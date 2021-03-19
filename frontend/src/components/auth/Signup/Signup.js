@@ -1,8 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import Auth from "../Auth";
-import { Card, Form, Button, Col } from "react-bootstrap";
+import { Card, Form, Button, Col, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import authStyles from "../auth.module.css";
+import { BsPersonFill } from "react-icons/bs"
+import { MdEmail, MdLock } from "react-icons/md"
+import { FaArrowAltCircleRight } from "react-icons/fa"
 
 class ConnectedSignup extends React.Component {
   constructor(){
@@ -27,81 +31,115 @@ class ConnectedSignup extends React.Component {
   render() {
 
     let signupForm = (<>
-    <Col>
-      <Card>
+    <Col className={authStyles.columns}>
+      <Card className={authStyles.cardLeft}>
         {/* <Card.Img> </Card.Img> */}
-        <Card.Subtitle>Text</Card.Subtitle>
+        <Card.Subtitle className={authStyles.text}>Welcome to awesomeness! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
       </Card>
     </Col>
-    <Col>
-      <Card>
-        <Card.Text><Link>Log in</Link> instead?</Card.Text>
-        <Card.Title>Create QuizGenAI Account</Card.Title> 
-        <Form id="signup-form">
-
-          {/* Enter first name */}
-          <Form.Group controlId="fname">
-            <Form.Label className="labels">First Name</Form.Label>
-            <Form.Control
-              style={{ textTransform: "capitalize" }}
-              onChange={this.handleChange}
-              placeholder="Enter First Name"
-            />
-            {/* <p className="errormessage"> {fnameerrormsg}</p> */}
-          </Form.Group>
-
-          {/* Enter last name */}
-          <Form.Group controlId="lname">
-            <Form.Label className="labels">Last Name</Form.Label>
-            <Form.Control
-              style={{ textTransform: "capitalize" }}
-              onChange={this.handleChange}
-              placeholder="Enter Last Name"
-            />
-            {/* <p className="errormessage"> {lnameerrormsg}</p> */}
-          </Form.Group>
+    <Col className={authStyles.columns}>
+      <Card className={authStyles.cardRight}>
+        <Card.Text style={{textAlign: "right"}}><Link className={authStyles.link} to="/login">Log in</Link> instead?</Card.Text>
+        <Card.Title style={{fontWeight: "700"}}>Create QuizGenAI Account</Card.Title> 
+        <Form id="signup-form" className={authStyles.form}>
+          <Row>
+            {/* Enter first name */}
+            <Form.Group as={Col} controlId="fname">
+              <Form.Label className={authStyles.labels}>First Name</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                  <InputGroup.Text>
+                    <BsPersonFill />
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control
+                  className={authStyles.fields}
+                  onChange={this.handleChange}
+                />
+              </InputGroup>
+              {/* <p className="errormessage"> {fnameerrormsg}</p> */}
+            </Form.Group>
+          
+          
+            {/* Enter last name */}
+            <Form.Group  as={Col} controlId="lname">
+              <Form.Label className={authStyles.labels}>Last Name</Form.Label>
+              {/* <InputGroup>
+                <InputGroup.Prepend>
+                  <InputGroup.Text>
+                    <BsPersonFill />
+                  </InputGroup.Text>
+                </InputGroup.Prepend> */}
+                <Form.Control
+                  className={authStyles.fields}
+                  onChange={this.handleChange}
+                />
+              {/* </InputGroup> */}
+              {/* <p className="errormessage"> {lnameerrormsg}</p> */}
+            </Form.Group>
+          </Row>
 
           {/* Enter email */}
-          <Form.Row>
-            <Form.Group as={Col} controlId="email">
-              <Form.Label className="labels">Email</Form.Label>
+          <Form.Group controlId="email">
+            <Form.Label className={authStyles.labels}>Email</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <MdEmail />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
               <Form.Control
+                className={authStyles.fields}
                 onChange={this.handleChange}
                 type="email"
-                placeholder="Enter email"
               />
-              {/* <p className="errormessage"> {emailerrormsg}</p> */}
-            </Form.Group>
+            </InputGroup>
+            {/* <p className="errormessage"> {emailerrormsg}</p> */}
+          </Form.Group>
 
-            {/* Enter Password */}
-            <Form.Group as={Col} controlId="password">
-              <Form.Label className="labels">Password</Form.Label>
+          {/* Enter Password */}
+          <Form.Group controlId="password">
+            <Form.Label className={authStyles.labels}>Password</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <MdLock />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
               <Form.Control
+                className={authStyles.fields}
                 onChange={this.handleChange}
                 type="password"
-                placeholder="Password"
               />
-              {/* <p className="errormessage"> {passerrormsg}</p> */}
-            </Form.Group>
-          </Form.Row>
+            </InputGroup>
+            {/* <p className="errormessage"> {passerrormsg}</p> */}
+          </Form.Group>
 
           {/* Select type - Educator or student */}
           <Form.Group controlId="type">
-            <Form.Label className="labels">What are you?</Form.Label>
-            <Form.Control
-              as="select"
-              onChange={this.handleChange}
-              name="type"
-            >
-              <option hidden>{} </option>
-              <option value="educator">Educator</option>
-              <option value="student">Student</option>
-            </Form.Control>
+            <Form.Label className={authStyles.labels}>Select what best describes you</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <FaArrowAltCircleRight />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                className={authStyles.fields}
+                as="select"
+                onChange={this.handleChange}
+                name="type"
+              >
+                <option hidden>{"Select"} </option>
+                <option value="educator">Professor</option>
+                <option value="student">Student</option>
+              </Form.Control>
+            </InputGroup>
             {/* <p className="errormessage"> {typeeerrormsg}</p> */}
           </Form.Group>
         </Form>
 
-        <Button onClick= {this.clickSignUp} >Sign Up</Button>
+        <Button className={authStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
       </Card>
     </Col>
     </>);

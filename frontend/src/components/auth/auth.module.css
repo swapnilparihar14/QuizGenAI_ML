@@ -1,0 +1,65 @@
+.background {
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.columns {
+  padding: 0;
+}
+
+.cardLeft {
+  border-right: none;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  min-height: 100%;
+  background-color: var(--dark-blue);
+  padding: 30px 60px 30px 60px;
+}
+
+.text {
+  color: var(--white);
+  font-weight: 400;
+  text-align: center;
+}
+
+.cardRight {
+  border-left: none;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  min-height: 100%;
+  padding: 30px 60px 60px 60px;
+}
+
+.container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.form {
+  padding-bottom: 20px;
+}
+
+.authButton {
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+}
+
+.link {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.fields {
+  background-color: var(--light-gray);
+  text-transform: "capitalize";
+}
+
+.labels {
+  margin-bottom: 0;
+}
