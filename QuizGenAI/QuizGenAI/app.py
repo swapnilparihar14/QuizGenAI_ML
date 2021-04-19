@@ -34,6 +34,7 @@ def home():
 
 @app.route('/home', methods=['POST'])
 def upload_file():
+    """POST method to take text file input from the user"""
     uploaded_file = request.files['file']
 
     # Prevents malware from attacking the system
