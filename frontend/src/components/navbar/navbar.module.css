@@ -1,0 +1,28 @@
+#navbar {
+  position: fixed;
+  background: var(--dark-blue);
+  margin: 0 auto;
+  min-width: 320px;
+  width: 100%;
+  height: 5vh;
+  z-index: 99;
+}
+
+#nav {
+  display: inline;
+  padding-right: 30px;
+}
+
+.links {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.separator {
+  color: var(--red);
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 600;
+  font-size: 1.1em;
+}

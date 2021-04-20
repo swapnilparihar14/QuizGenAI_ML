@@ -4,9 +4,10 @@ import Auth from "../Auth";
 import { Card, Form, Button, Col, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import authStyles from "../auth.module.css";
-import { BsPersonFill } from "react-icons/bs"
-import { MdEmail, MdLock } from "react-icons/md"
-import { FaArrowAltCircleRight } from "react-icons/fa"
+import { BsPersonFill } from "react-icons/bs";
+import { MdEmail, MdLock } from "react-icons/md";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import logo from "../../../assets/logo.svg";
 
 class ConnectedSignup extends React.Component {
   constructor(){
@@ -33,8 +34,8 @@ class ConnectedSignup extends React.Component {
     let signupForm = (<>
     <Col className={authStyles.columns}>
       <Card className={authStyles.cardLeft}>
-        {/* <Card.Img> </Card.Img> */}
-        <Card.Subtitle className={authStyles.text}>Welcome to awesomeness! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
+        <Card.Img src={logo} style={{width: "40%", marginLeft: "auto", marginRight: "auto"}}/>
+        <Card.Subtitle className={authStyles.text}>Welcome! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
       </Card>
     </Col>
     <Col className={authStyles.columns}>
