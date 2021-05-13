@@ -1,18 +1,14 @@
-
-#container1 {
+#row {
   background-image: linear-gradient(60deg, var(--black), var(--light-blue));
   height: 45vh;
-  min-width: 100%;
+  width: 100%;
   color: var(--white);
   padding-top: 5vh;
+  margin-right: 0;
+  margin-left: 0;
 }
-
-#row {
-  height: inherit;
-}
-
-#column1 {
-  padding-top: 150px;
+#tagline{
+  white-space: nowrap
 }
 
 #column1 h1{
@@ -20,6 +16,7 @@
   font-weight: bold;
   padding-bottom: 1em;
   padding-left: 40%;
+  padding-top: 150px;
 }
 
 #column1 h2{
@@ -28,13 +25,20 @@
   padding-left: 40%;
 }
 
-#column2 {
-  padding-top: 30px;
-}
- 
 #container1_image {
-  width: 800px;
-  height: 500px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+#column1{
+  padding-right: 0;
+}
+
+#column2{
+  padding-left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 #container2{
@@ -80,3 +84,24 @@
 #container3 span {
   font-weight: bold;
 }
+
+.steps {
+  height: 16vh;
+  width: 900px;
+}
+
+.circles {
+  width: 160px;
+  height: 160px;
+  background: var(--red);
+  border-radius: 50%;
+}
+
+.logos{
+  width:100%;
+  height:100%;
+  padding: 10%;
+  fill: var(--white);
+  stroke: var(--white);
+}
+

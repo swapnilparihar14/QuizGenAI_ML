@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import authStyles from "../auth.module.css";
 import { MdEmail, MdLock } from "react-icons/md";
 import logo from "../../../assets/logo.svg";
+import loginImage from "../../../assets/login-image.png";
 
 class ConnectedLogin extends React.Component {
   constructor(){
@@ -29,8 +30,9 @@ class ConnectedLogin extends React.Component {
     let loginForm = (<>
     <Col className={authStyles.columns}>
       <Card className={authStyles.cardLeft}>
-        <Card.Img src={logo} style={{width: "40%", marginLeft: "auto", marginRight: "auto"}}/>
+        <Card.Img src={logo} style={{width: "50%", marginLeft: "auto", marginRight: "auto"}}/>
         <Card.Subtitle className={authStyles.text}>Welcome back! <br/> Log in to upload your documents, generate and share your quizzes.</Card.Subtitle>
+        <Card.Img src={loginImage} style={{width: "80%", marginLeft: "auto", marginRight: "auto", paddingTop: "5px"}}/>
       </Card>
     </Col>
     <Col className={authStyles.columns}>
