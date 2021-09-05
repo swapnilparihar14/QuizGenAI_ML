@@ -4,17 +4,14 @@
   margin: 0 auto;
   width: 100%;
   height: 5vh;
-  z-index: 99;
 }
 
 #navbar_light {
   background: var(--white);
   margin: 0 auto;
-  padding-top: 0;
   width: 100%;
-  height: 55px;
+  height: 5vh;
   border: 1px solid var(--light-gray);
-  z-index: 99;
 }
 
 .navbar-brand {
@@ -36,7 +33,6 @@
     margin: 0 auto;
     width: 100%;
     height: 50px;
-    z-index: 99;
   }
 
   #navbar_light {
@@ -44,8 +40,7 @@
     margin: 0 auto;
     width: 100%;
     height: 50px;
-    border: 1px solid var(--light-gray);
-    z-index: 99;
+    border-bottom: 1px solid var(--light-gray);
   }
 
   .links_light {

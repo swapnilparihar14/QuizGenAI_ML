@@ -15,8 +15,8 @@ class ConnectedFooter extends React.Component {
 
     let footer = null;
     if (this.state.boolLoggedIn === true){
-      footer = <Container fluid style={{backgroundColor: "var(--dark-blue)", position: "fixed", bottom: "0"}}>
-                <p style={{display: "block"}} style={{marginTop: "1rem", marginBottom: "1rem"}}>
+      footer = <Container fluid style={{backgroundColor: "var(--dark-blue)", position: "relative", bottom: "0", height: "50px"}}>
+                <p style={{display: "block"}} style={{paddingTop: "15px", marginBottom: "0"}}>
                   <span className={footerStyles.text_dark} >Copyright &copy; 2021-2022</span>
                   <span className={footerStyles.text_dark}>|</span>
                   <span className={footerStyles.text_dark} style={{fontWeight: "bold"}}>QuizGenAI Inc.</span>
@@ -24,8 +24,8 @@ class ConnectedFooter extends React.Component {
                </Container>
     }
     else {
-      footer = <Container fluid style={{backgroundColor: "var(--white)", borderTop: "1px solid var(--light-gray)", position: "fixed", bottom: "0"}}>
-      <p style={{display: "block"}} style={{marginTop: "1rem", marginBottom: "1rem"}}>
+      footer = <Container fluid style={{backgroundColor: "var(--white)", borderTop: "1px solid var(--light-gray)", position: "relative", bottom: "0", height: "50px"}}>
+      <p style={{display: "block"}} style={{paddingTop: "15px", marginBottom: "0"}}>
         <span className={footerStyles.text_light} >Copyright &copy; 2021-2022</span>
         <span className={footerStyles.text_light}>|</span>
         <span className={footerStyles.text_light} style={{fontWeight: "bold"}}>QuizGenAI Inc.</span>
