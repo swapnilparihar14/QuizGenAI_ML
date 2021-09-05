@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import Auth from "../Auth";
 import { Card, Form, Button, Col, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import authStyles from "../auth.module.css";
+import signupStyles from "../signup.module.css";
 import { BsPersonFill } from "react-icons/bs";
 import { MdEmail, MdLock } from "react-icons/md";
 import { FaArrowAltCircleRight } from "react-icons/fa";
-import logo from "../../../assets/logo.svg";
-import loginImage from "../../../assets/login-image.png";
+import logo from "../../../assets/logo-light.svg";
 
 class ConnectedSignup extends React.Component {
   constructor(){
@@ -32,25 +31,26 @@ class ConnectedSignup extends React.Component {
 
   render() {
 
-    let signupForm = (<>
-    {/* <Col className={authStyles.columns}>
-      <Card className={authStyles.cardLeft}>
+    let signupForm = (
+    /*<Col className={signupStyles.columns}>
+      <Card className={signupStyles.cardLeft}>
         <Card.Img src={logo} style={{width: "50%", marginLeft: "auto", marginRight: "auto"}}/>
-        <Card.Subtitle className={authStyles.text}>Welcome! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
+        <Card.Subtitle className={signupStyles.text}>Welcome! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
         <Card.Img src={loginImage} style={{width: "80%", marginLeft: "auto", marginRight: "auto", paddingTop: "10px"}}/>
       </Card>
     </Col>
-    <Col className={authStyles.columns}> */}
-      <Card className={authStyles.card}>
-        <Card.Title className={authStyles.title}>Welcome to </Card.Title>
-        <Card.Img src={logo} style={{width: "70%", marginLeft: "auto", marginRight: "auto",  marginBottom: "20px"}}/>
-        {/* <Card.Img src={loginImage} style={{width: "20%", marginLeft: "auto", marginRight: "auto", paddingTop: "10px"}}/> */}
-        <Card.Subtitle  className={authStyles.labels} style={{fontWeight: "500"}}>Create an account</Card.Subtitle> 
-        <Form id="signup-form" className={authStyles.form}>
+    <Col className={signupStyles.columns}>*/
+      <Card className={signupStyles.card}>
+        <div className={signupStyles.background_title}>
+          <Card.Title className={signupStyles.title}>Welcome to </Card.Title>
+          <Card.Img src={logo} style={{width: "80%", marginLeft: "auto", marginRight: "auto",  display: "block", marginBottom: "20px"}}/>
+        </div>
+          <Card.Subtitle  className={signupStyles.labels} style={{fontWeight: "500", marginBottom: "5px"}}>Create an account</Card.Subtitle> 
+        <Form id="signup-form" className={signupStyles.form}>
         
           {/* Enter first name */}
           <Form.Group controlId="fname">
-            <Form.Label className={authStyles.labels}>First Name</Form.Label>
+            <Form.Label className={signupStyles.labels}>First Name</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -67,7 +67,7 @@ class ConnectedSignup extends React.Component {
           
           {/* Enter last name */}
           <Form.Group controlId="lname">
-            <Form.Label className={authStyles.labels}>Last Name</Form.Label>
+            <Form.Label className={signupStyles.labels}>Last Name</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -83,7 +83,7 @@ class ConnectedSignup extends React.Component {
 
           {/* Enter email */}
           <Form.Group controlId="email">
-            <Form.Label className={authStyles.labels}>Email</Form.Label>
+            <Form.Label className={signupStyles.labels}>Email</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -100,7 +100,7 @@ class ConnectedSignup extends React.Component {
 
           {/* Enter Password */}
           <Form.Group controlId="password">
-            <Form.Label className={authStyles.labels}>Password</Form.Label>
+            <Form.Label className={signupStyles.labels}>Password</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -117,7 +117,7 @@ class ConnectedSignup extends React.Component {
 
           {/* Select type - Educator or student */}
           <Form.Group controlId="type">
-            <Form.Label className={authStyles.labels}>Select what best describes you</Form.Label>
+            <Form.Label className={signupStyles.labels}>Select what best describes you</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>
@@ -138,10 +138,10 @@ class ConnectedSignup extends React.Component {
           </Form.Group>
         </Form>
 
-        <Button className={authStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
-        <Card.Text  className={authStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={authStyles.link} to="/login">Log in</Link></Card.Text>
+        <Button className={signupStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
+        <Card.Text className={signupStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={signupStyles.link} to="/login">Log in</Link></Card.Text>
       </Card>
-    </>);
+   );
     
     return (
      <Auth card = {signupForm} />
