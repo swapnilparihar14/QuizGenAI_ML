@@ -1,37 +1,19 @@
+/* For Mobiles */
 .background {
-  min-height: 100vh;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--dark-blue);
+  position: absolute;
+  z-index: -1;
 }
 
 .columns {
   padding: 0;
 }
 
-.cardLeft {
-  border-right: none;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  min-height: 100%;
-  background-image: linear-gradient(var(--black), var(--dark-blue));
-  /* background-color: var(--dark-blue); */
+.card {
+  border: none;
   padding: 30px 60px 30px 60px;
-}
-
-.text {
-  color: var(--white);
-  font-weight: 400;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.cardRight {
-  border-left: none;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  min-height: 100%;
-  padding: 30px 60px 60px 60px;
 }
 
 .container{
@@ -40,6 +22,17 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  width: 500px;
+}
+
+.title{
+  color: var(--blue);
+  text-transform: uppercase;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 1.4rem;
 }
 
 .form {
@@ -50,19 +43,111 @@
   background-color: var(--red);
   color: var(--white);
   border: none;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .link {
-  color: var(--red);
+  color: var(--blue);
   font-weight: 600;
-}
-
-.fields {
-  background-color: var(--light-gray);
-  text-transform: "capitalize";
 }
 
 .labels {
   margin-bottom: 0;
+  color: var(--gray);
+  font-weight: 400;
+  text-transform: "capitalize";
 }
+
+.circle1 {
+  height: 500px;
+  width: 500px;
+  background-color: var(--light-blue);
+  border-radius: 50%;
+  position: fixed;
+  top: -250px;
+  left: -250px;
+}
+
+.circle2 {
+  height: 500px;
+  width: 500px;
+  background-color: var(--light-blue);
+  border-radius: 50%;
+  position: fixed;
+  bottom: -250px;
+  right: -250px;
+}
+
+/* For Tablets */
+/* @media only screen and (min-width: 600px) {
+  
+} */
+
+/* For Desktop/Laptop, 992px and up */
+@media only screen and (min-width: 992px) {
+  .background {
+    width: 50%;
+  }
+
+  .card {
+    border: 1px solid var(--light-gray);
+    border-left: none;
+  }
+
+  .circle1 {
+    height: 100px;
+    width: 100px;
+    background-color: var(--light-blue);
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 200px;
+    left: 300px;
+  }
+
+  .circle2 {
+    height: 200px;
+    width: 200px;
+    background-color: var(--light-blue);
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 10px;
+    left: 50px;
+  }
+
+  .circle3 {
+    height: 50px;
+    width: 50px;
+    background-color: var(--light-blue);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 400px;
+    left: 120px;
+  }
+
+  .circle4 {
+    height: 150px;
+    width: 150px;
+    background-color: var(--dark-blue);
+    border-radius: 50%;
+    position: absolute;
+    top: 100px;
+    right: 80px;
+  }
+
+  .circle5 {
+    height: 80px;
+    width: 80px;
+    background-color: var(--dark-blue);
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+  }
+}
+
+/* For Desktop/Laptop, 1200px and up
+@media only screen and (min-width: 1200px) {
+ 
+} */

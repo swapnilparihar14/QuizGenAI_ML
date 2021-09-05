@@ -33,54 +33,53 @@ class ConnectedSignup extends React.Component {
   render() {
 
     let signupForm = (<>
-    <Col className={authStyles.columns}>
+    {/* <Col className={authStyles.columns}>
       <Card className={authStyles.cardLeft}>
         <Card.Img src={logo} style={{width: "50%", marginLeft: "auto", marginRight: "auto"}}/>
         <Card.Subtitle className={authStyles.text}>Welcome! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
         <Card.Img src={loginImage} style={{width: "80%", marginLeft: "auto", marginRight: "auto", paddingTop: "10px"}}/>
       </Card>
     </Col>
-    <Col className={authStyles.columns}>
-      <Card className={authStyles.cardRight}>
-        <Card.Text style={{textAlign: "right"}}><Link className={authStyles.link} to="/login">Log in</Link> instead?</Card.Text>
-        <Card.Title style={{fontWeight: "700"}}>Create QuizGenAI Account</Card.Title> 
+    <Col className={authStyles.columns}> */}
+      <Card className={authStyles.card}>
+        <Card.Title className={authStyles.title}>Welcome to </Card.Title>
+        <Card.Img src={logo} style={{width: "70%", marginLeft: "auto", marginRight: "auto",  marginBottom: "20px"}}/>
+        {/* <Card.Img src={loginImage} style={{width: "20%", marginLeft: "auto", marginRight: "auto", paddingTop: "10px"}}/> */}
+        <Card.Subtitle  className={authStyles.labels} style={{fontWeight: "500"}}>Create an account</Card.Subtitle> 
         <Form id="signup-form" className={authStyles.form}>
-          <Row>
-            {/* Enter first name */}
-            <Form.Group as={Col} controlId="fname">
-              <Form.Label className={authStyles.labels}>First Name</Form.Label>
-              <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <BsPersonFill />
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control
-                  className={authStyles.fields}
-                  onChange={this.handleChange}
-                />
-              </InputGroup>
-              {/* <p className="errormessage"> {fnameerrormsg}</p> */}
-            </Form.Group>
+        
+          {/* Enter first name */}
+          <Form.Group controlId="fname">
+            <Form.Label className={authStyles.labels}>First Name</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <BsPersonFill />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+            {/* <p className="errormessage"> {fnameerrormsg}</p> */}
+          </Form.Group>
           
           
-            {/* Enter last name */}
-            <Form.Group  as={Col} controlId="lname">
-              <Form.Label className={authStyles.labels}>Last Name</Form.Label>
-              {/* <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <BsPersonFill />
-                  </InputGroup.Text>
-                </InputGroup.Prepend> */}
-                <Form.Control
-                  className={authStyles.fields}
-                  onChange={this.handleChange}
-                />
-              {/* </InputGroup> */}
-              {/* <p className="errormessage"> {lnameerrormsg}</p> */}
-            </Form.Group>
-          </Row>
+          {/* Enter last name */}
+          <Form.Group controlId="lname">
+            <Form.Label className={authStyles.labels}>Last Name</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <BsPersonFill />
+                </InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+            {/* <p className="errormessage"> {lnameerrormsg}</p> */}
+          </Form.Group>
 
           {/* Enter email */}
           <Form.Group controlId="email">
@@ -92,7 +91,6 @@ class ConnectedSignup extends React.Component {
                 </InputGroup.Text>
               </InputGroup.Prepend>
               <Form.Control
-                className={authStyles.fields}
                 onChange={this.handleChange}
                 type="email"
               />
@@ -110,7 +108,6 @@ class ConnectedSignup extends React.Component {
                 </InputGroup.Text>
               </InputGroup.Prepend>
               <Form.Control
-                className={authStyles.fields}
                 onChange={this.handleChange}
                 type="password"
               />
@@ -128,7 +125,6 @@ class ConnectedSignup extends React.Component {
                 </InputGroup.Text>
               </InputGroup.Prepend>
               <Form.Control
-                className={authStyles.fields}
                 as="select"
                 onChange={this.handleChange}
                 name="type"
@@ -143,12 +139,12 @@ class ConnectedSignup extends React.Component {
         </Form>
 
         <Button className={authStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
+        <Card.Text  className={authStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={authStyles.link} to="/login">Log in</Link></Card.Text>
       </Card>
-    </Col>
     </>);
     
     return (
-     <Auth cards = {signupForm} />
+     <Auth card = {signupForm} />
     );
   }
 }
