@@ -1,28 +1,74 @@
-#navbar {
-  position: fixed;
+/* For Mobiles */
+#navbar_dark {
   background: var(--dark-blue);
   margin: 0 auto;
-  min-width: 320px;
   width: 100%;
   height: 5vh;
   z-index: 99;
 }
 
-#nav {
-  display: inline;
-  padding-right: 30px;
+#navbar_light {
+  background: var(--white);
+  margin: 0 auto;
+  padding-top: 0;
+  width: 100%;
+  height: 55px;
+  border: 1px solid var(--light-gray);
+  z-index: 99;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .links {
-  color: var(--white);
-  font-weight: 600;
-  font-size: 1.1em;
+  color: var(--blue);
+  font-weight: 500;
+  font-size: 1.2em;
 }
 
-.separator {
-  color: var(--red);
-  padding-left: 20px;
-  padding-right: 20px;
-  font-weight: 600;
-  font-size: 1.1em;
+/* For Desktop/Laptop, 768px and up */
+@media only screen and (min-width: 768px) {
+
+  #navbar_dark {
+    background: var(--dark-blue);
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    z-index: 99;
+  }
+
+  #navbar_light {
+    background: var(--white);
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--light-gray);
+    z-index: 99;
+  }
+
+  .links_light {
+    color: var(--blue);
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+
+  .links_dark {
+    color: var(--white);
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+
+  .links_dark a:first-child:first-of-type {
+    color: var(--white) !important;
+  }
+
+  .separator {
+    color: var(--red);
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+
 }
