@@ -130,7 +130,7 @@ class ConnectedSignup extends React.Component {
                 name="type"
               >
                 <option hidden>{"Select"} </option>
-                <option value="educator">Professor</option>
+                <option value="instructor">Instructor</option>
                 <option value="student">Student</option>
               </Form.Control>
             </InputGroup>

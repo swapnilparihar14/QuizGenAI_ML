@@ -93,7 +93,7 @@
 .circles {
   width: 160px;
   height: 160px;
-  background: var(--red);
+  background: var(--pinkish-red);
   border-radius: 50%;
 }
 

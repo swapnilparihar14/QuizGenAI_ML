@@ -19,7 +19,7 @@
 }
 
 .authButton {
-  background-color: var(--red);
+  background-color: var(--pinkish-red);
   color: var(--white);
   border: none;
   font-weight: 500;

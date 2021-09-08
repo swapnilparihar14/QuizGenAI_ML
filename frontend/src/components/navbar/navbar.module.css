@@ -60,7 +60,7 @@
   }
 
   .separator {
-    color: var(--red);
+    color: var(--pinkish-red);
     padding: 10px 20px;
     font-weight: 600;
     font-size: 1.2em;
