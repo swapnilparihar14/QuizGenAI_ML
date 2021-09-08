@@ -4,6 +4,7 @@ import LogIn from "./components/auth/Login/Login";
 // import LandPage from "./components/landpage/Landpage";
 import CreateQuiz from "./components/create_quiz/CreateQuiz";
 import ReviewQuestions from "./components/review_questions/ReviewQuestions";
+import TakeQuiz from "./components/take_quiz/TakeQuiz";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" component={LogIn} />
         <Route path="/create_quiz" component={CreateQuiz} />
         <Route path="/review_questions" component={ReviewQuestions} />
+        <Route path="/take_quiz" component={TakeQuiz} />
       </Switch>
     </BrowserRouter>
   );

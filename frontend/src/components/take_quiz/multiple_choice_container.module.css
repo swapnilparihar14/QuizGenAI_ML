@@ -1,0 +1,36 @@
+.card {
+  border: none;
+  padding: 30px 60px 30px 60px;
+  margin-bottom: 20px;
+}
+
+.questions {
+  margin-bottom: 5px;
+  color: var(--black);
+  font-weight: bolder;
+  font-size: 1rem;
+}
+
+.answers {
+  margin-bottom: 5px;
+  color: var(--black);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 1px 0;
+}
+
+.correct_answers {
+  margin-bottom: 6px;
+  color: var(--black);
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--green);
+  display: inline;
+  margin-right: 10px;
+  padding: 2px 0;
+}
+
+svg {
+  color: var(--green);
+  padding-bottom: 2px;
+}
