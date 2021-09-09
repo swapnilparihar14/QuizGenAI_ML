@@ -26,7 +26,7 @@ class TakeQuiz extends React.Component {
         <Link to="/new_quiz" onClick= {this.clickReview} className={takeQuizStyles.links}>New Quiz</Link>
         </Col>
         <Col xs={6} md={6} lg={6}>
-        <Link to="/" onClick= {this.clickReview} className={takeQuizStyles.links}>Existing Quiz</Link>
+        <Link to="/existing_quiz" onClick= {this.clickReview} className={takeQuizStyles.links}>Existing Quiz</Link>
         </Col>
       </Row>
       <Footer boolLoggedIn={true}></Footer>

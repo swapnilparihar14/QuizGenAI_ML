@@ -6,6 +6,7 @@ import CreateQuiz from "./components/create_quiz/CreateQuiz";
 import ReviewQuestions from "./components/review_questions/ReviewQuestions";
 import TakeQuiz from "./components/take_quiz/TakeQuiz";
 import NewQuiz from "./components/new_quiz/NewQuiz";
+import ExistingQuiz from "./components/existing_quiz/ExistingQuiz";
 import TakeQuizQuestions from "./components/take_quiz_questions/TakeQuizQuestions";
 import MyQuizzes from "./components/my_quizzes/MyQuizzes";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/review_questions" component={ReviewQuestions} />
         <Route path="/take_quiz" component={TakeQuiz} />
         <Route path="/new_quiz" component={NewQuiz} />
+        <Route path="/existing_quiz" component={ExistingQuiz} />
         <Route path="/take_quiz_questions" component={TakeQuizQuestions} />
         <Route path="/my_quizzes" component={MyQuizzes} />
       </Switch>
