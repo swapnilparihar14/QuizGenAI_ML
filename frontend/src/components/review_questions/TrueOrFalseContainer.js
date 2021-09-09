@@ -25,7 +25,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() == "true") {
       t = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>A. True</h6>
-        <RiCheckboxCircleLine></RiCheckboxCircleLine>
+        <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
         </>
       )
     } else {
@@ -37,7 +37,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() == "false") {
       f = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>B. False</h6>
-        <RiCheckboxCircleLine></RiCheckboxCircleLine>
+        <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
         </>
       )
     } else {
@@ -49,7 +49,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     return (
       <Card onClick= {this.clickCreateQuiz} className={TrueOrFalseContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
-          <Col  xs={8} md={8} lg={8}>
+          <Col  xs={8} md={8} lg={8}  className={TrueOrFalseContainerStyles.col}>
               <h4 className={TrueOrFalseContainerStyles.questions}>{this.props.trueOrFalseQuestion.question}</h4>
               {t}
               {f}

@@ -18,12 +18,18 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   }
 
   render() {
-    return (
+    return (<>
+      <h2 style={{fontSize: "1.2rem", marginBottom: "10px"}}>Fill in the blank in the following sentence.</h2>
       <Card onClick= {this.clickCreateQuiz} className={FillInTheBlankContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
           <Col  xs={8} md={8} lg={8}>
               <h4 className={FillInTheBlankContainerStyles.questions}>{this.props.fillinTheBlankQuestion.question}</h4>
-              <h6 className={FillInTheBlankContainerStyles.answers}>Answer: {this.props.fillinTheBlankQuestion.correctAnswer}</h6>
+              <Form.Group controlId="answer" className={FillInTheBlankContainerStyles.answers}>
+                <Form.Control
+                  onChange={this.handleChange}
+                  type="text"
+                />
+              </Form.Group>
           </Col>
           <Col  xs={4} md={4} lg={4}>
             <h4 className={FillInTheBlankContainerStyles.questions}>Does this question make sense?</h4>
@@ -49,6 +55,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
           </Col>
           </Row>
       </Card> 
+      </>
     );
   }
 }

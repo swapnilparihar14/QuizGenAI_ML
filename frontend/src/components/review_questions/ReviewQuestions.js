@@ -86,7 +86,7 @@ class ConnectedReviewQuestions extends React.Component {
     ));
     
     return (<>
-      <NavigationBar></NavigationBar>
+      <NavigationBar boolLoggedIn={true}></NavigationBar>
       <Container fluid className={reviewQuestionsStyles.page_header}>REVIEW QUESTIONS</Container>
       <Container className={reviewQuestionsStyles.container}> 
 
@@ -117,7 +117,7 @@ class ConnectedReviewQuestions extends React.Component {
           <Button className={reviewQuestionsStyles.buttons} onClick= {this.clickCreateQuiz} >Create Quiz</Button>
         </div>
       </Container>
-      <Footer></Footer>
+      <Footer boolLoggedIn={true}></Footer>
       </>
     );
   }

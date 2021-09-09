@@ -21,7 +21,7 @@ body {
 .card_header {
   border: none;
   border-top: 20px solid var(--blue);
-  padding: 0 60px 0 60px;
+  padding: 30px 60px 30px 60px;
   margin-bottom: 20px;
 }
 

@@ -7,15 +7,15 @@ class ConnectedFooter extends React.Component {
   constructor() {
     super();
     this.state = {
-      boolLoggedIn: true,
+      
     }
   }
 
   render(){
 
     let footer = null;
-    if (this.state.boolLoggedIn === true){
-      footer = <Container fluid style={{backgroundColor: "var(--dark-blue)", position: "relative", bottom: "0", height: "50px"}}>
+    if (this.props.boolLoggedIn === true){
+      footer = <Container fluid style={{backgroundColor: "var(--dark-blue)", position: "fixed", bottom: "0", height: "50px"}}>
                 <p style={{display: "block"}} style={{paddingTop: "15px", marginBottom: "0"}}>
                   <span className={footerStyles.text_dark} >Copyright &copy; 2021-2022</span>
                   <span className={footerStyles.text_dark}>|</span>
@@ -24,7 +24,7 @@ class ConnectedFooter extends React.Component {
                </Container>
     }
     else {
-      footer = <Container fluid style={{backgroundColor: "var(--white)", borderTop: "1px solid var(--light-gray)", position: "relative", bottom: "0", height: "50px"}}>
+      footer = <Container fluid style={{backgroundColor: "var(--white)", borderTop: "1px solid var(--light-gray)", position: "fixed", bottom: "0", height: "50px"}}>
       <p style={{display: "block"}} style={{paddingTop: "15px", marginBottom: "0"}}>
         <span className={footerStyles.text_light} >Copyright &copy; 2021-2022</span>
         <span className={footerStyles.text_light}>|</span>

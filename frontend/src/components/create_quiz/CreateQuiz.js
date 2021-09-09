@@ -1,8 +1,9 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Card, Button, Form } from "react-bootstrap";
+import { Container, Row, Card, Button, Form } from "react-bootstrap";
 import createQuizStyles from "./create_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
 
@@ -12,8 +13,10 @@ class ConnectedCreateQuiz extends React.Component {
     super();
     this.state = {
       quizname: "",
-      graded: "",
+      // graded: "",
       timed: "",
+      hours: "",
+      minutes: "",
       privacy: "",
       password: "",
       multiplechoicequestions: "",
@@ -31,12 +34,8 @@ class ConnectedCreateQuiz extends React.Component {
     this.setState({ file: file });
   };
 
-  clickReview = e =>{
-    e.preventDefault();
-  }
-
-  clickTakeQuiz = e =>{
-    e.preventDefault();
+  clickReview = ()=> {
+    
   }
 
   render() {
@@ -55,9 +54,36 @@ class ConnectedCreateQuiz extends React.Component {
         </Form.Group>
       );
     }
+
+    let durationFields = "";
+    if (this.state.timed === "yes") {
+      durationFields = (<>
+        <Form.Label className={createQuizStyles.labels}>Duration</Form.Label>
+        <Row style={{marginLeft: "1px"}}>
+          <Form.Group controlId="duration_hr" style={{marginRight: "20px"}}>
+            <Form.Label className={createQuizStyles.labels} >Hours</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              name="duration_hr"
+              type="number"
+            />
+          </Form.Group>
+
+          <Form.Group controlId="duration_min">
+            <Form.Label className={createQuizStyles.labels}>Minutes</Form.Label>
+            <Form.Control
+              onChange={this.handleChange}
+              name="duration_min"
+              type="number"
+            />
+          </Form.Group>
+        </Row>
+        </>
+      );
+    }
     
     return (<>
-      <NavigationBar></NavigationBar>
+      <NavigationBar boolLoggedIn={true}></NavigationBar>
       <Container fluid className={createQuizStyles.page_header}>CREATE QUIZ</Container>
       <Container className={createQuizStyles.container}> 
         <Form id="create-quiz-form" className={createQuizStyles.form}>
@@ -70,7 +96,7 @@ class ConnectedCreateQuiz extends React.Component {
             </Form.Group>
           </Card>
       
-          <Card className={createQuizStyles.card}>
+          {/* <Card className={createQuizStyles.card}>
             <Form.Group controlId="graded" style={{margin: "0"}}>
               <Form.Label className={createQuizStyles.labels}>Graded or Ungraded</Form.Label>
               <Form.Control
@@ -83,7 +109,7 @@ class ConnectedCreateQuiz extends React.Component {
                 <option value="ungraded">Ungraded</option>
               </Form.Control>
             </Form.Group>
-          </Card> 
+          </Card>  */}
           
           <Card className={createQuizStyles.card}>
             <Form.Group controlId="timed" style={{margin: "0"}}>
@@ -92,12 +118,15 @@ class ConnectedCreateQuiz extends React.Component {
                 as="select"
                 onChange={this.handleChange}
                 name="timed"
+                style={{marginBottom: "10px"}}
               >
                 <option hidden>{"Select"} </option>
-                <option value="timed">Timed</option>
-                <option value="untimed">Untimed</option>
+                <option value="yes">Timed</option>
+                <option value="no">Untimed</option>
               </Form.Control>
             </Form.Group>
+
+            {durationFields}
           </Card>
           
           <Card className={createQuizStyles.card}>
@@ -110,8 +139,8 @@ class ConnectedCreateQuiz extends React.Component {
                 style={{marginBottom: "10px"}}
               >
                 <option hidden>{"Select"} </option>
-                <option value="public">public</option>
-                <option value="private">private</option>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
               </Form.Control>
             </Form.Group>
 
@@ -145,11 +174,11 @@ class ConnectedCreateQuiz extends React.Component {
         </Form>
 
         <div style={{float: "right"}}>
-          <Button className={createQuizStyles.buttons} onClick= {this.clickReview} style={{marginRight: "50px"}}>Review Questions</Button>
-          <Button className={createQuizStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button>
+        <Link to="/review_questions" onClick= {this.clickReview} className={`btn btn-primary ${createQuizStyles.links}`}>Review Questions</Link>
+          {/* <Button className={createQuizStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button> */}
         </div>
       </Container>
-      <Footer></Footer>
+      <Footer boolLoggedIn={true}></Footer>
       </>
     );
   }

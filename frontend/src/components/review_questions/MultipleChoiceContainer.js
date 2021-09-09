@@ -27,7 +27,7 @@ class ConnectedMultipleChoiceContainer extends React.Component {
       if(counter === this.props.multipleChoiceQuestion.correctAnswer)
         return (<>
           <h6 className={multipleChoiceContainerStyles.correct_answers}>{letters[counter-1]}{answer}</h6>
-          <RiCheckboxCircleLine></RiCheckboxCircleLine>
+          <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
           </>
         )
       else
@@ -39,7 +39,7 @@ class ConnectedMultipleChoiceContainer extends React.Component {
     return (
       <Card onClick= {this.clickCreateQuiz} className={multipleChoiceContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
-          <Col  xs={8} md={8} lg={8}>
+          <Col  xs={8} md={8} lg={8} >
               <h4 className={multipleChoiceContainerStyles.questions}>{this.props.multipleChoiceQuestion.question}</h4>
               {answers}
           </Col>

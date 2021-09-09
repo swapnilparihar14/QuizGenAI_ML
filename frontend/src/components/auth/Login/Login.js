@@ -36,7 +36,7 @@ class ConnectedLogin extends React.Component {
     // </Col>
     // <Col className={loginStyles.columns}>
       <Card className={loginStyles.card}>
-        <Card.Title className={loginStyles.title}>Welcome back to </Card.Title> 
+        <Card.Title className={loginStyles.title}>Welcome to </Card.Title> 
         <Card.Img src={logo} style={{width: "80%", marginLeft: "auto", marginRight: "auto",  marginBottom: "20px"}}/>
         <Card.Subtitle  className={loginStyles.labels} style={{fontWeight: "500", marginBottom: "5px"}}>Log in to your account</Card.Subtitle> 
         <Form id="login-form" className={loginStyles.form}>
