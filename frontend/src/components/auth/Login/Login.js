@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Auth from "../Auth";
+import Auth from "../Auth.js";
 import { Card, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginStyles from "../login.module.css";
