@@ -4,7 +4,7 @@
   padding: 30px 60px 30px 60px;
 }
 
-.title{
+.title {
   color: var(--blue);
   text-transform: uppercase;
   font-weight: 400;
@@ -12,6 +12,11 @@
   margin-top: 20px;
   margin-bottom: 5px;
   font-size: 1.4rem;
+}
+
+.container {
+  margin: 0 auto;
+  width: 500px;
 }
 
 .form {
@@ -41,6 +46,18 @@
 /* @media only screen and (min-width: 600px) {
   
 } */
+
+/* For screen 475px and up */
+@media only screen and (min-height: 475px) {
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 500px;
+  }
+}
 
 /* For Desktop/Laptop, 992px and up */
 @media only screen and (min-width: 992px) {

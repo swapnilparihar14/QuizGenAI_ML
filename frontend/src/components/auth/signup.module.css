@@ -11,7 +11,12 @@
   margin-bottom: 20px;
 }
 
-.title{
+.container {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.title {
   color: var(--white);
   text-transform: uppercase;
   font-weight: 400;
@@ -48,6 +53,17 @@
 /* @media only screen and (min-width: 600px) {
   
 } */
+/* For screen 700px and up */
+@media only screen and (min-height: 700px) {
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 500px;
+  }
+}
 
 /* For Desktop/Laptop, 992px and up */
 @media only screen and (min-width: 992px) {

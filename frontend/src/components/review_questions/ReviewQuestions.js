@@ -47,6 +47,10 @@ class ConnectedReviewQuestions extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   handleChange = e =>{
     this.setState({ [e.target.id]: e.target.value });
   }
@@ -90,7 +94,7 @@ class ConnectedReviewQuestions extends React.Component {
       <Container fluid className={reviewQuestionsStyles.page_header}>REVIEW QUESTIONS</Container>
       <Container className={reviewQuestionsStyles.container}> 
 
-        <h2 style={{fontSize: "1.2rem", marginBottom: "10px"}}>Select the questions you would like to add to your quiz</h2>
+        <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Select the questions you would like to add to your quiz</h2>
 
         <Form id="review-questions-form" className={reviewQuestionsStyles.form}>
           

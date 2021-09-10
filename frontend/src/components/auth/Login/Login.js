@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Auth from "../Auth";
-import { Card, Form, Button, Col, InputGroup } from "react-bootstrap";
+import { Card, Form, Button, Container, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginStyles from "../login.module.css";
 import { MdEmail, MdLock } from "react-icons/md";
@@ -35,6 +35,7 @@ class ConnectedLogin extends React.Component {
     //   </Card>
     // </Col>
     // <Col className={loginStyles.columns}>
+    <Container className={loginStyles.container}> 
       <Card className={loginStyles.card}>
         <Card.Title className={loginStyles.title}>Welcome to </Card.Title> 
         <Card.Img src={logo} style={{width: "80%", marginLeft: "auto", marginRight: "auto",  marginBottom: "20px"}}/>
@@ -79,6 +80,7 @@ class ConnectedLogin extends React.Component {
         <Button className={loginStyles.authButton} onClick= {this.clickLogIn} >Log In</Button>
         <Card.Text className={loginStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Don&apos;t have an account? <Link className={loginStyles.link} to="/signup">Sign up</Link></Card.Text>
       </Card>
+      </Container>
     );
     
     return (

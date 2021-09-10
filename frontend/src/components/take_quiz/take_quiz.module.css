@@ -1,6 +1,6 @@
 .page_header {
   text-align: center;
-  color:var(--gray);
+  color: var(--gray);
   font-weight: bolder;
   font-size: 1.3rem;
   text-transform: uppercase;
@@ -13,7 +13,7 @@ body {
   background-color: var(--light-gray);
 }
 
-.container{
+.container {
   width: 80%;
   margin: 30px auto 140px auto;
 }
@@ -23,26 +23,24 @@ body {
   color: var(--white);
   border: none;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   padding: 20px 10px;
-  border-radius: .25rem;
-  width: 50%;
+  border-radius: 0.25rem;
   display: block;
   margin: 0 auto;
   text-align: center;
 }
-
 
 .links:hover {
   color: var(--white);
   text-decoration: none;
 }
 
-.row{
+.row {
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 80%;
 }
