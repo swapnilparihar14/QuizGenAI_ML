@@ -3,12 +3,14 @@ from flask import jsonify
 
 def user_registration(db, user_details):
     try:
+        # print(user_details)
         user = db.user_table.find_one(
             {
                 'email_id': user_details['email_id']
             }
         )
-        if user['_id'] is not None:
+        print(user)
+        if user is not None:
             return 409, jsonify(message="User already exists")
         user_id = db.user_table.insert_one(
             {
