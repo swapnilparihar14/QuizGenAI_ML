@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import Auth from "../Auth.js";
-import { Card, Form, Button, Col, InputGroup } from "react-bootstrap";
+import Auth from "../Auth";
+import { Card, Form, Button, Container, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginStyles from "../login.module.css";
 import { MdEmail, MdLock } from "react-icons/md";

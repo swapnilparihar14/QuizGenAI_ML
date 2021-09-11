@@ -22,12 +22,11 @@
 .links {
   color: var(--blue);
   font-weight: 500;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 /* For Desktop/Laptop, 768px and up */
 @media only screen and (min-width: 768px) {
-
   #navbar_dark {
     background: var(--dark-blue);
     margin: 0 auto;
@@ -46,13 +45,13 @@
   .links_light {
     color: var(--dark-blue);
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1rem;
   }
 
   .links_dark {
     color: var(--white);
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1rem;
   }
 
   .links_dark a:first-child:first-of-type {
@@ -63,7 +62,6 @@
     color: var(--pinkish-red);
     padding: 10px 20px;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 1rem;
   }
-
 }

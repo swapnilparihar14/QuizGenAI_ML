@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Auth from "../Auth";
-import { Card, Form, Button, Col, InputGroup, Row } from "react-bootstrap";
+import { Card, Form, Button, Container, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import signupStyles from "../signup.module.css";
 import { BsPersonFill } from "react-icons/bs";
@@ -40,6 +40,7 @@ class ConnectedSignup extends React.Component {
       </Card>
     </Col>
     <Col className={signupStyles.columns}>*/
+    <Container className={signupStyles.container}> 
       <Card className={signupStyles.card}>
         <div className={signupStyles.background_title}>
           <Card.Title className={signupStyles.title}>Welcome to </Card.Title>
@@ -141,6 +142,7 @@ class ConnectedSignup extends React.Component {
         <Button className={signupStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
         <Card.Text className={signupStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={signupStyles.link} to="/login">Log in</Link></Card.Text>
       </Card>
+      </Container>
    );
     
     return (

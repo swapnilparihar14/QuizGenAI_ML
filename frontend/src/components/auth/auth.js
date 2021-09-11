@@ -10,9 +10,8 @@ const Auth = (props) => {
       <span className={authStyles.circle3}></span>
       <span className={authStyles.circle4}></span>
       <span className={authStyles.circle5}></span>
-      <Container className={authStyles.container}> 
-          {props.card}
-      </Container>
+
+      {props.card}
     </>
   );
 }

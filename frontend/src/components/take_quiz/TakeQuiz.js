@@ -22,11 +22,11 @@ class TakeQuiz extends React.Component {
       <NavigationBar boolLoggedIn={true}></NavigationBar>
       <Container fluid className={takeQuizStyles.page_header}>TAKE QUIZ</Container>
       <Row className={takeQuizStyles.row}>
-        <Col xs={6} md={6} lg={6}>
+        <Col xs={6} md={6} lg={6} >
         <Link to="/new_quiz" onClick= {this.clickReview} className={takeQuizStyles.links}>New Quiz</Link>
         </Col>
-        <Col xs={6} md={6} lg={6}>
-        <Link to="/" onClick= {this.clickReview} className={takeQuizStyles.links}>Existing Quiz</Link>
+        <Col xs={6} md={6} lg={6} >
+        <Link to="/existing_quiz" onClick= {this.clickReview} className={takeQuizStyles.links}>Existing Quiz</Link>
         </Col>
       </Row>
       <Footer boolLoggedIn={true}></Footer>

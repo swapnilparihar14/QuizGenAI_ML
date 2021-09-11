@@ -19,7 +19,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
 
   render() {
     return (<>
-      <h2 style={{fontSize: "1.2rem", marginBottom: "10px"}}>Fill in the blank in the following sentence.</h2>
+      <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Fill in the blank in the following sentence.</h2>
       <Card onClick= {this.clickCreateQuiz} className={FillInTheBlankContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
           <Col  xs={8} md={8} lg={8}>

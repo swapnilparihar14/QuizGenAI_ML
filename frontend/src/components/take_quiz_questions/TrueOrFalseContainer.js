@@ -19,7 +19,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
 
   render() {
     return (<>
-      <h2 style={{fontSize: "1.2rem", marginBottom: "10px"}}>Select True or False as the correct answer.</h2>
+      <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Select True or False as the correct answer.</h2>
       <Card onClick= {this.clickCreateQuiz} className={TrueOrFalseContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
           <Col  xs={8} md={8} lg={8}>
