@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import Auth from "../Auth";
-import { Card, Form, Button, Container, InputGroup, Row } from "react-bootstrap";
+import { Card, Form, Button, Container, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 import signupStyles from "../signup.module.css";
 import { BsPersonFill } from "react-icons/bs";
 import { MdEmail, MdLock } from "react-icons/md";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import logo from "../../../assets/logo-light.svg";
+
+import { signup } from "../../../actions/signup";
 
 class ConnectedSignup extends React.Component {
   constructor(){
@@ -18,6 +21,7 @@ class ConnectedSignup extends React.Component {
       email: "",
       password: "",
       type: "",
+      error: "",
     }
   }
 
@@ -25,22 +29,51 @@ class ConnectedSignup extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  clickSignUp = e =>{
+  clickSignUp = async e =>{
     e.preventDefault();
-  }
+  
+    const {
+      fname, lname, email, password, type
+    } = this.state;
+
+    await this.props.dispatch(
+      signup({
+        fname, lname, email, password, type
+      })
+    );
+  };
 
   render() {
+    // let fnameerrormsg = "";
+    // let lnameerrormsg = "";
+    // let emailerrormsg = "";
+    // let passworderrormsg = "";
+    // let typeerrormsg = "";
+
+    // redirect based on successful signup
+    let redirectVar = null;
+
+    if (signup.isAuthenticated === true) {
+      const id = localStorage.getItem("id");
+      const path = `/my_quizzes/${id}`;
+      redirectVar = <Redirect to={path} />;
+    }
+
+    // if (signup.token === null && signup.payload) {
+    //   signup.payload.forEach(err => {
+    //     if (err.param === "fname") fnameerrormsg = err.msg;
+    //     else if (err.param === "lname") lnameerrormsg = err.msg;
+    //     else if (err.param === "email") emailerrormsg = err.msg;
+    //     else if (err.param === "password") passerrormsg = err.msg;
+    //     else if (err.param === "college") collegeerrormsg = err.msg;
+    //     else accounterrormsg = err.msg;
+    //   });
+    // }
+
 
     let signupForm = (
-    /*<Col className={signupStyles.columns}>
-      <Card className={signupStyles.cardLeft}>
-        <Card.Img src={logo} style={{width: "50%", marginLeft: "auto", marginRight: "auto"}}/>
-        <Card.Subtitle className={signupStyles.text}>Welcome! <br/> Register to upload your documents, generate and share your quizzes.</Card.Subtitle>
-        <Card.Img src={loginImage} style={{width: "80%", marginLeft: "auto", marginRight: "auto", paddingTop: "10px"}}/>
-      </Card>
-    </Col>
-    <Col className={signupStyles.columns}>*/
     <Container className={signupStyles.container}> 
+      {redirectVar}
       <Card className={signupStyles.card}>
         <div className={signupStyles.background_title}>
           <Card.Title className={signupStyles.title}>Welcome to </Card.Title>

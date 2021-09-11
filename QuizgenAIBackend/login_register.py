@@ -7,7 +7,7 @@ def user_registration(db, user_details):
             'email_id': user_details['email_id']
         }
     )
-    if user['_id'] is not None:
+    if user is not None:
         return jsonify(message="User already exists")
     user_id = db.user_table.insert_one(
         {
