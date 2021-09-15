@@ -1,14 +1,15 @@
-import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOG_OUT } from "../actions/types";
+import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT } from "../actions/types";
 
 const initialState = {
   isAuthenticated: null,
 };
 
-const signup = (state = initialState, action) => {
+const auth = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case SIGNUP_SUCCESS:
+    case LOGIN_SUCCESS:
       localStorage.setItem("id", payload._id);
       return {
         ...state,
@@ -17,6 +18,12 @@ const signup = (state = initialState, action) => {
       };
 
     case SIGNUP_FAIL:
+    case LOGIN_FAIL:
+      return {
+        message: payload,
+        isAuthenticated: false
+      };
+
     case LOG_OUT:
       localStorage.removeItem("id");
       return {
@@ -28,4 +35,4 @@ const signup = (state = initialState, action) => {
   }
 }
 
-export default signup;
+export default auth;

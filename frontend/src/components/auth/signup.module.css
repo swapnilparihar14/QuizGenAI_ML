@@ -26,10 +26,6 @@
   font-size: 1.4rem;
 }
 
-.form {
-  padding-bottom: 20px;
-}
-
 .authButton {
   background-color: var(--pinkish-red);
   color: var(--white);
@@ -47,6 +43,15 @@
   color: var(--gray);
   font-weight: 400;
   text-transform: "capitalize";
+}
+
+.errormessage {
+  font-size: 1rem;
+  color: #ff0000;
+  padding: 0;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  display: block;
 }
 
 /* For Tablets */

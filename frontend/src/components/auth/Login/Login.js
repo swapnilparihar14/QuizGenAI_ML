@@ -4,8 +4,11 @@ import Auth from "../Auth";
 import { Card, Form, Button, Container, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginStyles from "../login.module.css";
+import { Redirect } from "react-router";
 import { MdEmail, MdLock } from "react-icons/md";
 import logo from "../../../assets/logo.svg";
+
+import { login } from "../../../actions/auth";
 
 class ConnectedLogin extends React.Component {
   constructor(){
@@ -20,22 +23,40 @@ class ConnectedLogin extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  clickLogIn = e =>{
+  clickLogIn = async e =>{
     e.preventDefault();
+
+    const {
+      email, password
+    } = this.state;
+
+    await this.props.dispatch(
+      login({
+        email, password
+      })
+    );
   }
 
   render() {
 
+    // redirect based on successful signup
+    let redirectVar = null;
+
+    const logIn = this.props.login;
+
+    if (logIn.isAuthenticated === true) {
+      const id = localStorage.getItem("id");
+      const path = `/my_quizzes/${id}`;
+      redirectVar = <Redirect to={path} />;
+    }
+
+    let errorMessage = "";
+    if(logIn.message)
+      errorMessage = logIn.message;
+
     let loginForm = (
-    // <Col className={loginStyles.columns}>
-    //   <Card className={loginStyles.cardLeft}>
-    //     <Card.Img src={logo} style={{width: "50%", marginLeft: "auto", marginRight: "auto"}}/>
-    //     <Card.Subtitle className={loginStyles.text}>Welcome back! <br/> Log in to upload your documents, generate and share your quizzes.</Card.Subtitle>
-    //     <Card.Img src={loginImage} style={{width: "80%", marginLeft: "auto", marginRight: "auto", paddingTop: "5px"}}/>
-    //   </Card>
-    // </Col>
-    // <Col className={loginStyles.columns}>
     <Container className={loginStyles.container}> 
+      {redirectVar}
       <Card className={loginStyles.card}>
         <Card.Title className={loginStyles.title}>Welcome to </Card.Title> 
         <Card.Img src={logo} style={{width: "80%", marginLeft: "auto", marginRight: "auto",  marginBottom: "20px"}}/>
@@ -77,6 +98,7 @@ class ConnectedLogin extends React.Component {
           </Form.Group>
         </Form>
 
+        <p className={loginStyles.errormessage}>{errorMessage}</p>
         <Button className={loginStyles.authButton} onClick= {this.clickLogIn} >Log In</Button>
         <Card.Text className={loginStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Don&apos;t have an account? <Link className={loginStyles.link} to="/signup">Sign up</Link></Card.Text>
       </Card>
@@ -89,5 +111,9 @@ class ConnectedLogin extends React.Component {
   }
 }
 
-const LogIn = connect(null)(ConnectedLogin);
+const mapStateToProps = state => {
+  return { login: state.auth };
+};
+
+const LogIn = connect(mapStateToProps)(ConnectedLogin);
 export default LogIn;

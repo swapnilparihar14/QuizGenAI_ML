@@ -10,7 +10,7 @@ import { MdEmail, MdLock } from "react-icons/md";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import logo from "../../../assets/logo-light.svg";
 
-import { signup } from "../../../actions/signup";
+import { signup } from "../../../actions/auth";
 
 class ConnectedSignup extends React.Component {
   constructor(){
@@ -20,8 +20,7 @@ class ConnectedSignup extends React.Component {
       lname: "",
       email: "",
       password: "",
-      type: "",
-      error: "",
+      type: ""
     }
   }
 
@@ -41,34 +40,24 @@ class ConnectedSignup extends React.Component {
         fname, lname, email, password, type
       })
     );
-  };
+  }
 
   render() {
-    // let fnameerrormsg = "";
-    // let lnameerrormsg = "";
-    // let emailerrormsg = "";
-    // let passworderrormsg = "";
-    // let typeerrormsg = "";
 
     // redirect based on successful signup
     let redirectVar = null;
 
-    if (signup.isAuthenticated === true) {
+    const signUp = this.props.signup;
+
+    if (signUp.isAuthenticated === true) {
       const id = localStorage.getItem("id");
       const path = `/my_quizzes/${id}`;
       redirectVar = <Redirect to={path} />;
     }
 
-    // if (signup.token === null && signup.payload) {
-    //   signup.payload.forEach(err => {
-    //     if (err.param === "fname") fnameerrormsg = err.msg;
-    //     else if (err.param === "lname") lnameerrormsg = err.msg;
-    //     else if (err.param === "email") emailerrormsg = err.msg;
-    //     else if (err.param === "password") passerrormsg = err.msg;
-    //     else if (err.param === "college") collegeerrormsg = err.msg;
-    //     else accounterrormsg = err.msg;
-    //   });
-    // }
+    let errorMessage = "";
+    if(signUp.message)
+      errorMessage = signUp.message;
 
 
     let signupForm = (
@@ -172,6 +161,7 @@ class ConnectedSignup extends React.Component {
           </Form.Group>
         </Form>
 
+        <p className={signupStyles.errormessage}>{errorMessage}</p>
         <Button className={signupStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
         <Card.Text className={signupStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={signupStyles.link} to="/login">Log in</Link></Card.Text>
       </Card>
@@ -184,5 +174,9 @@ class ConnectedSignup extends React.Component {
   }
 }
 
-const SignUp = connect(null)(ConnectedSignup);
+const mapStateToProps = state => {
+  return { signup: state.auth };
+};
+
+const SignUp = connect(mapStateToProps)(ConnectedSignup);
 export default SignUp;
