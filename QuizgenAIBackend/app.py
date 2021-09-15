@@ -8,13 +8,13 @@ from connect import URI
 app = Flask(__name__)
 
 
-def connectDB(app):
+def connectdb(app):
     mongodb_client = PyMongo(app, uri=URI)
     db = mongodb_client.db
     return db
 
 
-db = connectDB(app)
+db = connectdb(app)
 
 
 @app.route('/')

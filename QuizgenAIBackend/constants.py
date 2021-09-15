@@ -8,6 +8,7 @@ HTML_EXTENSION = '.html'
 DEEP_AI_SUMMARIZER = "https://api.deepai.org/api/summarization"
 DEEP_AI_API_KEY = '4ef082fc-70da-4fbe-a321-a6f13aa56c08'
 ENGLISH = 'english'
+ERROR_MESSAGE = 'Error'
 SUCCESS_MESSAGE = 'Success'
 ALLEN_NLP_MODEL = 'https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz'
 GPT2 = 'gpt2'

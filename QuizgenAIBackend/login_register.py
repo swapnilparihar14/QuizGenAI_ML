@@ -3,6 +3,7 @@ from flask import jsonify
 import logging
 from constants import LOGGER_FORMAT
 
+
 class Authentication:
 
     def __init__(self):

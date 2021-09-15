@@ -35,7 +35,6 @@ class TrueFalsePreprocessing:
         except Exception as e:
             self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
-
     def tfpreprocessor(self, sentence):
         try:
             tree = self.break_sentence(sentence)
