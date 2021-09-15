@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { Container, Row, Card, Button, Form } from "react-bootstrap";
+import { BiLoaderCircle } from "react-icons/bi";
 import createQuizStyles from "./create_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
 
@@ -12,6 +13,8 @@ class ConnectedCreateQuiz extends React.Component {
   constructor(){
     super();
     this.state = {
+      isLoading: false,
+
       quizname: "",
       // graded: "",
       timed: "",
@@ -34,12 +37,49 @@ class ConnectedCreateQuiz extends React.Component {
     this.setState({ file: file });
   };
 
-  clickReview = ()=> {
-    
+  clickReview = async e =>{
+    e.preventDefault();
+
+    this.setState({
+      isLoading: true
+    });
+
+    setTimeout(
+      function() {
+       this.setState({ isLoading: false });
+      }.bind(this),
+     10000
+   );
+  
+    // const {
+    //   fname, lname, email, password, type
+    // } = this.state;
+
+    // await this.props.dispatch(
+    //   signup({
+    //     fname, lname, email, password, type
+    //   })
+    // );
   }
+
 
   render() {
     const fileTypes = ["PDF", "DOC", "PPT", "HTML", "DOCX", "PPTX",];
+
+    let { isLoading } = this.state;
+    let loading = null;
+    loading = (
+      <div>
+        {isLoading ? (
+           <div className={createQuizStyles.loadingScreen}>
+             <BiLoaderCircle className={createQuizStyles.loadingIcon}/>
+             <h1>Loading...</h1>
+           </div>
+        ) : (
+          <div className={createQuizStyles.loadingScreen} style={{display: "none"}}></div>
+        )}
+      </div>
+    );
 
     let passwordField = "";
     if (this.state.privacy === "private") {
@@ -83,6 +123,7 @@ class ConnectedCreateQuiz extends React.Component {
     }
     
     return (<>
+      {loading}
       <NavigationBar boolLoggedIn={true}></NavigationBar>
       <Container fluid className={createQuizStyles.page_header}>CREATE QUIZ</Container>
       <Container className={createQuizStyles.container}> 
