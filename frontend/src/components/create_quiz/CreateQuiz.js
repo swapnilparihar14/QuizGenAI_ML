@@ -7,6 +7,7 @@ import { Container, Row, Card, Button, Form } from "react-bootstrap";
 import { BiLoaderCircle } from "react-icons/bi";
 import createQuizStyles from "./create_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
+import {VscLoading} from "react-icons/vsc";
 
 
 class ConnectedCreateQuiz extends React.Component {
@@ -72,7 +73,7 @@ class ConnectedCreateQuiz extends React.Component {
       <div>
         {isLoading ? (
            <div className={createQuizStyles.loadingScreen}>
-             <BiLoaderCircle className={createQuizStyles.loadingIcon}/>
+             <VscLoading className={createQuizStyles.loadingIcon}/>
              <h1>Loading...</h1>
            </div>
         ) : (

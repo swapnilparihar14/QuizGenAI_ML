@@ -3,6 +3,7 @@ from tfgenerator import TrueFalsePreprocessing
 from login_register import Authentication
 from flask_pymongo import PyMongo
 from connect import URI
+from flask_cors import CORS
 
 
 app = Flask(__name__)
