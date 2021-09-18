@@ -4,10 +4,11 @@ from models import Models
 from login_register import Authentication
 from flask_pymongo import PyMongo
 from connect import URI
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 
+CORS(app)
 
 def connectdb(app):
     mongodb_client = PyMongo(app, uri=URI)
