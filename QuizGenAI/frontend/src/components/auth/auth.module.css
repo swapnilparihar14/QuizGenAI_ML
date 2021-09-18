@@ -1,0 +1,97 @@
+/* For Mobiles */
+.background {
+  height: 100%;
+  width: 100%;
+  background-color: var(--dark-blue);
+  position: fixed;
+  z-index: -1;
+}
+
+.circle1 {
+  height: 500px;
+  width: 500px;
+  background-color: var(--light-blue);
+  border-radius: 50%;
+  position: fixed;
+  top: -250px;
+  left: -250px;
+}
+
+.circle2 {
+  height: 500px;
+  width: 500px;
+  background-color: var(--light-blue);
+  border-radius: 50%;
+  position: fixed;
+  bottom: -250px;
+  right: -250px;
+}
+
+/* For Tablets */
+/* @media only screen and (min-width: 600px) {
+  
+} */
+
+/* For Desktop/Laptop, 992px and up */
+@media only screen and (min-width: 992px) {
+  .background {
+    width: 50%;
+  }
+
+  .circle1 {
+    height: 100px;
+    width: 100px;
+    background-color: var(--light-blue);
+    position: fixed;
+    top: auto;
+    right: auto;
+    bottom: 200px;
+    left: 300px;
+  }
+
+  .circle2 {
+    height: 200px;
+    width: 200px;
+    background-color: var(--light-blue);
+    position: fixed;
+    top: auto;
+    right: auto;
+    bottom: 10px;
+    left: 50px;
+  }
+
+  .circle3 {
+    height: 50px;
+    width: 50px;
+    background-color: var(--light-blue);
+    border-radius: 50%;
+    position: fixed;
+    bottom: 400px;
+    left: 120px;
+  }
+
+  .circle4 {
+    height: 150px;
+    width: 150px;
+    background-color: var(--dark-blue);
+    border-radius: 50%;
+    position: fixed;
+    top: 100px;
+    right: 80px;
+  }
+
+  .circle5 {
+    height: 80px;
+    width: 80px;
+    background-color: var(--dark-blue);
+    border-radius: 50%;
+    position: fixed;
+    top: 10px;
+    right: 50px;
+  }
+}
+
+/* For Desktop/Laptop, 1200px and up
+@media only screen and (min-width: 1200px) {
+ 
+} */

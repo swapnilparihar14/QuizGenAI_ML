@@ -1,0 +1,99 @@
+.page_header {
+  text-align: center;
+  color: var(--gray);
+  font-weight: bolder;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  background-color: var(--white);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+body {
+  background-color: var(--light-gray);
+}
+
+.container {
+  width: 80%;
+  margin: 30px auto 140px auto;
+}
+
+.card_header {
+  border: none;
+  border-top: 20px solid var(--blue);
+  padding: 0 60px 0 60px;
+  margin-bottom: 20px;
+}
+
+.card {
+  border: none;
+  padding: 30px 60px 30px 60px;
+  margin-bottom: 20px;
+}
+
+.labels {
+  margin-bottom: 5px;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+.required {
+  color: var(--pinkish-red);
+}
+
+.form {
+  padding-bottom: 20px;
+}
+
+.links {
+  background-color: var(--pinkish-red);
+  color: var(--white);
+  border: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 10px;
+  border-radius: 0.25rem;
+}
+
+.links:hover {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.loadingScreen {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loadingScreen > h1 {
+  color: var(--white);
+  font-family: hurme_no2-webfont, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.loadingIcon {
+  color: var(--white);
+  display: block;
+  height: 15%;
+  width: 15%;
+  animation: spin 3s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
