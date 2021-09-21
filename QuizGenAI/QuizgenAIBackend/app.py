@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 CORS(app)
 
+
 def connectdb(app):
     mongodb_client = PyMongo(app, uri=URI)
     db = mongodb_client.db
@@ -19,7 +20,7 @@ def connectdb(app):
 db = connectdb(app)
 
 models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = models.generate_all_models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, SENSE2VEC_GLOBAL = models.generate_all_models()
 print("Hi", GPT2tokenizer)
 
 
@@ -52,7 +53,8 @@ def tfgen():
         sentence_json = request.get_json()
         sentence = sentence_json['sentence']
         tfpre = TrueFalsePreprocessing(AllenNLPpredictor)
-        false_question = tfpre.tfdriver(sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
+        false_question = tfpre.tfdriver(
+            sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
         return jsonify(message=false_question)
 
 
