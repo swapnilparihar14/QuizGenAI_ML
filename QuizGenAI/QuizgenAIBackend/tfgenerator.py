@@ -23,6 +23,7 @@ class TrueFalsePreprocessing:
         self.log.addHandler(file_handler)
 
     def tfdriver(self, sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions):
+
         try:
             split_sentence = self.tfpreprocessor(sentence)
             print(split_sentence)

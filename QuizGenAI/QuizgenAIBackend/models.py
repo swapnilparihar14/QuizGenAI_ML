@@ -21,10 +21,8 @@ class Models:
             GPT2tokenizer = GPT2Tokenizer.from_pretrained(GPT2)
             GPT2model = TFGPT2LMHeadModel.from_pretrained(GPT2, pad_token_id=GPT2tokenizer.eos_token_id)
             BERT_model = SentenceTransformer(BERT_FOR_TF_QUESTIONS)
-            # print(type(predictor), type(GPT2tokenizer), type(GPT2model), type(BERT_model))
             return predictor, GPT2tokenizer, GPT2model, BERT_model
         except Exception as e:
-            print("Hello")
             self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return None, None, None, None
 

@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 CORS(app)
 
+
 def connectdb(app):
     mongodb_client = PyMongo(app, uri=URI)
     db = mongodb_client.db
@@ -20,7 +21,6 @@ db = connectdb(app)
 
 models = Models()
 AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = models.generate_all_models()
-print("Hi", GPT2tokenizer)
 
 
 @app.route('/')
@@ -55,6 +55,11 @@ def tfgen():
         false_question = tfpre.tfdriver(sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
         return jsonify(message=false_question)
 
+
+@app.route("/get_review_questions", methods=["POST"])
+def get_review_questions():
+    if request.method == 'POST':
+        quiz_details =
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
