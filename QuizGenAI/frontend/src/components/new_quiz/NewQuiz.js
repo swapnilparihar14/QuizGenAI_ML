@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Row, Card, Button, Form } from "react-bootstrap";
+import { Container, Row, Card, Form } from "react-bootstrap";
 import newQuizStyles from "./new_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
 

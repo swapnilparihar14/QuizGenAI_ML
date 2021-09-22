@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Row, Col, Card, Form } from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 
 

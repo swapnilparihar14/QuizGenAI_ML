@@ -3,29 +3,30 @@ import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Row, Card, Button, Form } from "react-bootstrap";
-import { BiLoaderCircle } from "react-icons/bi";
+import { Container, Row, Card, Form } from "react-bootstrap";
+// import { BiLoaderCircle } from "react-icons/bi";
+import { Redirect } from "react-router";
 import createQuizStyles from "./create_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
+import { createQuiz } from "../../actions/create_quiz";
 
 class ConnectedCreateQuiz extends React.Component {
   constructor(){
     super();
     this.state = {
       isLoading: false,
-
       quizname: "",
       // graded: "",
       timed: "",
-      hours: "",
-      minutes: "",
+      hours: 0,
+      minutes: 0,
       privacy: "",
       password: "",
-      multiplechoicequestions: "",
-      fillintheblankquestions: "",
-      trueorfalsequestions: "",
+      multiplechoicequestions: 0,
+      fillintheblankquestions: 0,
+      trueorfalsequestions: 0,
       file: null,
     }
   }
@@ -35,7 +36,7 @@ class ConnectedCreateQuiz extends React.Component {
   }
 
   handleFile = (file) => {
-    this.setState({ file: file });
+    this.setState({ file });
   };
 
   clickReview = async e =>{
@@ -44,27 +45,44 @@ class ConnectedCreateQuiz extends React.Component {
     this.setState({
       isLoading: true
     });
+   
+    const {
+      quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, file
+    } = this.state;
 
-    setTimeout(
-      function() {
-       this.setState({ isLoading: false });
-      }.bind(this),
-     10000
-   );
-  
-    // const {
-    //   fname, lname, email, password, type
-    // } = this.state;
+    let id = localStorage.getItem("id");
 
-    // await this.props.dispatch(
-    //   signup({
-    //     fname, lname, email, password, type
-    //   })
-    // );
+    await this.props.dispatch(
+      createQuiz({
+        quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
+      }, file)
+    );
+
+    this.setState({
+      isLoading: false
+    });
   }
 
 
   render() {
+    // redirect based on authentication
+    let redirectVar = null;
+
+    const auth = this.props.auth;
+
+    if (auth.isAuthenticated === false) {
+      const path = "/";
+      redirectVar = <Redirect to={path} />;
+    }
+
+    // redirect to review questions once the quiz is created
+    let redirectQuiz = null;
+    const quiz = this.props.quiz;
+
+    if (quiz.quiz_id){
+      redirectQuiz = <Redirect to={"/review_questions"} />;
+    } 
+
     const fileTypes = ["PDF", "DOC", "PPT", "HTML", "DOCX", "PPTX",];
 
     let { isLoading } = this.state;
@@ -101,20 +119,20 @@ class ConnectedCreateQuiz extends React.Component {
       durationFields = (<>
         <Form.Label className={createQuizStyles.labels}>Duration</Form.Label>
         <Row style={{marginLeft: "1px"}}>
-          <Form.Group controlId="duration_hr" style={{marginRight: "20px"}}>
+          <Form.Group controlId="hours" style={{marginRight: "20px"}}>
             <Form.Label className={createQuizStyles.labels} >Hours</Form.Label>
             <Form.Control
               onChange={this.handleChange}
-              name="duration_hr"
+              name="hours"
               type="number"
             />
           </Form.Group>
 
-          <Form.Group controlId="duration_min">
+          <Form.Group controlId="minutes">
             <Form.Label className={createQuizStyles.labels}>Minutes</Form.Label>
             <Form.Control
               onChange={this.handleChange}
-              name="duration_min"
+              name="minutes"
               type="number"
             />
           </Form.Group>
@@ -124,8 +142,10 @@ class ConnectedCreateQuiz extends React.Component {
     }
     
     return (<>
+      {redirectVar}
+      {redirectQuiz}
       {loading}
-      <NavigationBar boolLoggedIn={true}></NavigationBar>
+      <NavigationBar></NavigationBar>
       <Container fluid className={createQuizStyles.page_header}>CREATE QUIZ</Container>
       <Container className={createQuizStyles.container}> 
         <Form id="create-quiz-form" className={createQuizStyles.form}>
@@ -220,12 +240,18 @@ class ConnectedCreateQuiz extends React.Component {
           {/* <Button className={createQuizStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button> */}
         </div>
       </Container>
-      <Footer boolLoggedIn={true}></Footer>
+      <Footer></Footer>
       </>
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = state => {
+  return { 
+    auth: state.auth,
+    quiz: state.createQuiz
+  };
+};
+
 const CreateQuiz = connect(mapStateToProps)(ConnectedCreateQuiz);
 export default CreateQuiz;

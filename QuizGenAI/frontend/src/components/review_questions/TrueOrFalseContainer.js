@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Row, Col, Card, Form } from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
@@ -22,7 +22,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     let t = null;
     let f = null;
 
-    if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() == "true") {
+    if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() === "true") {
       t = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>A. True</h6>
         <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
@@ -34,7 +34,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
       )
     }
 
-    if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() == "false") {
+    if (this.props.trueOrFalseQuestion.correctAnswer.toLowerCase() === "false") {
       f = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>B. False</h6>
         <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>

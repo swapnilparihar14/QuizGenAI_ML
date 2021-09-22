@@ -46,7 +46,7 @@ export const signup = (data) => async dispatch => {
 };
 
 
-//1log In
+//Log In
 export const login = (data) => async dispatch => {
   const config = {
     headers: {

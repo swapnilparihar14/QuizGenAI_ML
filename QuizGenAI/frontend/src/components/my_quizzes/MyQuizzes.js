@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Image, Col, Row } from "react-bootstrap";
-import myQuizzesStyles from "./my_quizzes.module.css";
+// import { Container, Image, Col, Row } from "react-bootstrap";
+// import myQuizzesStyles from "./my_quizzes.module.css";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 

@@ -16,7 +16,7 @@ class ConnectedNavBar extends React.Component {
   render(){
 
     let nav = null;
-    if (this.props.boolLoggedIn === true){
+    if (this.props.auth.isAuthenticated === true){
       nav = <Navbar collapseOnSelect id={navbarStyles.navbar_dark} expand="md">
               <Navbar.Brand>
                 <Link to={"/my_quizzes"}>
@@ -37,9 +37,9 @@ class ConnectedNavBar extends React.Component {
                    Public Quizzes
                   </Link> */}
                   <span className={navbarStyles.separator}>|</span>
-                  <NavDropdown title="Hi, Pranav" className={navbarStyles.links_dark} style={{ display: "block", padding: "1px", fontWeight: "bolder"}}> 
+                  <NavDropdown title={`Hi, ` + this.props.auth.first_name} className={navbarStyles.links_dark} style={{ display: "block", padding: "1px", fontWeight: "bolder"}}> 
                     <NavDropdown.Item href="#action3">
-                      <Link>
+                      <Link to="/">
                         Profile
                       </Link>
                     </NavDropdown.Item>
@@ -91,7 +91,11 @@ class ConnectedNavBar extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => ({});
+
+const mapStateToProps = state => {
+  return { auth: state.auth };
+};
+
 const NavigationBar = connect(mapStateToProps)(ConnectedNavBar);
 export default NavigationBar;
 

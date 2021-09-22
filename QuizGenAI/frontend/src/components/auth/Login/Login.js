@@ -45,8 +45,7 @@ class ConnectedLogin extends React.Component {
     const logIn = this.props.login;
 
     if (logIn.isAuthenticated === true) {
-      const id = localStorage.getItem("id");
-      const path = `/my_quizzes/${id}`;
+      const path = "/my_quizzes";
       redirectVar = <Redirect to={path} />;
     }
 

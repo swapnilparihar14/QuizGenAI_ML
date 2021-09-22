@@ -14,7 +14,7 @@ class ConnectedFooter extends React.Component {
   render(){
 
     let footer = null;
-    if (this.props.boolLoggedIn === true){
+    if (this.props.auth.isAuthenticated === true){
       footer = <Container fluid style={{backgroundColor: "var(--dark-blue)", position: "fixed", bottom: "0", height: "50px"}}>
                 <p style={{display: "block", paddingTop: "15px", marginBottom: "0"}}>
                   <span className={footerStyles.text_dark} >Copyright &copy; 2021-2022</span>
@@ -40,7 +40,11 @@ class ConnectedFooter extends React.Component {
     );
   }
 }
-const mapStateToProps = (state) => ({});
+
+const mapStateToProps = state => {
+  return { auth: state.auth };
+};
+
 const Footer = connect(mapStateToProps)(ConnectedFooter);
 export default Footer;
 

@@ -3,3 +3,5 @@ export const SIGNUP_FAIL = "SIGNUP_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOG_OUT = "LOG_OUT";
+export const CREATE_QUIZ_SUCCESS = "CREATE_QUIZ_SUCCESS";
+export const CREATE_QUIZ_FAIL = "CREATE_QUIZ_FAIL";

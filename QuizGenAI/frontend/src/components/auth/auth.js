@@ -1,5 +1,3 @@
-import { Container, Row } from "react-bootstrap";
-import backgroundImage from "../../assets/background.svg"
 import authStyles from "./auth.module.css";
 
 const Auth = (props) => {

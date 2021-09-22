@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Card, Button, Form } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import takeQuizQuestionsStyles from "./take_quiz_questions.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";

@@ -1,13 +1,13 @@
 import React from "react";
-import { Container, Image, Col, Row } from "react-bootstrap";
-import landpageStyles from "./landpage.module.css";
+// import { Container, Image, Col, Row } from "react-bootstrap";
+// import landpageStyles from "./landpage.module.css";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import container1Image from "../../assets/landpage-container1.png";
-import uploadLogo from "../../assets/upload-logo.png";
-import { Link } from "react-router-dom";
-import { MdFileUpload } from "react-icons/md";
-import {GiClick} from "react-icons/gi";
+// import container1Image from "../../assets/landpage-container1.png";
+// import uploadLogo from "../../assets/upload-logo.png";
+// import { Link } from "react-router-dom";
+// import { MdFileUpload } from "react-icons/md";
+// import {GiClick} from "react-icons/gi";
 
 class Landpage extends React.Component {
   // scrollToTop = () => {

@@ -1,7 +1,7 @@
 import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT } from "../actions/types";
 
 const initialState = {
-  isAuthenticated: null,
+  isAuthenticated: false,
 };
 
 const auth = (state = initialState, action) => {

@@ -1,11 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import takeQuizStyles from "./take_quiz.module.css";
-import { FileUploader } from "react-drag-drop-files";
+// import { FileUploader } from "react-drag-drop-files";
 
 
 class TakeQuiz extends React.Component {

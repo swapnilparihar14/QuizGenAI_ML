@@ -50,8 +50,7 @@ class ConnectedSignup extends React.Component {
     const signUp = this.props.signup;
 
     if (signUp.isAuthenticated === true) {
-      const id = localStorage.getItem("id");
-      const path = `/my_quizzes/${id}`;
+      const path = "/my_quizzes";
       redirectVar = <Redirect to={path} />;
     }
 
