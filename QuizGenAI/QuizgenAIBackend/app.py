@@ -8,6 +8,7 @@ from flask_cors import CORS
 from constants import UPLOAD_FOLDER
 from generate_quiz import GenerateQuiz
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -22,8 +23,8 @@ def connectdb(app):
 
 db = connectdb(app)
 
-# models = Models()
-# AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = models.generate_all_models()
+models = Models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question = models.generate_all_models()
 
 
 @app.route('/')
@@ -57,6 +58,15 @@ def login():
 #         tfpre = TrueFalsePreprocessing(AllenNLPpredictor)
 #         false_question = tfpre.tfdriver(sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
 #         return jsonify(message=false_question)
+
+@app.route("/long_question", methods=["POST"])
+def long_quest():
+    if request.method == 'POST':
+        sentence_json = request.get_json()
+        context = sentence_json['context']
+        keyword = sentence_json['keyword']
+        long_question = models.generate_question(context, keyword)
+        return jsonify(message=long_question)
 
 
 @app.route("/review_questions", methods=["POST"])

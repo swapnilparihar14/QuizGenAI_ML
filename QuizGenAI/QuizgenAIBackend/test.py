@@ -27,7 +27,7 @@ t5_tokenizer = copy.deepcopy(model_t.t5_tokenizer)
 prod = model_prod()
 prod.import_model()
 
-prod.context ="""There is a lot of volcanic activity at divergent plate boundaries in the oceans. For example, many undersea 
+context ="""There is a lot of volcanic activity at divergent plate boundaries in the oceans. For example, many undersea 
 volcanoes are found along the Mid-Atlantic Ridge. This is a divergent plate boundary that runs north-south through 
 the middle of the Atlantic Ocean. As tectonic plates pull away from each other at a divergent plate boundary, 
 they create deep fissures, or cracks, in the crust. Molten rock, called magma, erupts through these cracks onto 
@@ -39,7 +39,6 @@ pulled down beneath another at a subduction zone. The leading edge of the plate 
 mantle, forming magma that erupts as volcanoes. When a line of volcanoes forms along a subduction zone, they make up 
 a volcanic arc. The edges of the Pacific plate are long subduction zones lined with volcanoes. This is why the 
 Pacific rim is called the "Pacific Ring of Fire."""
-prod.answer = "plate melts"
-prod.text = "context: "+prod.context + " " + "answer: " + prod.answer + " </s>"
+answer = "plate melts"
 
-prod.generate_question()
+prod.generate_question(context, answer)

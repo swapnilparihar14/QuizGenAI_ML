@@ -22,6 +22,7 @@ from torch.utils.data import Dataset, DataLoader
 import pytorch_lightning as pl
 from termcolor import colored
 import textwrap
+from constants import trained_model_path, trained_tokenizer
 
 from transformers import (
     AdamW,
@@ -217,8 +218,6 @@ class transformer_model:
 
 
 class model_prod:
-    trained_model_path = 't5/model1/'
-    trained_tokenizer = 't5/tokenizer1/'
 
     def __init__(self):
         self.model = None
@@ -231,16 +230,20 @@ class model_prod:
         self.input_ids = None
         self.attention_mask = None
         self.beam_outputs = None
+        self.text = None
 
     def import_model(self):
-        self.model = T5ForConditionalGeneration.from_pretrained(self.trained_model_path)
-        self.tokenizer = T5Tokenizer.from_pretrained(self.trained_tokenizer)
+        self.model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
+        self.tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print("device ", self.device)
         self.model = self.model.to(self.device)
 
-    def generate_question(self):
+    def generate_question(self, input_answer, input_context):
+        self.answer = input_answer
+        self.context = input_context
+        self.text = "context: "+self.context + " " + "answer: " + self.answer + " </s>"
         self.encoding = self.tokenizer.encode_plus(self.text, max_length=512, padding=True, return_tensors="pt")
         print(self.encoding.keys())
         self.input_ids, self.attention_mask = self.encoding["input_ids"].to(self.device), self.encoding["attention_mask"].to(self.device)
