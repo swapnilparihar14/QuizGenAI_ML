@@ -58,19 +58,19 @@ class GenerateQuiz:
 
     def generate_questions(self, no_of_mcq, no_of_fbq, no_of_tfq, file_destination):
         mcquestions, fbquestions, tfquestions = [], [], []
-        for i in range(no_of_mcq+10):
+        for i in range(no_of_mcq*2):
             question = {'context': "Blabla",
                         'question': "Which company owns ABC?",
                         'options': ["Walt Disney Company", "CNN", "Facebook", "Google"], 'correctAnswer': 1}
             mcquestions.append(question)
 
-        for i in range(no_of_fbq+10):
+        for i in range(no_of_fbq*2):
             question = {'question': "The ________________ newspaper defined southern California",
                         'correctAnswer': 1,
                         'options':  ["New York Times", "Los Angeles Times", "San Jose Tribune", "San Francisco Tribune"]}
             fbquestions.append(question)
 
-        for i in range(no_of_tfq+10):
+        for i in range(no_of_tfq*2):
             question = {'question': "Southern California is often abbreviated SoCal.",
                         'correctAnswer': "true"}
             tfquestions.append(question)
