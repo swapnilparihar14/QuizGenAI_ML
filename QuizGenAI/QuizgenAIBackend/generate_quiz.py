@@ -25,7 +25,7 @@ class GenerateQuiz:
             quiz_details_dict['quiz_type'] = quiz_details['quiz_type']
             quiz_details_dict['creator_id'] = quiz_details['creator_id']
             if timed == "yes":
-                quiz_details_dict['duration'] = quiz_details['minutes']
+                quiz_details_dict['duration'] = (int(quiz_details['hours'])*60) + int(quiz_details['minutes'])
             no_of_mcq = int(quiz_details['mcq'])
             no_of_fbq = int(quiz_details['fbq'])
             no_of_tfq = int(quiz_details['tfq'])
