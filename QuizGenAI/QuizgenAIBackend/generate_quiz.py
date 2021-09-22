@@ -75,7 +75,7 @@ class GenerateQuiz:
                         'correctAnswer': "true"}
             tfquestions.append(question)
 
-        return [mcquestions, fbquestions, tfquestions]
+        return {'mcq': mcquestions, 'fbq': fbquestions, 'tfq': tfquestions}
 
 
 
