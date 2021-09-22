@@ -18,9 +18,14 @@ const auth = (state = initialState, action) => {
       };
 
     case SIGNUP_FAIL:
+      return {
+        signup_message: payload,
+        isAuthenticated: false
+      };
+
     case LOGIN_FAIL:
       return {
-        message: payload,
+        login_message: payload,
         isAuthenticated: false
       };
 

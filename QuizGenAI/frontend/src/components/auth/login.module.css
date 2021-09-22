@@ -19,9 +19,9 @@
   width: 500px;
 }
 
-.form {
+/* .form {
   padding-bottom: 20px;
-}
+} */
 
 .authButton {
   background-color: var(--pinkish-red);
@@ -47,7 +47,6 @@
   color: #ff0000;
   padding: 0;
   margin: 0 auto;
-  padding-bottom: 1rem;
   display: block;
 }
 

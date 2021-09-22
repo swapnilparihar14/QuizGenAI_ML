@@ -49,9 +49,10 @@ class ConnectedLogin extends React.Component {
       redirectVar = <Redirect to={path} />;
     }
 
-    let errorMessage = "";
-    if(logIn.message)
-      errorMessage = logIn.message;
+    let errorMessage = (<p className={loginStyles.errormessage} style={{visibility: "hidden"}}>{"error message"}</p>);
+  
+    if(logIn.login_message)
+      errorMessage =  (<p className={loginStyles.errormessage} style={{visibility: "visible"}}>{logIn.login_message}</p>);
 
     let loginForm = (
     <Container className={loginStyles.container}> 

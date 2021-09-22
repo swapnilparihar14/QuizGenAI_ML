@@ -54,9 +54,10 @@ class ConnectedSignup extends React.Component {
       redirectVar = <Redirect to={path} />;
     }
 
-    let errorMessage = "";
-    if(signUp.message)
-      errorMessage = signUp.message;
+    let errorMessage = (<p className={signupStyles.errormessage} style={{visibility: "hidden"}}>{"error message"}</p>);
+   
+    if(signUp.signup_message)
+      errorMessage =  (<p className={signupStyles.errormessage} style={{visibility: "visible"}}>{signUp.signup_message}</p>);
 
 
     let signupForm = (
@@ -160,7 +161,7 @@ class ConnectedSignup extends React.Component {
           </Form.Group>
         </Form>
 
-        <p className={signupStyles.errormessage}>{errorMessage}</p>
+        {errorMessage}
         <Button className={signupStyles.authButton} onClick= {this.clickSignUp} >Sign Up</Button>
         <Card.Text className={signupStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Already have an account? <Link className={signupStyles.link} to="/login">Log in</Link></Card.Text>
       </Card>
