@@ -98,7 +98,7 @@ class ConnectedLogin extends React.Component {
           </Form.Group>
         </Form>
 
-        <p className={loginStyles.errormessage}>{errorMessage}</p>
+        {errorMessage}
         <Button className={loginStyles.authButton} onClick= {this.clickLogIn} >Log In</Button>
         <Card.Text className={loginStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Don&apos;t have an account? <Link className={loginStyles.link} to="/signup">Sign up</Link></Card.Text>
       </Card>

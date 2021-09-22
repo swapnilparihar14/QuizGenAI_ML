@@ -31,6 +31,12 @@ class ConnectedCreateQuiz extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.setState({
+      isLoading: false
+    });
+  }
+
   handleChange = e =>{
     this.setState({ [e.target.id]: e.target.value });
   }
@@ -57,10 +63,6 @@ class ConnectedCreateQuiz extends React.Component {
         quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
       }, file)
     );
-
-    this.setState({
-      isLoading: false
-    });
   }
 
 
