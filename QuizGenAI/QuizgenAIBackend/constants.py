@@ -28,3 +28,6 @@ SENSE2VEC_MODEL = 'model/s2v_old'
 SENTENCE_CHAR_LIMIT = 20
 DEEP_AI_ERROR = "DeepAI API not working. Contact the development team @swapnil.parihars@gmail.com"
 FILL_IN_THE_BLANK_STRING = '__________'
+UPLOAD_FOLDER = ''
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'html', 'pptx'])
+

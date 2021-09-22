@@ -29,6 +29,3 @@ class Models:
     def generate_all_models(self):
         AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = self.true_false_questions()
         return AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions
-
-models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = models.generate_all_models()
