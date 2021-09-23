@@ -1,4 +1,5 @@
 import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT } from "../actions/types";
+import persist from "./index";
 
 const initialState = {
   isAuthenticated: false,

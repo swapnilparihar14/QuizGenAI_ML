@@ -82,3 +82,12 @@ export const login = (data) => async dispatch => {
     });
   }
 };
+
+//Log Out
+export const logout = () => async dispatch => {
+  
+  dispatch({
+    type: LOG_OUT
+  });
+  
+};

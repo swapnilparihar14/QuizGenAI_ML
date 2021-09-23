@@ -12,7 +12,7 @@ import {VscLoading} from "react-icons/vsc";
 
 import { createQuizForm } from "../../actions/create_quiz";
 
-class ConnectedCreateQuiz extends React.Component {
+class ConnectedCreateQuizForm extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -255,5 +255,5 @@ const mapStateToProps = state => {
   };
 };
 
-const CreateQuiz = connect(mapStateToProps)(ConnectedCreateQuiz);
-export default CreateQuiz;
+const CreateQuizForm = connect(mapStateToProps)(ConnectedCreateQuizForm);
+export default CreateQuizForm;

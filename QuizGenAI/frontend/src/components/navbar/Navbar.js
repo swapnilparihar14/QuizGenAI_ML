@@ -6,11 +6,21 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import logo2 from "../../assets/logo-light.svg";
 
+import { logout } from "../../actions/auth";
+
 class ConnectedNavBar extends React.Component {
   constructor() {
     super();
     this.state = {
     }
+  }
+
+  handleLogout = async (e) => {
+    e.preventDefault();
+    
+    await this.props.dispatch(
+      logout()
+    );
   }
 
   render(){
@@ -38,11 +48,11 @@ class ConnectedNavBar extends React.Component {
                   </Link> */}
                   <span className={navbarStyles.separator}>|</span>
                   <NavDropdown title={`Hi, ` + this.props.auth.first_name} className={navbarStyles.links_dark} style={{ display: "block", padding: "1px", fontWeight: "bolder"}}> 
-                    <NavDropdown.Item href="#action3">
+                    {/* <NavDropdown.Item href="#action3">
                       <Link to="/">
                         Profile
                       </Link>
-                    </NavDropdown.Item>
+                    </NavDropdown.Item> */}
                     {/* <NavDropdown.Item href="#action3">
                       <Link>
                         My Quizzes
@@ -53,8 +63,8 @@ class ConnectedNavBar extends React.Component {
                         Taken Quizzes
                       </Link>
                     </NavDropdown.Item> */}
-                    <NavDropdown.Divider />
-                    <Link onClick={this.handleLogout} to="/">
+                    {/* <NavDropdown.Divider /> */}
+                    <Link onClick={this.handleLogout} to="/" className={navbarStyles.logout}>
                       Log Out
                     </Link>
                   </NavDropdown>

@@ -25,6 +25,16 @@
   font-size: 1.1em;
 }
 
+.logout {
+  display: block;
+  color: var(--pinkish-red);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-decoration: 0;
+  font-weight: 600;
+}
+
 /* For Desktop/Laptop, 768px and up */
 @media only screen and (min-width: 768px) {
   #navbar_dark {
@@ -54,7 +64,7 @@
     font-size: 1rem;
   }
 
-  .links_dark a:first-child:first-of-type {
+  .links_dark > a:first-of-type {
     color: var(--white) !important;
   }
 
