@@ -1,4 +1,4 @@
-import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL } from "../actions/types";
+import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
@@ -16,6 +16,11 @@ const review_questions = (state = initialState, action) => {
     case REVIEW_QUESTIONS_FAIL:
       return {
         message: payload,
+      };
+
+    case LOG_OUT:
+      return {
+        ...initialState
       };
 
     default:

@@ -1,28 +1,28 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Row, Col, Card, Form } from "react-bootstrap";
+import { Col, Card } from "react-bootstrap";
 import multipleChoiceContainerStyles from "./multiple_choice_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
 
-class ConnectedMultipleChoiceContainer extends React.Component {
+class MultipleChoiceContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      selected: false,
-      makeSense: null,
+      isSelected: false
     }
   }
 
-  handleChange = e =>{
-    this.setState({ [e.target.id]: e.target.value });
+  setSelected = e =>{
+    e.preventDefault();
+
+    this.setState({ isSelected: !this.state.isSelected });
   }
 
   render() {
     let counter = 0;
     let letters = ["A. ", "B. ", "C. ", "D. "];
 
-    let answers = this.props.multipleChoiceQuestion.answers.map((answer) => { 
+    let answers = this.props.multipleChoiceQuestion.options.map((answer) => { 
       counter++;
       if(counter === this.props.multipleChoiceQuestion.correctAnswer)
         return (<>
@@ -37,40 +37,14 @@ class ConnectedMultipleChoiceContainer extends React.Component {
     });
 
     return (
-      <Card onClick= {this.clickCreateQuiz} className={multipleChoiceContainerStyles.card}>
-        <Row  xs={12} md={12} lg={12}>
-          <Col  xs={8} md={8} lg={8} >
-              <h4 className={multipleChoiceContainerStyles.questions}>{this.props.multipleChoiceQuestion.question}</h4>
-              {answers}
-          </Col>
-          <Col  xs={4} md={4} lg={4}>
-            <h4 className={multipleChoiceContainerStyles.questions}>Does this question make sense?</h4>
-
-            {['radio'].map((type) => (
-              <div key={`inline-${type}`} >
-                <Form.Check className={multipleChoiceContainerStyles.answers} style={{marginRight: "50px"}}
-                  inline
-                  label="Yes"
-                  name="group1"
-                  type={type}
-                  id={`inline-${type}-1`}
-                />
-                <Form.Check className={multipleChoiceContainerStyles.answers}
-                  inline
-                  label="No"
-                  name="group1"
-                  type={type}
-                  id={`inline-${type}-2`}
-                />
-              </div>
-            ))}
-          </Col>
-          </Row>
+      <Card onClick= {this.setSelected} className={this.state.isSelected ? multipleChoiceContainerStyles.cardSelected: multipleChoiceContainerStyles.card}>
+        <Col style={{textAlign: "left"}}>
+            <h4 className={multipleChoiceContainerStyles.questions}>{this.props.multipleChoiceQuestion.question}</h4>
+            {answers}
+        </Col>
       </Card> 
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
-const MultipleChoiceContainer = connect(mapStateToProps)(ConnectedMultipleChoiceContainer);
 export default MultipleChoiceContainer;

@@ -1,5 +1,4 @@
 import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT } from "../actions/types";
-import persist from "./index";
 
 const initialState = {
   isAuthenticated: false,
@@ -12,6 +11,7 @@ const auth = (state = initialState, action) => {
     case SIGNUP_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("id", payload._id);
+      delete payload._id;
       return {
         ...state,
         ...payload,
@@ -33,7 +33,7 @@ const auth = (state = initialState, action) => {
     case LOG_OUT:
       localStorage.removeItem("id");
       return {
-        isAuthenticated: false,
+        ...initialState
       };
 
     default:

@@ -4,6 +4,18 @@
   margin-bottom: 20px;
 }
 
+.cardSelected {
+  border: none;
+  padding: 30px 60px 30px 60px;
+  margin-bottom: 20px;
+  background-color: rgb(38 143 255 / 20%);
+}
+
+.cardSelected:hover,
+.card:hover {
+  box-shadow: 0 0 0 0.2rem rgb(38 143 255 / 50%);
+}
+
 .questions {
   margin-bottom: 5px;
   color: var(--black);

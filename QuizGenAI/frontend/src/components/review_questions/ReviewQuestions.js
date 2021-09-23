@@ -60,37 +60,67 @@ class ConnectedReviewQuestions extends React.Component {
     let fillinTheBlankQuestions = null;
     let trueOrFalseQuestions = null;
 
+    let multipleChoiceQuestionsHeader = null;
+    let fillinTheBlankQuestionsHeader = null;
+    let trueOrFalseQuestionsHeader = null;
 
+    const review_questions = this.props.reviewQuestions;
+    let counter = 0;
 
-    multipleChoiceQuestions = this.state.mcquestions.map((multipleChoiceQuestion) => (
-      <MultipleChoiceContainer
-        // key={job._id}
-        // jobid={job._id}
-        // id={this.state.id}
-        multipleChoiceQuestion={multipleChoiceQuestion}
-      />
-    ));
+    if (review_questions.questions.mcq.lenght !== 0){
+      multipleChoiceQuestionsHeader = (<Card className={reviewQuestionsStyles.card_header}>
+        <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
+      </Card>);
 
-    fillinTheBlankQuestions = this.state.fbquestions.map((fillinTheBlankQuestion) => (
-      <FillInTheBlankContainer
-        // key={job._id}
-        // jobid={job._id}
-        // id={this.state.id}
-        fillinTheBlankQuestion={fillinTheBlankQuestion}
-      />
-    ));
+      multipleChoiceQuestions = review_questions.questions.mcq.map((multipleChoiceQuestion) => {
+        counter++;
+        return (
+          <MultipleChoiceContainer
+            key={"multipleChoiceQuestion"+counter}
+            multipleChoiceQuestion={multipleChoiceQuestion}
+          />
+        )
+      });
+    }
 
-    trueOrFalseQuestions = this.state.tfquestions.map((trueOrFalseQuestion) => (
-      <TrueOrFalseContainer
-        // key={job._id}
-        // jobid={job._id}
-        // id={this.state.id}
-        trueOrFalseQuestion={trueOrFalseQuestion}
-      />
-    ));
-    
+    counter = 0;
+
+    if (review_questions.questions.fbq.lenght !== 0){
+      fillinTheBlankQuestionsHeader=( <Card className={reviewQuestionsStyles.card_header}>
+        <Card.Title className={reviewQuestionsStyles.title}>Fill-in the Blank Questions</Card.Title>
+      </Card>);
+
+      fillinTheBlankQuestions = review_questions.questions.fbq.map((fillinTheBlankQuestion) => {
+        counter++;
+        return (
+          <FillInTheBlankContainer
+            key={"fillinTheBlankQuestion"+counter}
+            fillinTheBlankQuestion={fillinTheBlankQuestion}
+          />
+        )
+      });
+    }
+
+    counter = 0;
+
+    if (review_questions.questions.tfq.lenght !== 0){
+      trueOrFalseQuestionsHeader=(<Card className={reviewQuestionsStyles.card_header}>
+        <Card.Title className={reviewQuestionsStyles.title}>True or False Questions</Card.Title>
+      </Card>);
+
+      trueOrFalseQuestions = review_questions.questions.tfq.map((trueOrFalseQuestion) => {
+        counter++;
+        return (
+          <TrueOrFalseContainer
+            key={"trueOrFalseQuestion"+counter}
+            trueOrFalseQuestion={trueOrFalseQuestion}
+          />
+        )
+      });
+    }
+
     return (<>
-      <NavigationBar boolLoggedIn={true}></NavigationBar>
+      <NavigationBar></NavigationBar>
       <Container fluid className={reviewQuestionsStyles.page_header}>REVIEW QUESTIONS</Container>
       <Container className={reviewQuestionsStyles.container}> 
 
@@ -98,21 +128,15 @@ class ConnectedReviewQuestions extends React.Component {
 
         <Form id="review-questions-form" className={reviewQuestionsStyles.form}>
           
-          <Card className={reviewQuestionsStyles.card_header}>
-            <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
-          </Card>
+          {multipleChoiceQuestionsHeader}
 
           {multipleChoiceQuestions}
 
-          <Card className={reviewQuestionsStyles.card_header}>
-            <Card.Title className={reviewQuestionsStyles.title}>Fill-in the Blank Questions</Card.Title>
-          </Card>
+          {fillinTheBlankQuestionsHeader}
 
           {fillinTheBlankQuestions}
 
-          <Card className={reviewQuestionsStyles.card_header}>
-            <Card.Title className={reviewQuestionsStyles.title}>True or False Questions</Card.Title>
-          </Card>
+          {trueOrFalseQuestionsHeader}
 
           {trueOrFalseQuestions}
         </Form>
@@ -121,12 +145,15 @@ class ConnectedReviewQuestions extends React.Component {
           <Button className={reviewQuestionsStyles.buttons} onClick= {this.clickCreateQuiz} >Create Quiz</Button>
         </div>
       </Container>
-      <Footer boolLoggedIn={true}></Footer>
+      <Footer></Footer>
       </>
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = state => {
+  return { reviewQuestions: state.reviewQuestions };
+};
+
 const ReviewQuestions = connect(mapStateToProps)(ConnectedReviewQuestions);
 export default ReviewQuestions;
