@@ -3,17 +3,17 @@ import { persistReducer } from 'redux-persist';
 import storage from "redux-persist/lib/storage";
 
 import auth from "./auth";
-import createQuiz from "./create_quiz";
+import reviewQuestions from "./review_questions";
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'createQuiz']
+  whitelist: ['auth', 'reviewQuestions']
 }
 
 const rootReducer = combineReducers({
   auth,
-  createQuiz
+  reviewQuestions
 });
 
 export default persistReducer(persistConfig, rootReducer);

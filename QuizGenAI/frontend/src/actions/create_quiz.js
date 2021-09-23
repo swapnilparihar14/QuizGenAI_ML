@@ -1,9 +1,9 @@
 import axios from "axios";
-import { CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL} from "./types";
+import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL} from "./types";
 import url from "../config/config";
 
 //Create Quiz
-export const createQuiz = (data, file) => async dispatch => {
+export const createQuizForm = (data, file) => async dispatch => {
   const config = {
     headers: {
       'Accept': 'application/json',
@@ -43,7 +43,7 @@ export const createQuiz = (data, file) => async dispatch => {
     );
 
     dispatch({
-      type: CREATE_QUIZ_SUCCESS,
+      type: REVIEW_QUESTIONS_SUCCESS,
       payload: res.data
     });
   } catch (err) {
@@ -51,7 +51,7 @@ export const createQuiz = (data, file) => async dispatch => {
     const error = err.response.data.message;
 
     dispatch({
-      type: CREATE_QUIZ_FAIL,
+      type: REVIEW_QUESTIONS_FAIL,
       payload: error
     });
   }

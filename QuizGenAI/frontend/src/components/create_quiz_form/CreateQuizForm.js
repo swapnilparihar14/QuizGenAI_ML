@@ -6,11 +6,11 @@ import Footer from "../footer/Footer";
 import { Container, Row, Card, Form } from "react-bootstrap";
 // import { BiLoaderCircle } from "react-icons/bi";
 import { Redirect } from "react-router";
-import createQuizStyles from "./create_quiz.module.css";
+import createQuizFormStyles from "./create_quiz_form.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
-import { createQuiz } from "../../actions/create_quiz";
+import { createQuizForm } from "../../actions/create_quiz";
 
 class ConnectedCreateQuiz extends React.Component {
   constructor(){
@@ -59,7 +59,7 @@ class ConnectedCreateQuiz extends React.Component {
     let id = localStorage.getItem("id");
 
     await this.props.dispatch(
-      createQuiz({
+      createQuizForm({
         quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
       }, file)
     );
@@ -79,9 +79,9 @@ class ConnectedCreateQuiz extends React.Component {
 
     // redirect to review questions once the quiz is created
     let redirectQuiz = null;
-    const quiz = this.props.quiz;
+    const review_questions = this.props.reviewQuestions;
 
-    if (quiz.quiz_id){
+    if (review_questions.quiz_id){
       redirectQuiz = <Redirect to={"/review_questions"} />;
     } 
 
@@ -92,12 +92,12 @@ class ConnectedCreateQuiz extends React.Component {
     loading = (
       <div>
         {isLoading ? (
-           <div className={createQuizStyles.loadingScreen}>
-             <VscLoading className={createQuizStyles.loadingIcon}/>
+           <div className={createQuizFormStyles.loadingScreen}>
+             <VscLoading className={createQuizFormStyles.loadingIcon}/>
              <h1>Loading...</h1>
            </div>
         ) : (
-          <div className={createQuizStyles.loadingScreen} style={{display: "none"}}></div>
+          <div className={createQuizFormStyles.loadingScreen} style={{display: "none"}}></div>
         )}
       </div>
     );
@@ -106,7 +106,7 @@ class ConnectedCreateQuiz extends React.Component {
     if (this.state.privacy === "private") {
       passwordField = (
         <Form.Group controlId="password">
-          <Form.Label className={createQuizStyles.labels}>Password</Form.Label>
+          <Form.Label className={createQuizFormStyles.labels}>Password</Form.Label>
           <Form.Control
             onChange={this.handleChange}
             name="password"
@@ -119,10 +119,10 @@ class ConnectedCreateQuiz extends React.Component {
     let durationFields = "";
     if (this.state.timed === "yes") {
       durationFields = (<>
-        <Form.Label className={createQuizStyles.labels}>Duration</Form.Label>
+        <Form.Label className={createQuizFormStyles.labels}>Duration</Form.Label>
         <Row style={{marginLeft: "1px"}}>
           <Form.Group controlId="hours" style={{marginRight: "20px"}}>
-            <Form.Label className={createQuizStyles.labels} >Hours</Form.Label>
+            <Form.Label className={createQuizFormStyles.labels} >Hours</Form.Label>
             <Form.Control
               onChange={this.handleChange}
               name="hours"
@@ -131,7 +131,7 @@ class ConnectedCreateQuiz extends React.Component {
           </Form.Group>
 
           <Form.Group controlId="minutes">
-            <Form.Label className={createQuizStyles.labels}>Minutes</Form.Label>
+            <Form.Label className={createQuizFormStyles.labels}>Minutes</Form.Label>
             <Form.Control
               onChange={this.handleChange}
               name="minutes"
@@ -148,21 +148,21 @@ class ConnectedCreateQuiz extends React.Component {
       {redirectQuiz}
       {loading}
       <NavigationBar></NavigationBar>
-      <Container fluid className={createQuizStyles.page_header}>CREATE QUIZ</Container>
-      <Container className={createQuizStyles.container}> 
-        <Form id="create-quiz-form" className={createQuizStyles.form}>
+      <Container fluid className={createQuizFormStyles.page_header}>CREATE QUIZ</Container>
+      <Container className={createQuizFormStyles.container}> 
+        <Form id="create-quiz-form" className={createQuizFormStyles.form}>
           
           {/* Enter Quiz Title */}
-          <Card className={createQuizStyles.card_header}>
+          <Card className={createQuizFormStyles.card_header}>
             <Form.Group controlId="quizname" style={{margin: "0"}}>
               <Form.Control type="text" placeholder="Untitled Quiz" onChange={this.handleChange} style={{border: "none", fontSize: "2.5rem", paddingLeft: "0"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
           </Card>
       
-          {/* <Card className={createQuizStyles.card}>
+          {/* <Card className={createQuizFormStyles.card}>
             <Form.Group controlId="graded" style={{margin: "0"}}>
-              <Form.Label className={createQuizStyles.labels}>Graded or Ungraded</Form.Label>
+              <Form.Label className={createQuizFormStyles.labels}>Graded or Ungraded</Form.Label>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
@@ -175,9 +175,9 @@ class ConnectedCreateQuiz extends React.Component {
             </Form.Group>
           </Card>  */}
           
-          <Card className={createQuizStyles.card}>
+          <Card className={createQuizFormStyles.card}>
             <Form.Group controlId="timed" style={{margin: "0"}}>
-              <Form.Label className={createQuizStyles.labels}>Timed or Untimed</Form.Label>
+              <Form.Label className={createQuizFormStyles.labels}>Timed or Untimed</Form.Label>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
@@ -193,9 +193,9 @@ class ConnectedCreateQuiz extends React.Component {
             {durationFields}
           </Card>
           
-          <Card className={createQuizStyles.card}>
+          <Card className={createQuizFormStyles.card}>
             <Form.Group controlId="privacy" style={{margin: "0"}}>
-              <Form.Label className={createQuizStyles.labels}>Public or Private</Form.Label>
+              <Form.Label className={createQuizFormStyles.labels}>Public or Private</Form.Label>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
@@ -211,35 +211,35 @@ class ConnectedCreateQuiz extends React.Component {
             {passwordField}
           </Card> 
           
-          <Card className={createQuizStyles.card}>
+          <Card className={createQuizFormStyles.card}>
             <Form.Group controlId="multiplechoicequestions" style={{margin: "0"}}>
-              <Form.Label className={createQuizStyles.labels}>Multiple Choice Questions</Form.Label>
+              <Form.Label className={createQuizFormStyles.labels}>Multiple Choice Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
            
             <Form.Group controlId="fillintheblankquestions" style={{margin: "0"}}>
-            <Form.Label className={createQuizStyles.labels}>Fill-in the Blank Questions</Form.Label>
+            <Form.Label className={createQuizFormStyles.labels}>Fill-in the Blank Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
            
             <Form.Group controlId="trueorfalsequestions" style={{margin: "0"}}>
-            <Form.Label className={createQuizStyles.labels}>True or False Questions</Form.Label>
+            <Form.Label className={createQuizFormStyles.labels}>True or False Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
           </Card> 
           
-          <Card className={createQuizStyles.card}>
+          <Card className={createQuizFormStyles.card}>
             <FileUploader handleChange={this.handleFile} name="file" types={fileTypes} />
             <p>{this.state.file ? `File name: ${this.state.file.name}` : "No file uploaded yet"}</p>
           </Card>  
         </Form>
 
         <div style={{float: "right"}}>
-        <Link to="/review_questions" onClick= {this.clickReview} className={`btn btn-primary ${createQuizStyles.links}`}>Review Questions</Link>
-          {/* <Button className={createQuizStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button> */}
+        <Link to="/review_questions" onClick= {this.clickReview} className={`btn btn-primary ${createQuizFormStyles.links}`}>Review Questions</Link>
+          {/* <Button className={createQuizFormStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button> */}
         </div>
       </Container>
       <Footer></Footer>
@@ -251,7 +251,7 @@ class ConnectedCreateQuiz extends React.Component {
 const mapStateToProps = state => {
   return { 
     auth: state.auth,
-    quiz: state.createQuiz
+    reviewQuestions: state.reviewQuestions
   };
 };
 
