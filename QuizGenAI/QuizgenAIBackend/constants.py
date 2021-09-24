@@ -30,4 +30,6 @@ DEEP_AI_ERROR = "DeepAI API not working. Contact the development team @swapnil.p
 FILL_IN_THE_BLANK_STRING = '__________'
 UPLOAD_FOLDER = ''
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'html', 'pptx'])
+trained_model_path = 'Question_generation/t5/model1/'
+trained_tokenizer = 'Question_generation/t5/tokenizer1/'
 

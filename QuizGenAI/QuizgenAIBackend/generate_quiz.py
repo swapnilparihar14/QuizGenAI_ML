@@ -43,7 +43,6 @@ class GenerateQuiz:
     def upload_files(self, file):
         try:
             target = os.path.join(UPLOAD_FOLDER, 'quiz_docs')
-            path = os.getcwd()
             if not os.path.isdir(target):
                 os.mkdir(target)
             file = file
@@ -52,30 +51,60 @@ class GenerateQuiz:
             file.save(destination)
             return destination
         except OSError as exc:
-            if exc.errno != errno.EEXIST:
-                raise
-            pass
+            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {exc}")
+            return ""
 
     def generate_questions(self, no_of_mcq, no_of_fbq, no_of_tfq, file_destination):
         mcquestions, fbquestions, tfquestions = [], [], []
         for i in range(no_of_mcq*2):
-            question = {'context': "Blabla",
+            question = {
+                        'context': "Blabla",
                         'question': "Which company owns ABC?",
-                        'options': ["Walt Disney Company", "CNN", "Facebook", "Google"], 'correctAnswer': 1}
+                        'options': ["Walt Disney Company", "CNN", "Facebook", "Google"], 'correctAnswer': 1,
+                        'isSelected': False
+                        },
             mcquestions.append(question)
 
         for i in range(no_of_fbq*2):
-            question = {'question': "The ________________ newspaper defined southern California",
+            question = {
+                        'question': "The ________________ newspaper defined southern California",
                         'correctAnswer': 1,
-                        'options':  ["New York Times", "Los Angeles Times", "San Jose Tribune", "San Francisco Tribune"]}
+                        'options':  ["New York Times", "Los Angeles Times", "San Jose Tribune", "San Francisco Tribune"],
+                        'isSelected': False
+                        }
             fbquestions.append(question)
 
         for i in range(no_of_tfq*2):
-            question = {'question': "Southern California is often abbreviated SoCal.",
-                        'correctAnswer': "true"}
+            question = {
+                        'question': "Southern California is often abbreviated SoCal.",
+                        'correctAnswer': "true",
+                        'isSelected': False
+                        }
             tfquestions.append(question)
 
         return {'mcq': mcquestions, 'fbq': fbquestions, 'tfq': tfquestions}
+
+    # def save_questions(self, questions, db):
+    #     tfq = questions['tfq']
+    #     mcq = questions['mcq']
+    #     fbq = questions['fbq']
+    #     quiz_id = questions['quiz_id']
+    #     for question in tfq:
+    #         if question['isSelected'] == True:
+    #             db.questions.insert_one({
+    #                 'question': question['question'],
+    #                 'answer': question['correctAnswer'],
+    #                 'type': 'tfq',
+    #                 'quiz_id': quiz_id
+    #             })
+    #     for question in mcq:
+    #         if question['isSelected'] == True:
+    #             db.questions.insert_one({
+    #                 'question': question['question'],
+    #             })
+
+
+
 
 
 

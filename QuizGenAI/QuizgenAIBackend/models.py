@@ -2,6 +2,7 @@ from allennlp.predictors.predictor import Predictor
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 from sentence_transformers import SentenceTransformer
 from constants import LOGGER_FORMAT, ALLEN_NLP_MODEL, GPT2, BERT_FOR_TF_QUESTIONS
+from model_generation import model_prod
 import logging
 import inspect
 
@@ -26,6 +27,15 @@ class Models:
             self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return None, None, None, None
 
+    def long_question_generate(self):
+        try:
+            long_question = model_prod.import_model()
+            return long_question
+        except Exception as e:
+            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return None
+
     def generate_all_models(self):
         AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = self.true_false_questions()
-        return AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions
+        long_question = self.long_question_generate()
+        return AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question
