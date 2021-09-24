@@ -79,5 +79,14 @@ def get_review_questions():
         return json_message, code
 
 
+# @app.route("/create_quiz", methods=["POST"])
+# def get_create_questions():
+#     if request.method == 'POST':
+#         selected_questions = request.get_json()
+#         gen_quiz = GenerateQuiz()
+#         code, json_message = gen_quiz.save_questions(selected_questions, db)
+#         return code, json_message
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
