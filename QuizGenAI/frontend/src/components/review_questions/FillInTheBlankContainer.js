@@ -1,10 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Col, Card } from "react-bootstrap";
 import FillInTheBlankContainerStyles from "./fillin_the_blank_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
+import { selectQuestion, unselectQuestion } from "../../actions/review_questions";
 
-class FillInTheBlankContainer extends React.Component {
+class ConnectedFillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -12,9 +14,17 @@ class FillInTheBlankContainer extends React.Component {
     }
   }
 
+  componentDidUpdate(prevState) {
+    if (this.state.isSelected !== prevState.isSelected) {
+      if (this.state.isSelected === true)
+        this.props.select("fbq", this.props.position-1);
+      else
+        this.props.unselect("fbq", this.props.position-1);
+    }
+  }
+
   setSelected = e =>{
     e.preventDefault();
-
     this.setState({ isSelected: !this.state.isSelected });
   }
 
@@ -47,4 +57,12 @@ class FillInTheBlankContainer extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    select: (type, position) => dispatch(selectQuestion(type, position)),
+    unselect: (type, position) => dispatch(unselectQuestion(type, position)),
+  }
+}
+
+const FillInTheBlankContainer = connect(null, mapDispatchToProps)(ConnectedFillInTheBlankContainer);
 export default FillInTheBlankContainer;

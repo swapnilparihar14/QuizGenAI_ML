@@ -1,8 +1,8 @@
 import axios from "axios";
-import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL} from "./types";
+import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, UNSELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL} from "./types";
 import url from "../config/config";
 
-//Create Quiz
+// Get review questions
 export const createQuizForm = (data, file) => async dispatch => {
   const config = {
     headers: {
@@ -52,6 +52,62 @@ export const createQuizForm = (data, file) => async dispatch => {
 
     dispatch({
       type: REVIEW_QUESTIONS_FAIL,
+      payload: error
+    });
+  }
+};
+
+// Select question
+export const selectQuestion = (type, position) => dispatch => {
+
+  let data={type, position};
+
+  dispatch({
+    type: SELECT_QUESTION,
+    payload: data
+  });
+
+};
+
+// Unselect question
+export const unselectQuestion = (type, position) => dispatch => {
+
+  let data={type, position};
+
+  dispatch({
+    type: UNSELECT_QUESTION,
+    payload: data
+  });
+
+};
+
+// Create Quiz
+export const createQuiz = (data) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    // axios.defaults.withCredentials = true;
+    
+    const res = await axios.post(
+      url + "/create_quiz",
+      data,
+      config
+    );
+
+    dispatch({
+      type: CREATE_QUIZ_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    console.log(err.response);
+    const error = err.response.data.message;
+
+    dispatch({
+      type: CREATE_QUIZ_FAIL,
       payload: error
     });
   }

@@ -8,42 +8,12 @@ import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
 
+import { createQuiz } from "../../actions/review_questions";
+
 class ConnectedReviewQuestions extends React.Component {
   constructor(){
     super();
     this.state = {
-      mcquestions: [
-        {
-          question: "Which company owns ABC?",
-          answers: ["Walt Disney Company", "CNN", "Facebook", "Google"],
-          correctAnswer: 1 
-        },
-        {
-          question: "Which city does the Hollywood district belong to?",
-          answers: ["New York", "Los Angeles", "San Jose", "San Francisco"],
-          correctAnswer: 2 
-        }
-      ],
-      fbquestions: [
-        {
-          question: "The ________________ newspaper defined southern California.",
-          correctAnswer: "Los Angeles Times" 
-        },
-        {
-          question: "Usually all of Southern California have ____________ climate.",
-          correctAnswer: "Mediterranean"
-        }
-      ],
-      tfquestions: [
-        {
-          question: "Southern California is often abbreviated SoCal.",
-          correctAnswer: "true"
-        },
-        {
-          question: "Northern California is a major economic center for the state of California and the United States.",
-          correctAnswer: "false"
-        }
-      ]
     }
   }
 
@@ -51,8 +21,25 @@ class ConnectedReviewQuestions extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  handleChange = e =>{
-    this.setState({ [e.target.id]: e.target.value });
+  clickCreateQuiz = async e => {
+    e.preventDefault();
+
+    let selectedQuestions = {
+      fbq: [],
+      mcq: [],
+      tfq: []
+    };
+
+    for (const key in selectedQuestions) {
+      for(let i = 0; i < this.props.reviewQuestions.questions[key].length; i++){
+        if(this.props.reviewQuestions.questions[key][i].isSelected === true)
+          selectedQuestions[key].push(this.props.reviewQuestions.questions[key][i]); 
+      }
+    }
+
+    await this.props.dispatch(
+      createQuiz(selectedQuestions)
+    );
   }
 
   render() {
@@ -76,7 +63,7 @@ class ConnectedReviewQuestions extends React.Component {
         counter++;
         return (
           <MultipleChoiceContainer
-            key={"multipleChoiceQuestion"+counter}
+            key={counter}
             multipleChoiceQuestion={multipleChoiceQuestion}
           />
         )
@@ -94,7 +81,8 @@ class ConnectedReviewQuestions extends React.Component {
         counter++;
         return (
           <FillInTheBlankContainer
-            key={"fillinTheBlankQuestion"+counter}
+            key={counter}
+            position={counter}
             fillinTheBlankQuestion={fillinTheBlankQuestion}
           />
         )
@@ -112,7 +100,7 @@ class ConnectedReviewQuestions extends React.Component {
         counter++;
         return (
           <TrueOrFalseContainer
-            key={"trueOrFalseQuestion"+counter}
+            key={counter}
             trueOrFalseQuestion={trueOrFalseQuestion}
           />
         )

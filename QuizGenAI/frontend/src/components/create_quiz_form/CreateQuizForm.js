@@ -10,7 +10,7 @@ import createQuizFormStyles from "./create_quiz_form.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
-import { createQuizForm } from "../../actions/create_quiz";
+import { createQuizForm } from "../../actions/review_questions";
 
 class ConnectedCreateQuizForm extends React.Component {
   constructor(){
