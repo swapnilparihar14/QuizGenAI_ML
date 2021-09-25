@@ -24,6 +24,7 @@ class GenerateQuiz:
             quiz_details_dict['access_code'] = quiz_details['access_code']
             quiz_details_dict['quiz_type'] = quiz_details['quiz_type']
             quiz_details_dict['creator_id'] = quiz_details['creator_id']
+            quiz_details_dict['active'] = False
             if timed == "yes":
                 quiz_details_dict['duration'] = (int(quiz_details['hours'])*60) + int(quiz_details['minutes'])
             no_of_mcq = int(quiz_details['mcq'])
@@ -60,9 +61,10 @@ class GenerateQuiz:
             question = {
                         'context': "Blabla",
                         'question': "Which company owns ABC?",
-                        'options': ["Walt Disney Company", "CNN", "Facebook", "Google"], 'correctAnswer': 1,
+                        'options': ["Walt Disney Company", "CNN", "Facebook", "Google"],
+                        'correctAnswer': 1,
                         'isSelected': False
-                        },
+                        }
             mcquestions.append(question)
 
         for i in range(no_of_fbq*2):
@@ -84,25 +86,44 @@ class GenerateQuiz:
 
         return {'mcq': mcquestions, 'fbq': fbquestions, 'tfq': tfquestions}
 
-    # def save_questions(self, questions, db):
-    #     tfq = questions['tfq']
-    #     mcq = questions['mcq']
-    #     fbq = questions['fbq']
-    #     quiz_id = questions['quiz_id']
-    #     for question in tfq:
-    #         if question['isSelected'] == True:
-    #             db.questions.insert_one({
-    #                 'question': question['question'],
-    #                 'answer': question['correctAnswer'],
-    #                 'type': 'tfq',
-    #                 'quiz_id': quiz_id
-    #             })
-    #     for question in mcq:
-    #         if question['isSelected'] == True:
-    #             db.questions.insert_one({
-    #                 'question': question['question'],
-    #             })
-
+    def save_questions(self, questions_data, db):
+        try:
+            questions = questions_data['questions']
+            tfq = questions['tfq']
+            mcq = questions['mcq']
+            fbq = questions['fbq']
+            quiz_id = questions_data['quiz_id']
+            for question in tfq:
+                if question['isSelected']:
+                    db.questions.insert_one({
+                        'question': question['question'],
+                        'answer': question['correctAnswer'],
+                        'type': 'tfq',
+                        'quiz_id': quiz_id
+                    })
+            for question in mcq:
+                if question['isSelected']:
+                    db.questions.insert_one({
+                        'context': question['context'],
+                        'question': question['question'],
+                        'answer': question['correctAnswer'],
+                        'options': question['options'],
+                        'type': 'mcq',
+                        'quiz_id': quiz_id
+                    })
+            for question in fbq:
+                if question['isSelected']:
+                    db.questions.insert_one({
+                        'question': question['question'],
+                        'answer': question['correctAnswer'],
+                        'options': question['options'],
+                        'type': 'fbq',
+                        'quiz_id': quiz_id
+                    })
+            return 200, jsonify(message="Success")
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
 
 
 
