@@ -19,7 +19,7 @@ const review_questions = (state = initialState, action) => {
       };
 
     case SELECT_QUESTION:
-      state.questions[payload.type][payload.position].isSelected = true;
+      state.questions[payload.type][payload.position].isSelected = !state.questions[payload.type][payload.position].isSelected;
       return {
         ...state,
       };

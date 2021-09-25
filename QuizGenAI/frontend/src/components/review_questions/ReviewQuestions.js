@@ -24,21 +24,8 @@ class ConnectedReviewQuestions extends React.Component {
   clickCreateQuiz = async e => {
     e.preventDefault();
 
-    let selectedQuestions = {
-      fbq: [],
-      mcq: [],
-      tfq: []
-    };
-
-    for (const key in selectedQuestions) {
-      for(let i = 0; i < this.props.reviewQuestions.questions[key].length; i++){
-        if(this.props.reviewQuestions.questions[key][i].isSelected === true)
-          selectedQuestions[key].push(this.props.reviewQuestions.questions[key][i]); 
-      }
-    }
-
     await this.props.dispatch(
-      createQuiz(selectedQuestions)
+      createQuiz(this.props.reviewQuestions)
     );
   }
 

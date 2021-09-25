@@ -10,22 +10,25 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      isSelected: false
+      // isSelected: false
     }
   }
 
-  componentDidUpdate(prevState) {
-    if (this.state.isSelected !== prevState.isSelected) {
-      if (this.state.isSelected === true)
-        this.props.select("fbq", this.props.position-1);
-      else
-        this.props.unselect("fbq", this.props.position-1);
-    }
-  }
+  // componentDidUpdate(prevState) {
+  //   if (this.state.isSelected !== prevState.isSelected) {
+  //     if (this.state.isSelected === true)
+  //       this.props.select("fbq", this.props.position-1);
+  //     else
+  //       this.props.unselect("fbq", this.props.position-1);
+  //   }
+  // }
 
   setSelected = e =>{
     e.preventDefault();
-    this.setState({ isSelected: !this.state.isSelected });
+    // this.setState({ isSelected: !this.state.isSelected });
+    this.props.dispatch(
+      selectQuestion("fbq", this.props.position-1)
+    );
   }
 
   render() {
@@ -47,7 +50,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
     });
 
     return (
-      <Card onClick= {this.setSelected} className={this.state.isSelected ? FillInTheBlankContainerStyles.cardSelected: FillInTheBlankContainerStyles.card}>
+      <Card onClick= {this.setSelected} className={this.props.reviewQuestions.questions.fbq[this.props.position-1].isSelected ? FillInTheBlankContainerStyles.cardSelected: FillInTheBlankContainerStyles.card}>
         <Col style={{textAlign: "left"}}>
             <h4 className={FillInTheBlankContainerStyles.questions}>{this.props.fillinTheBlankQuestion.question}</h4>
             {answers}
@@ -57,12 +60,16 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    select: (type, position) => dispatch(selectQuestion(type, position)),
-    unselect: (type, position) => dispatch(unselectQuestion(type, position)),
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     select: (type, position) => dispatch(selectQuestion(type, position)),
+//     unselect: (type, position) => dispatch(unselectQuestion(type, position)),
+//   }
+// }
 
-const FillInTheBlankContainer = connect(null, mapDispatchToProps)(ConnectedFillInTheBlankContainer);
+const mapStateToProps = state => {
+  return { reviewQuestions: state.reviewQuestions };
+};
+
+const FillInTheBlankContainer = connect(mapStateToProps)(ConnectedFillInTheBlankContainer);
 export default FillInTheBlankContainer;
