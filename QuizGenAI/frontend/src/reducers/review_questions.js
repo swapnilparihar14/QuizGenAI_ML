@@ -1,4 +1,4 @@
-import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, UNSELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL, LOG_OUT} from "../actions/types";
+import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL, RESET_REVIEW_QUESTIONS, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
@@ -24,21 +24,20 @@ const review_questions = (state = initialState, action) => {
         ...state,
       };
 
-    case UNSELECT_QUESTION:
-      state.questions[payload.type][payload.position].isSelected = false;
-      return {
-        ...state,
-      };
-
     case CREATE_QUIZ_SUCCESS:
       return {
         ...payload,
+        createQuizStatus: "success"
       };
 
     case CREATE_QUIZ_FAIL:
       return {
         message: payload,
+        createQuizStatus: "fail"
       };
+
+    case RESET_REVIEW_QUESTIONS:
+      return {};
 
     case LOG_OUT:
       return {

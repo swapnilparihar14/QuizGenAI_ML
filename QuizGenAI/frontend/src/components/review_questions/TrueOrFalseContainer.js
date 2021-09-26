@@ -1,21 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Col, Card } from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
+import { selectQuestion } from "../../actions/review_questions";
 
-class TrueOrFalseContainer extends React.Component {
+class ConnectedTrueOrFalseContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      isSelected: false
     }
   }
 
   setSelected = e =>{
     e.preventDefault();
-
-    this.setState({ isSelected: !this.state.isSelected });
+    this.props.dispatch(
+      selectQuestion("tfq", this.props.position-1)
+    );
   }
 
   render() {
@@ -47,7 +49,7 @@ class TrueOrFalseContainer extends React.Component {
     }
 
     return (
-      <Card onClick= {this.setSelected} className={this.state.isSelected ? TrueOrFalseContainerStyles.cardSelected: TrueOrFalseContainerStyles.card}>
+      <Card onClick= {this.setSelected} className={this.props.reviewQuestions.questions.tfq[this.props.position-1].isSelected ? TrueOrFalseContainerStyles.cardSelected: TrueOrFalseContainerStyles.card}>
         <Col  style={{textAlign: "left"}}>
             <h4 className={TrueOrFalseContainerStyles.questions}>{this.props.trueOrFalseQuestion.question}</h4>
             {t}
@@ -58,4 +60,9 @@ class TrueOrFalseContainer extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return { reviewQuestions: state.reviewQuestions };
+};
+
+const TrueOrFalseContainer = connect(mapStateToProps)(ConnectedTrueOrFalseContainer);
 export default TrueOrFalseContainer;

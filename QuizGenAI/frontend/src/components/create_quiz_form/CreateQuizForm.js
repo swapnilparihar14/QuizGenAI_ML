@@ -10,7 +10,7 @@ import createQuizFormStyles from "./create_quiz_form.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
-import { createQuizForm } from "../../actions/review_questions";
+import { createQuizForm, resetReviewQuestions } from "../../actions/review_questions";
 
 class ConnectedCreateQuizForm extends React.Component {
   constructor(){
@@ -29,6 +29,13 @@ class ConnectedCreateQuizForm extends React.Component {
       trueorfalsequestions: 0,
       file: null,
     }
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    this.props.dispatch(
+      resetReviewQuestions()
+    );
   }
 
   componentWillUnmount(){
@@ -93,8 +100,10 @@ class ConnectedCreateQuizForm extends React.Component {
       <div>
         {isLoading ? (
            <div className={createQuizFormStyles.loadingScreen}>
-             <VscLoading className={createQuizFormStyles.loadingIcon}/>
-             <h1>Loading...</h1>
+              <VscLoading className={createQuizFormStyles.loadingIcon}/>
+              <h1>Generating Questions...</h1>
+              <h2>Hang on, this might take some time.</h2>
+              <h2>DO NOT CLOSE OR RELOAD THIS WINDOW</h2>
            </div>
         ) : (
           <div className={createQuizFormStyles.loadingScreen} style={{display: "none"}}></div>

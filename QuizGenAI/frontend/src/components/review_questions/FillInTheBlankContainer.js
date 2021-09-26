@@ -4,28 +4,17 @@ import { Col, Card } from "react-bootstrap";
 import FillInTheBlankContainerStyles from "./fillin_the_blank_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
-import { selectQuestion, unselectQuestion } from "../../actions/review_questions";
+import { selectQuestion } from "../../actions/review_questions";
 
 class ConnectedFillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      // isSelected: false
     }
   }
 
-  // componentDidUpdate(prevState) {
-  //   if (this.state.isSelected !== prevState.isSelected) {
-  //     if (this.state.isSelected === true)
-  //       this.props.select("fbq", this.props.position-1);
-  //     else
-  //       this.props.unselect("fbq", this.props.position-1);
-  //   }
-  // }
-
   setSelected = e =>{
     e.preventDefault();
-    // this.setState({ isSelected: !this.state.isSelected });
     this.props.dispatch(
       selectQuestion("fbq", this.props.position-1)
     );
@@ -39,13 +28,13 @@ class ConnectedFillInTheBlankContainer extends React.Component {
       counter++;
       if(counter === this.props.fillinTheBlankQuestion.correctAnswer)
         return (<>
-          <h6 className={FillInTheBlankContainerStyles.correct_answers}>{letters[counter-1]}{answer}</h6>
-          <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
+          <h6 className={FillInTheBlankContainerStyles.correct_answers} key={"fillinTheBlankAnswers"+counter}>{letters[counter-1]}{answer}</h6>
+          <RiCheckboxCircleLine key={"fillinTheBlankAnswersSymbol"+counter} style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
           </>
         )
       else
         return (
-          <h6 className={FillInTheBlankContainerStyles.answers}>{letters[counter-1]}{answer}</h6>
+          <h6 className={FillInTheBlankContainerStyles.answers} key={"fillinTheBlankAnswers"+counter}>{letters[counter-1]}{answer}</h6>
         )
     });
 
@@ -59,13 +48,6 @@ class ConnectedFillInTheBlankContainer extends React.Component {
     );
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     select: (type, position) => dispatch(selectQuestion(type, position)),
-//     unselect: (type, position) => dispatch(unselectQuestion(type, position)),
-//   }
-// }
 
 const mapStateToProps = state => {
   return { reviewQuestions: state.reviewQuestions };

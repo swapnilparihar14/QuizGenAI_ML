@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { Container, Card, Button, Form } from "react-bootstrap";
+import { Redirect } from "react-router";
 import reviewQuestionsStyles from "./review_questions.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
@@ -17,10 +18,6 @@ class ConnectedReviewQuestions extends React.Component {
     }
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   clickCreateQuiz = async e => {
     e.preventDefault();
 
@@ -30,6 +27,9 @@ class ConnectedReviewQuestions extends React.Component {
   }
 
   render() {
+    let redirectVar = null;
+    const review_questions = this.props.reviewQuestions;
+
     let multipleChoiceQuestions = null;
     let fillinTheBlankQuestions = null;
     let trueOrFalseQuestions = null;
@@ -38,63 +38,71 @@ class ConnectedReviewQuestions extends React.Component {
     let fillinTheBlankQuestionsHeader = null;
     let trueOrFalseQuestionsHeader = null;
 
-    const review_questions = this.props.reviewQuestions;
     let counter = 0;
 
-    if (review_questions.questions.mcq.lenght !== 0){
-      multipleChoiceQuestionsHeader = (<Card className={reviewQuestionsStyles.card_header}>
-        <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
-      </Card>);
 
-      multipleChoiceQuestions = review_questions.questions.mcq.map((multipleChoiceQuestion) => {
-        counter++;
-        return (
-          <MultipleChoiceContainer
-            key={counter}
-            multipleChoiceQuestion={multipleChoiceQuestion}
-          />
-        )
-      });
-    }
 
-    counter = 0;
+    if(review_questions.createQuizStatus)
+      redirectVar =  <Redirect to="/my_quizzes" />;
+    else {
+      if (review_questions.questions.mcq.lenght !== 0){
+        multipleChoiceQuestionsHeader = (<Card className={reviewQuestionsStyles.card_header}>
+          <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
+        </Card>);
 
-    if (review_questions.questions.fbq.lenght !== 0){
-      fillinTheBlankQuestionsHeader=( <Card className={reviewQuestionsStyles.card_header}>
-        <Card.Title className={reviewQuestionsStyles.title}>Fill-in the Blank Questions</Card.Title>
-      </Card>);
+        multipleChoiceQuestions = review_questions.questions.mcq.map((multipleChoiceQuestion) => {
+          counter++;
+          return (
+            <MultipleChoiceContainer
+              key={counter}
+              position={counter}
+              multipleChoiceQuestion={multipleChoiceQuestion}
+            />
+          )
+        });
+      }
 
-      fillinTheBlankQuestions = review_questions.questions.fbq.map((fillinTheBlankQuestion) => {
-        counter++;
-        return (
-          <FillInTheBlankContainer
-            key={counter}
-            position={counter}
-            fillinTheBlankQuestion={fillinTheBlankQuestion}
-          />
-        )
-      });
-    }
+      counter = 0;
 
-    counter = 0;
+      if (review_questions.questions.fbq.lenght !== 0){
+        fillinTheBlankQuestionsHeader=( <Card className={reviewQuestionsStyles.card_header}>
+          <Card.Title className={reviewQuestionsStyles.title}>Fill-in the Blank Questions</Card.Title>
+        </Card>);
 
-    if (review_questions.questions.tfq.lenght !== 0){
-      trueOrFalseQuestionsHeader=(<Card className={reviewQuestionsStyles.card_header}>
-        <Card.Title className={reviewQuestionsStyles.title}>True or False Questions</Card.Title>
-      </Card>);
+        fillinTheBlankQuestions = review_questions.questions.fbq.map((fillinTheBlankQuestion) => {
+          counter++;
+          return (
+            <FillInTheBlankContainer
+              key={counter}
+              position={counter}
+              fillinTheBlankQuestion={fillinTheBlankQuestion}
+            />
+          )
+        });
+      }
 
-      trueOrFalseQuestions = review_questions.questions.tfq.map((trueOrFalseQuestion) => {
-        counter++;
-        return (
-          <TrueOrFalseContainer
-            key={counter}
-            trueOrFalseQuestion={trueOrFalseQuestion}
-          />
-        )
-      });
-    }
+      counter = 0;
+
+      if (review_questions.questions.tfq.lenght !== 0){
+        trueOrFalseQuestionsHeader=(<Card className={reviewQuestionsStyles.card_header}>
+          <Card.Title className={reviewQuestionsStyles.title}>True or False Questions</Card.Title>
+        </Card>);
+
+        trueOrFalseQuestions = review_questions.questions.tfq.map((trueOrFalseQuestion) => {
+          counter++;
+          return (
+            <TrueOrFalseContainer
+              key={counter}
+              position={counter}
+              trueOrFalseQuestion={trueOrFalseQuestion}
+            />
+          )
+        });
+      }
+  }
 
     return (<>
+      {redirectVar}
       <NavigationBar></NavigationBar>
       <Container fluid className={reviewQuestionsStyles.page_header}>REVIEW QUESTIONS</Container>
       <Container className={reviewQuestionsStyles.container}> 

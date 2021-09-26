@@ -1,5 +1,5 @@
 import axios from "axios";
-import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, UNSELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL} from "./types";
+import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL, RESET_REVIEW_QUESTIONS} from "./types";
 import url from "../config/config";
 
 // Get review questions
@@ -69,14 +69,11 @@ export const selectQuestion = (type, position) => dispatch => {
 
 };
 
-// Unselect question
-export const unselectQuestion = (type, position) => dispatch => {
-
-  let data={type, position};
+// Reset review questions store
+export const resetReviewQuestions = () => dispatch => {
 
   dispatch({
-    type: UNSELECT_QUESTION,
-    payload: data
+    type: RESET_REVIEW_QUESTIONS,
   });
 
 };
@@ -103,7 +100,7 @@ export const createQuiz = (data) => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    console.log(err.response);
+    console.log(err);
     const error = err.response.data.message;
 
     dispatch({

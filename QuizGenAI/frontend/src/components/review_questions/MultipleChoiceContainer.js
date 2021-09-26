@@ -1,21 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Col, Card } from "react-bootstrap";
 import multipleChoiceContainerStyles from "./multiple_choice_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
+import { selectQuestion } from "../../actions/review_questions";
 
-class MultipleChoiceContainer extends React.Component {
+class ConnectedMultipleChoiceContainer extends React.Component {
   constructor(props){
-    super(props);
+    super();
     this.state = {
-      isSelected: false
     }
   }
 
   setSelected = e =>{
     e.preventDefault();
-
-    this.setState({ isSelected: !this.state.isSelected });
+    this.props.dispatch(
+      selectQuestion("mcq", this.props.position-1)
+    );
   }
 
   render() {
@@ -26,18 +28,18 @@ class MultipleChoiceContainer extends React.Component {
       counter++;
       if(counter === this.props.multipleChoiceQuestion.correctAnswer)
         return (<>
-          <h6 className={multipleChoiceContainerStyles.correct_answers}>{letters[counter-1]}{answer}</h6>
-          <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
+          <h6 key={"multipleChoiceAnswers"+counter} className={multipleChoiceContainerStyles.correct_answers}>{letters[counter-1]}{answer}</h6>
+          <RiCheckboxCircleLine key={"multipleChoiceAnswersSymbol"+counter} style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
           </>
         )
       else
         return (
-          <h6 className={multipleChoiceContainerStyles.answers}>{letters[counter-1]}{answer}</h6>
+          <h6 key={"multipleChoiceAnswers"+counter} className={multipleChoiceContainerStyles.answers}>{letters[counter-1]}{answer}</h6>
         )
     });
 
     return (
-      <Card onClick= {this.setSelected} className={this.state.isSelected ? multipleChoiceContainerStyles.cardSelected: multipleChoiceContainerStyles.card}>
+      <Card onClick= {this.setSelected} className={this.props.reviewQuestions.questions.mcq[this.props.position-1].isSelected  ? multipleChoiceContainerStyles.cardSelected: multipleChoiceContainerStyles.card}>
         <Col style={{textAlign: "left"}}>
             <h4 className={multipleChoiceContainerStyles.questions}>{this.props.multipleChoiceQuestion.question}</h4>
             {answers}
@@ -47,4 +49,9 @@ class MultipleChoiceContainer extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return { reviewQuestions: state.reviewQuestions };
+};
+
+const MultipleChoiceContainer = connect(mapStateToProps)(ConnectedMultipleChoiceContainer);
 export default MultipleChoiceContainer;
