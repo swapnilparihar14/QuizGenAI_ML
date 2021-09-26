@@ -37,6 +37,10 @@ class Models:
             return None
 
     def sense_to_vec(self):
+        """
+        Loads the Sense2Vec model from the model library
+        :return: Sense2Vec model
+        """
         try:
             return Sense2Vec().from_disk(SENSE2VEC_MODEL)
         except Exception as e:
@@ -45,6 +49,10 @@ class Models:
 
 
     def generate_all_models(self):
+        """
+        Generates all global machine learning models required for the project
+        :return: ML models required for the project
+        """
         AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions = self.true_false_questions()
         long_question = self.long_question_generate()
         return AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question, self.sense_to_vec()
