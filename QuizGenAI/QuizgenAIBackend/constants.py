@@ -6,7 +6,6 @@ TEXT_EXTENSION = '.txt'
 PPTX_EXTENSION = '.pptx'
 HTML_EXTENSION = '.html'
 DEEP_AI_SUMMARIZER = "https://api.deepai.org/api/summarization"
-DEEP_AI_API_KEY = '4ef082fc-70da-4fbe-a321-a6f13aa56c08'
 ENGLISH = 'english'
 ERROR_MESSAGE = 'Error'
 SUCCESS_MESSAGE = 'Success'

@@ -10,6 +10,7 @@ from sense2vec import Sense2Vec
 from constants import CONCEPT_NET_API_1, CONCEPT_NET_API_2, LOGGER_FORMAT, DISTRACTOR_LIB_WEIGHTS, \
     WORDNET_GRAND_WEIGHT, WORDNET_LIMIT, SENSE2VEC_MODEL
 from utility import get_sentence_cosine_similarity
+from app import SENSE2VEC
 
 
 # nltk.download('wordnet')
@@ -97,6 +98,7 @@ class DistractorGeneration:
         word = self.keyword[0].lower().replace(" ", "_")
         try:
             s2v = Sense2Vec().from_disk(SENSE2VEC_MODEL)
+            # s2v = SENSE2VEC
             sense = s2v.get_best_sense(word)
             distractor_limit = 6
             while distractor_limit > 2:
