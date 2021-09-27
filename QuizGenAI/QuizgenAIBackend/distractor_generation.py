@@ -10,8 +10,10 @@ from sense2vec import Sense2Vec
 from constants import CONCEPT_NET_API_1, CONCEPT_NET_API_2, LOGGER_FORMAT, DISTRACTOR_LIB_WEIGHTS, \
     WORDNET_GRAND_WEIGHT, WORDNET_LIMIT, SENSE2VEC_MODEL
 from utility import get_sentence_cosine_similarity
-from app import SENSE2VEC
+from models import Models
 
+A = Models()
+SENSE2VEC = A.sense_to_vec()
 
 # nltk.download('wordnet')
 # !pip install sense2vec==1.0.3
@@ -29,8 +31,7 @@ class DistractorGeneration:
         :param distractor_count: The count of distractors expected
         """
         self.log = logging.getLogger(self.__class__.__name__)
-        file_handler = logging.FileHandler(
-            f'logs/{self.__class__.__name__}.log')
+        file_handler = logging.FileHandler(f'logs/{self.__class__.__name__}.log')
         formatter = logging.Formatter(LOGGER_FORMAT)
         file_handler.setFormatter(formatter)
         self.log.addHandler(file_handler)
@@ -49,7 +50,8 @@ class DistractorGeneration:
         distractor_final = {}
         for i in first_funcs:
             distractor_dic = self.prune_distractor_list(i())
-            distractor_final.update(distractor_dic[self.keyword[0]])
+            if self.keyword[0] in distractor_dic:
+                distractor_final.update(distractor_dic[self.keyword[0]])
             if len(distractor_final) > self.distractor_count:
                 return {self.keyword[0]: self.get_n_distractors(distractor_final, self.distractor_count)}
         return {self.keyword[0]: {}}
@@ -97,13 +99,11 @@ class DistractorGeneration:
         distractor_list, output, most_similar = {self.keyword[0]: {}}, {}, []
         word = self.keyword[0].lower().replace(" ", "_")
         try:
-            s2v = Sense2Vec().from_disk(SENSE2VEC_MODEL)
-            # s2v = SENSE2VEC
-            sense = s2v.get_best_sense(word)
-            distractor_limit = 6
+            sense = SENSE2VEC.get_best_sense(word)
+            distractor_limit = 12
             while distractor_limit > 2:
                 try:
-                    most_similar = s2v.most_similar(sense, n=distractor_limit)
+                    most_similar = SENSE2VEC.most_similar(sense, n=distractor_limit)
                     break
                 except:
                     distractor_limit -= 2
@@ -212,8 +212,7 @@ class WordNetDistractor:
         if len(syns) > 1:
             cosine = 0
             for syn in syns[::-1]:
-                intial_cosine = get_sentence_cosine_similarity(
-                    syn.definition(), self.keyword_sentence)
+                intial_cosine = get_sentence_cosine_similarity(syn.definition(), self.keyword_sentence)
                 if cosine <= intial_cosine:
                     cosine, new_syn = intial_cosine, syn
         elif len(syns) == 1:
@@ -228,8 +227,7 @@ class WordNetDistractor:
         """
         result = {}
         for element in distractor_dict:
-            word, hypernym, distractor = element[0].lower(
-            ), element[1].hypernyms(), {}
+            word, hypernym, distractor = element[0].lower(), element[1].hypernyms(), {}
 
             # Distractor generation using parents
             if len(hypernym) != 0:

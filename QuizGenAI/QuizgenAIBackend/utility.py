@@ -4,11 +4,10 @@ import nltk
 from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer
-
+import re
 from constants import ENGLISH, ADDITIONAL_STOPWORDS, SENTENCE_CHAR_LIMIT, GET_POS, FILL_IN_THE_BLANK_STRING
 
 
@@ -86,7 +85,7 @@ def tokenize_sentences(text, pruning=True):
     :param pruning: Remove smaller sentences
     :return: Sentence Array
     """
-    sentences = sent_tokenize(text)
+    sentences = re.split("(?<!etc)\.", text)
     if pruning:
         return [sentence.strip() for sentence in sentences if len(sentence) > SENTENCE_CHAR_LIMIT]
     return sentences

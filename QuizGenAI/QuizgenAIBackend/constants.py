@@ -31,4 +31,8 @@ UPLOAD_FOLDER = ''
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'html', 'pptx'])
 trained_model_path = 'Question_generation/t5/model1/'
 trained_tokenizer = 'Question_generation/t5/tokenizer1/'
-
+CONTEXT = 'context'
+QUESTION = 'question'
+OPTIONS = 'options'
+CORRECT_ANS = 'correctAnswer'
+IS_SELECTED = 'isSelected'

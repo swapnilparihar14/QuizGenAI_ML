@@ -10,7 +10,8 @@ from sumy.summarizers.lsa import LsaSummarizer
 from sumy.summarizers.reduction import ReductionSummarizer
 from sumy.summarizers.text_rank import TextRankSummarizer
 
-from constants import DEEP_AI_SUMMARIZER, DEEP_AI_API_KEY, ENGLISH, LOGGER_FORMAT, DEEP_AI_ERROR
+from constants import DEEP_AI_SUMMARIZER, ENGLISH, LOGGER_FORMAT, DEEP_AI_ERROR
+from connect import DEEP_AI_API_KEY
 from utility import tokenize_sentences
 
 
@@ -37,7 +38,6 @@ class ExtractiveTextSum:
         :return: Summary of the input text
         """
         sentences_in_text = len(tokenize_sentences(self.text))
-        print(sentences_in_text)
         if sentences_in_text < self.sentence_count:
             self.log.warning(f"Question Count: {self.sentence_count} Sentence Count: {sentences_in_text}")
             return self.text
