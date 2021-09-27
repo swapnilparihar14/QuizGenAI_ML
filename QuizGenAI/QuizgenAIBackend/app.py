@@ -24,7 +24,7 @@ def connectdb(app):
 db = connectdb(app)
 # Use CAPITAL LETTERS FOR GLOBAL VARIABLES
 models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question, SENSE2VEC = models.generate_all_models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question = models.generate_all_models()
 
 
 @app.route('/')
