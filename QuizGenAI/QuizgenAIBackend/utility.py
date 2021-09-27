@@ -1,6 +1,8 @@
 from string import punctuation
 
 import nltk
+import re
+#import wikipedia
 from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -11,7 +13,7 @@ from nltk.tokenize import word_tokenize
 
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer
-import re
+
 from constants import ENGLISH, ADDITIONAL_STOPWORDS, SENTENCE_CHAR_LIMIT, GET_POS, FILL_IN_THE_BLANK_STRING
 
 
@@ -144,3 +146,17 @@ def get_fill_in_the_blank(keyword, sentence):
     elif " " + keyword in sentence:
         return sentence.replace(' ' + keyword, ' ' + FILL_IN_THE_BLANK_STRING, 1)
     return ""
+
+
+def get_data_from_wiki(keyword):
+    """
+    Get the definition of a keyword from the web
+    :param keyword: Keyword for which new information is required from the web
+    :return: text extracted from Wikipedia
+    """
+    try:
+        wiki = wikipedia.page(keyword)
+        text = wiki.content.split('==')[0]
+        return re.sub(r"\([^()]*\)", "", text)
+    except:
+        return ""

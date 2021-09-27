@@ -2,7 +2,7 @@ from allennlp.predictors.predictor import Predictor
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 from sentence_transformers import SentenceTransformer
 from constants import LOGGER_FORMAT, ALLEN_NLP_MODEL, GPT2, BERT_FOR_TF_QUESTIONS, SENSE2VEC_MODEL
-from long_question_generation import model_prod
+from long_question_generation import *
 from sense2vec import Sense2Vec
 import logging
 import inspect
