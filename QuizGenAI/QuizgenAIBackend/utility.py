@@ -2,7 +2,7 @@ from string import punctuation
 
 import nltk
 import re
-#import wikipedia
+import wikipedia
 from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
