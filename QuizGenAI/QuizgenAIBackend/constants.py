@@ -6,7 +6,6 @@ TEXT_EXTENSION = '.txt'
 PPTX_EXTENSION = '.pptx'
 HTML_EXTENSION = '.html'
 DEEP_AI_SUMMARIZER = "https://api.deepai.org/api/summarization"
-DEEP_AI_API_KEY = '4ef082fc-70da-4fbe-a321-a6f13aa56c08'
 ENGLISH = 'english'
 ERROR_MESSAGE = 'Error'
 SUCCESS_MESSAGE = 'Success'
@@ -32,4 +31,8 @@ UPLOAD_FOLDER = ''
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'html', 'pptx'])
 trained_model_path = 'Question_generation/t5/model1/'
 trained_tokenizer = 'Question_generation/t5/tokenizer1/'
-
+CONTEXT = 'context'
+QUESTION = 'question'
+OPTIONS = 'options'
+CORRECT_ANS = 'correctAnswer'
+IS_SELECTED = 'isSelected'

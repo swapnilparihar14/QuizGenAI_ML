@@ -22,9 +22,9 @@ def connectdb(app):
 
 
 db = connectdb(app)
-
+# Use CAPITAL LETTERS FOR GLOBAL VARIABLES
 models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question = models.generate_all_models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question, SENSE2VEC = models.generate_all_models()
 
 
 @app.route('/')
@@ -76,6 +76,15 @@ def get_review_questions():
         file = request.files['file']
         gen_quiz = GenerateQuiz()
         code, json_message = gen_quiz.generate_quiz_driver(quiz_details, file, db)
+        return json_message, code
+
+
+@app.route("/create_quiz", methods=["POST"])
+def get_create_questions():
+    if request.method == 'POST':
+        selected_questions = request.get_json()
+        gen_quiz = GenerateQuiz()
+        code, json_message = gen_quiz.save_questions(selected_questions, db)
         return json_message, code
 
 
