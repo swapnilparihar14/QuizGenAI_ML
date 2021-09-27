@@ -1,4 +1,4 @@
-from model_generation import *
+from long_question_generation import *
 
 #preprocessing.create_folder()
 '''
