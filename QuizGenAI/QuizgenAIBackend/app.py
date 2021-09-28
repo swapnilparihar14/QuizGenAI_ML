@@ -7,6 +7,7 @@ from connect import URI
 from flask_cors import CORS
 from constants import UPLOAD_FOLDER
 from generate_quiz import GenerateQuiz
+from long_question_generation import model_prod
 
 
 app = Flask(__name__)
@@ -22,9 +23,9 @@ def connectdb(app):
 
 
 db = connectdb(app)
-
+# Use CAPITAL LETTERS FOR GLOBAL VARIABLES
 models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, long_question = models.generate_all_models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
 
 
 @app.route('/')
@@ -65,7 +66,9 @@ def long_quest():
         sentence_json = request.get_json()
         context = sentence_json['context']
         keyword = sentence_json['keyword']
-        long_question = models.generate_question(context, keyword)
+
+        temp_model_obj = model_prod(t5_model, t5_tokenizer)
+        long_question = temp_model_obj.generate_question(context, keyword)
         return jsonify(message=long_question)
 
 

@@ -150,7 +150,6 @@ class transformer_model:
 
         pickle_in = open("tokenizer.pickle", 'rb')
         self.t5_tokenizer = pickle.load(pickle_in)
-        #'''
 
     def explore_tokenizer(self):
         from pprint import pprint
@@ -219,9 +218,9 @@ class transformer_model:
 
 class model_prod:
 
-    def __init__(self):
-        self.model = None
-        self.tokenizer = None
+    def __init__(self, t5_model, t5_tokenizer):
+        self.model = t5_model
+        self.tokenizer = t5_tokenizer
         self.device = None
         self.answer = None
         self.context = None
@@ -232,13 +231,13 @@ class model_prod:
         self.beam_outputs = None
         self.text = None
 
-    def import_model(self):
-        self.model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
-        self.tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer)
-
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print("device ", self.device)
-        self.model = self.model.to(self.device)
+    # def import_model(self):
+    #     self.model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
+    #     self.tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer)
+    #
+    #     self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #     print("device ", self.device)
+    #     self.model = self.model.to(self.device)
 
     def generate_question(self, input_answer, input_context):
         self.answer = input_answer
@@ -254,13 +253,14 @@ class model_prod:
             max_length=72,
             early_stopping=True,
             num_beams=5,
-            num_return_sequences=5
+            num_return_sequences=1
 
         )
 
         for beam_output in self.beam_outputs:
             self.sent = self.tokenizer.decode(beam_output, skip_special_tokens=True, clean_up_tokenization_spaces=True)
-            print(self.sent)
+            #print(self.sent)
+            return self.sent[10:]
 
 
 class QuestionGenerationDataset(Dataset):

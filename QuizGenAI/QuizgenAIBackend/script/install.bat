@@ -1,9 +1,6 @@
-pip install flask
-pip install flask_cors
-pip install flask_pymongo
-pip install scipy
 pip install nltk
 pip install transformers
 pip install sentence-transformers
 pip install "pymongo[srv]"
 pip install allennlp
+pip install git+https://github.com/boudinfl/pke.git

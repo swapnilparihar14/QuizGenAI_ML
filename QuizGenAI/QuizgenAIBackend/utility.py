@@ -1,11 +1,16 @@
 from string import punctuation
 
 import nltk
+import re
+import wikipedia
 from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
+
+# import nltk
+# nltk.download('stopwords')
+
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer
 
@@ -86,7 +91,7 @@ def tokenize_sentences(text, pruning=True):
     :param pruning: Remove smaller sentences
     :return: Sentence Array
     """
-    sentences = sent_tokenize(text)
+    sentences = re.split("(?<!etc)\.", text)
     if pruning:
         return [sentence.strip() for sentence in sentences if len(sentence) > SENTENCE_CHAR_LIMIT]
     return sentences
@@ -141,3 +146,17 @@ def get_fill_in_the_blank(keyword, sentence):
     elif " " + keyword in sentence:
         return sentence.replace(' ' + keyword, ' ' + FILL_IN_THE_BLANK_STRING, 1)
     return ""
+
+
+def get_data_from_wiki(keyword):
+    """
+    Get the definition of a keyword from the web
+    :param keyword: Keyword for which new information is required from the web
+    :return: text extracted from Wikipedia
+    """
+    try:
+        wiki = wikipedia.page(keyword)
+        text = wiki.content.split('==')[0]
+        return re.sub(r"\([^()]*\)", "", text)
+    except:
+        return ""
