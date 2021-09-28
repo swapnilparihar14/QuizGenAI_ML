@@ -101,7 +101,7 @@ class ConnectedCreateQuizForm extends React.Component {
         {isLoading ? (
            <div className={createQuizFormStyles.loadingScreen}>
               <VscLoading className={createQuizFormStyles.loadingIcon}/>
-              <h1>Generating Questions...</h1>
+              <h1>Generating Questions ...</h1>
               <h2>Hang on, this might take some time.</h2>
               <h2>DO NOT CLOSE OR RELOAD THIS WINDOW</h2>
            </div>

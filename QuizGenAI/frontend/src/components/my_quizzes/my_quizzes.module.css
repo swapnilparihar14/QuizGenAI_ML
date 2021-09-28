@@ -149,3 +149,50 @@
 .alertFail > p > span {
   font-weight: bolder;
 }
+
+.buttonSelected {
+  background-color: var(--pinkish-red);
+  color: var(--white);
+  border: 1px solid var(--white);
+  display: inline-block;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.buttonUnselected {
+  background-color: var(--white);
+  color: var(--pinkish-red);
+  border: 1px solid var(--pinkish-red);
+  display: inline-block;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 10px;
+  margin-top: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.table {
+  padding: 0;
+}
+
+.tableContainer {
+  overflow-y: scroll;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  max-height: 70vh;
+  padding: 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--gray);
+}
