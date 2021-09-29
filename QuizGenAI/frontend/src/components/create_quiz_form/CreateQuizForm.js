@@ -92,7 +92,15 @@ class ConnectedCreateQuizForm extends React.Component {
       redirectQuiz = <Redirect to={"/review_questions"} />;
     } 
 
-    const fileTypes = ["PDF", "DOC", "PPT", "HTML", "DOCX", "PPTX",];
+    // Send file types in the following form because of how the library react-drag-drop-files works
+    // txt = "plain"
+    // pdf = "pdf"
+    // pptx = "vnd.openxmlformats-officedocument.presentationml.presentation"
+    // html = "html"
+    // doc = "msword"
+    // docx = "vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+    const fileTypes = ["PDF", "HTML", "PLAIN", "vnd.openxmlformats-officedocument.presentationml.presentation"];
 
     let { isLoading } = this.state;
     let loading = null;
