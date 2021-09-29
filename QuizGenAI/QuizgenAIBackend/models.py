@@ -25,7 +25,7 @@ class Models:
             BERT_model = SentenceTransformer(BERT_FOR_TF_QUESTIONS)
             return predictor, GPT2tokenizer, GPT2model, BERT_model
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return None, None, None, None
 
     def long_question_generate(self):
@@ -39,7 +39,7 @@ class Models:
             model = model.to(device)
             return model, tokenizer
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return None, None
 
     def sense_to_vec(self):
@@ -50,7 +50,7 @@ class Models:
         try:
             return Sense2Vec().from_disk(SENSE2VEC_MODEL)
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return None
 
     def generate_all_models(self):

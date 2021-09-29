@@ -1,6 +1,5 @@
 absl-py==0.14.0
 aiohttp==3.7.4.post0
-allennlp==2.7.0
 argcomplete==1.10.3
 argon2-cffi==21.1.0
 async-timeout==3.0.1

@@ -25,12 +25,11 @@ class TrueFalsePreprocessing:
     def tfdriver(self, sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions):
         try:
             split_sentence = self.tfpreprocessor(sentence)
-            print(split_sentence)
             tfgen = TrueFalseGenerator(GPT2tokenizer, GPT2model, BERT_model_tfquestions)
             false_question = tfgen.generate_tf_questions(sentence, split_sentence)
             return false_question
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def tfpreprocessor(self, sentence):
         try:
@@ -44,7 +43,7 @@ class TrueFalsePreprocessing:
             split_sentence = self.get_termination_portion(sentence, longest_phrase_to_use)
             return split_sentence
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def break_sentence(self, sentence):
         try:
@@ -54,7 +53,7 @@ class TrueFalsePreprocessing:
             tree = Tree.fromstring(tree_string)
             return tree
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def get_flattened(self, t):
         try:
@@ -65,7 +64,7 @@ class TrueFalsePreprocessing:
                 sent_str_final = sent_str_final[0]
             return sent_str_final
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def get_right_most_VP_or_NP(self, parse_tree, last_NP=None, last_VP=None):
         try:
@@ -76,10 +75,9 @@ class TrueFalsePreprocessing:
                 last_NP = last_subtree
             elif last_subtree.label() == "VP":
                 last_VP = last_subtree
-
             return self.get_right_most_VP_or_NP(last_subtree, last_NP, last_VP)
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def get_termination_portion(self, main_string, sub_string):
         try:
@@ -94,7 +92,7 @@ class TrueFalsePreprocessing:
                     return " ".join(main_string_list[:i])
             return None
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
 
 class TrueFalseGenerator:
@@ -115,7 +113,7 @@ class TrueFalseGenerator:
             false_sentence = self.choose_best_sentence(original_sentence, false_sentences)
             return false_sentence
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def generate_alternate_endings(self, partial_sentence):
         try:
@@ -138,7 +136,7 @@ class TrueFalseGenerator:
                 generated_sentences.append(final_sentence)
             return generated_sentences
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
     def choose_best_sentence(self, original_sentence, false_sentences):
         try:
@@ -154,7 +152,7 @@ class TrueFalseGenerator:
             for sent in false_sentences_list_final:
                 return sent
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 
 
 

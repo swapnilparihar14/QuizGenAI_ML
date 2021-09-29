@@ -51,14 +51,14 @@ def login():
         return json_message, code
 
 
-# @app.route("/true_false_questions", methods=["GET"])
-# def tfgen():
-#     if request.method == 'GET':
-#         sentence_json = request.get_json()
-#         sentence = sentence_json['sentence']
-#         tfpre = TrueFalsePreprocessing(AllenNLPpredictor)
-#         false_question = tfpre.tfdriver(sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
-#         return jsonify(message=false_question)
+@app.route("/true_false_questions", methods=["GET"])
+def tfgen():
+    if request.method == 'GET':
+        sentence_json = request.get_json()
+        sentence = sentence_json['sentence']
+        tfpre = TrueFalsePreprocessing(AllenNLPpredictor)
+        false_question = tfpre.tfdriver(sentence, GPT2tokenizer, GPT2model, BERT_model_tfquestions)
+        return jsonify(message=false_question)
 
 @app.route("/long_question", methods=["POST"])
 def long_quest():
@@ -77,7 +77,7 @@ def get_review_questions():
     if request.method == 'POST':
         quiz_details = request.form
         file = request.files['file']
-        gen_quiz = GenerateQuiz()
+        gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer)
         code, json_message = gen_quiz.generate_quiz_driver(quiz_details, file, db)
         return json_message, code
 

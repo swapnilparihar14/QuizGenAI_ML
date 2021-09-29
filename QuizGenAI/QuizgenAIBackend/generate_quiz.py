@@ -13,13 +13,21 @@ from keyword_pos_extraction import KeywordAndPOS
 from text_extractor import Dotx2text
 from text_summarization import ExtractiveTextSum
 from utility import tokenize_sentences, get_fill_in_the_blank
+from tfgenerator import TrueFalsePreprocessing
+from long_question_generation import model_prod
 
 
 class GenerateQuiz:
     """ Generates the complete quiz """
 
-    def __init__(self):
+    def __init__(self, predictor, GPT2tokenizer, GPT2model, BERT_model, t5_model, t5_tokenizer):
         """ Constructor """
+        self.AllenNLPpredictor = predictor
+        self.GPT2tokenizer = GPT2tokenizer
+        self.GPT2model = GPT2model
+        self.BERT_model = BERT_model
+        self.t5_model = t5_model
+        self.t5_tokenizer = t5_tokenizer
         self.log = logging.getLogger(self.__class__.__name__)
         file_handler = logging.FileHandler(f'logs/{self.__class__.__name__}.log')
         formatter = logging.Formatter(LOGGER_FORMAT)
@@ -49,7 +57,7 @@ class GenerateQuiz:
                 quiz_id=str(quiz_id)
             )
         except Exception as e:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
     def upload_files(self, file):
@@ -63,7 +71,7 @@ class GenerateQuiz:
             file.save(destination)
             return destination
         except OSError as exc:
-            self.log.debug(f"{inspect.currentframe().f_code.co_name} . Error: {exc}")
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {exc}")
             return ""
 
     def text_preprocessing(self, filename, total_question_count):
@@ -123,18 +131,21 @@ class GenerateQuiz:
         :param correct_ans: The location of the correct answer
         :return: dictionary containing all relevant information about mcq for the frontend
         """
-        question = "This is a MCQ question"
+        temp_model_obj = model_prod(self.t5_model, self.t5_tokenizer)
+        question = temp_model_obj.generate_question(context, options[correct_ans])
         return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: False}
 
-    def get_tfq_question(self, context):
+    def get_tfq_question(self, sentence):
         """
         Get the True or False question for the given content
         :param context: The selected sentence
         :return: dictionary containing all relevant information about mcq for the frontend
         """
-        question = "This is a T/F question"
-        correct_ans = True
-        return {CONTEXT: context, QUESTION: question, CORRECT_ANS: correct_ans, IS_SELECTED: False}
+        print(sentence)
+        tfpre = TrueFalsePreprocessing(self.AllenNLPpredictor)
+        question = tfpre.tfdriver(sentence, self.GPT2tokenizer, self.GPT2model, self.BERT_model)
+        correct_ans = False
+        return {QUESTION: question, CORRECT_ANS: correct_ans, IS_SELECTED: False}
 
     def generate_questions(self, no_of_mcq, no_of_fbq, no_of_tfq, file_destination, no_of_saq=0, option_length=4):
         """
@@ -157,10 +168,12 @@ class GenerateQuiz:
                 keyword_pos, distractors = self.get_distractor(keyword_list[sent_iter], sentences_list[sent_iter],
                                                                option_length)
                 if len(distractors) == option_length and no_of_fbq:
+                    print("fbq", keyword_pos, distractors)
                     fbquestions.append(self.get_fb_question(sentences_list[sent_iter], distractors, keyword_pos))
                     no_of_fbq -= 1
                     flag = False
                 elif len(distractors) == option_length:
+                    print("mcq", keyword_pos, distractors)
                     mcquestions.append(self.get_mcq_question(sentences_list[sent_iter], distractors, keyword_pos))
                     no_of_mcq -= 1
                     flag = False
