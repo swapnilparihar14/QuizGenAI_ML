@@ -93,7 +93,6 @@ parsimonious==0.8.1
 pathy==0.6.0
 pdfminer.six==20191110
 Pillow==8.3.2
-pke @ git+https://github.com/boudinfl/pke.git@485c93879988f5b0290d241ad484c4fae7454530
 plac==0.9.6
 pluggy==1.0.0
 preshed==3.0.5
