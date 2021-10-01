@@ -15,6 +15,7 @@ from text_summarization import ExtractiveTextSum
 from utility import tokenize_sentences, get_fill_in_the_blank
 from tfgenerator import TrueFalsePreprocessing
 from long_question_generation import model_prod
+import datetime;
 
 
 class GenerateQuiz:
@@ -43,6 +44,7 @@ class GenerateQuiz:
             quiz_details_dict['access_code'] = quiz_details['access_code']
             quiz_details_dict['quiz_type'] = quiz_details['quiz_type']
             quiz_details_dict['creator_id'] = quiz_details['creator_id']
+            quiz_details_dict['created_on'] = datetime.datetime.now()
             quiz_details_dict['active'] = False
             if timed == "yes":
                 quiz_details_dict['duration'] = (int(quiz_details['hours']) * 60) + int(quiz_details['minutes'])
@@ -141,7 +143,6 @@ class GenerateQuiz:
         :param context: The selected sentence
         :return: dictionary containing all relevant information about mcq for the frontend
         """
-        print(sentence)
         tfpre = TrueFalsePreprocessing(self.AllenNLPpredictor)
         question = tfpre.tfdriver(sentence, self.GPT2tokenizer, self.GPT2model, self.BERT_model)
         correct_ans = False
@@ -168,12 +169,10 @@ class GenerateQuiz:
                 keyword_pos, distractors = self.get_distractor(keyword_list[sent_iter], sentences_list[sent_iter],
                                                                option_length)
                 if len(distractors) == option_length and no_of_fbq:
-                    print("fbq", keyword_pos, distractors)
                     fbquestions.append(self.get_fb_question(sentences_list[sent_iter], distractors, keyword_pos))
                     no_of_fbq -= 1
                     flag = False
                 elif len(distractors) == option_length:
-                    print("mcq", keyword_pos, distractors)
                     mcquestions.append(self.get_mcq_question(sentences_list[sent_iter], distractors, keyword_pos))
                     no_of_mcq -= 1
                     flag = False

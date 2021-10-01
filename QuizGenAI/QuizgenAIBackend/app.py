@@ -8,6 +8,7 @@ from flask_cors import CORS
 from constants import UPLOAD_FOLDER
 from generate_quiz import GenerateQuiz
 from long_question_generation import model_prod
+from crud_operations import CrudOperations
 
 
 app = Flask(__name__)
@@ -86,8 +87,26 @@ def get_review_questions():
 def get_create_questions():
     if request.method == 'POST':
         selected_questions = request.get_json()
-        gen_quiz = GenerateQuiz()
+        gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer)
         code, json_message = gen_quiz.save_questions(selected_questions, db)
+        return json_message, code
+
+
+@app.route("/get_created_quizzes", methods=["GET"])
+def get_created_quizzes():
+    if request.method == 'GET':
+        user_details = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_created_quizzes(user_details, db)
+        return json_message, code
+
+
+@app.route("/take_quiz", methods=["GET"])
+def take_quiz():
+    if request.method == 'GET':
+        quiz_details = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.take_quiz(quiz_details, db)
         return json_message, code
 
 

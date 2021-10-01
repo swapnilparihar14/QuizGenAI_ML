@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 
-nltk.download('stopwords')
+# nltk.download('stopwords')
 
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer

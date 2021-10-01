@@ -7,12 +7,12 @@ from pke.unsupervised import MultipartiteRank, PositionRank, SingleRank, TextRan
 from constants import ENGLISH, LOGGER_FORMAT, KEYBERT_TOKENS, CONVERT_POS, POS, GRAMMAR
 from utility import get_stopword_list, get_pos_for_keywords
 
-import nltk
-nltk.download('averaged_perceptron_tagger')
-import spacy
-spacy.load("en_core_web_sm")
-nltk.download('wordnet')
-nltk.download('punkt')
+# import nltk
+# nltk.download('averaged_perceptron_tagger')
+# import spacy
+# spacy.load("en_core_web_sm")
+# nltk.download('wordnet')
+# nltk.download('punkt')
 
 # pip3 install git+https://github.com/boudinfl/pke.git
 # pip3 install flashtext
