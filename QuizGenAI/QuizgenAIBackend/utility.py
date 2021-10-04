@@ -12,7 +12,6 @@ from nltk.tokenize import word_tokenize
 
 from nltk.translate.bleu_score import sentence_bleu
 from rouge_score import rouge_scorer
-
 from constants import ENGLISH, ADDITIONAL_STOPWORDS, SENTENCE_CHAR_LIMIT, GET_POS, FILL_IN_THE_BLANK_STRING
 
 
@@ -140,10 +139,15 @@ def get_fill_in_the_blank(keyword, sentence):
     :param sentence: Sentence containing the keyword
     :return: Sentence with the keyword dashed-out or empty string if failed
     """
-    if keyword + ' ' in sentence:
-        return sentence.replace(keyword + ' ', FILL_IN_THE_BLANK_STRING + ' ', 1)
-    elif " " + keyword in sentence:
-        return sentence.replace(' ' + keyword, ' ' + FILL_IN_THE_BLANK_STRING, 1)
+    if keyword.lower() + ' ' in sentence.lower():
+        reg_ex = re.compile(re.escape(keyword+' '), re.IGNORECASE)
+        return reg_ex.sub(FILL_IN_THE_BLANK_STRING + ' ', sentence)
+    elif ' ' + keyword.lower() in sentence.lower():
+        reg_ex = re.compile(re.escape(' ' + keyword), re.IGNORECASE)
+        return reg_ex.sub(' ' + FILL_IN_THE_BLANK_STRING, sentence)
+    elif keyword.lower() in sentence.lower():
+        reg_ex = re.compile(re.escape(keyword), re.IGNORECASE)
+        return reg_ex.sub(FILL_IN_THE_BLANK_STRING, sentence)
     return ""
 
 
