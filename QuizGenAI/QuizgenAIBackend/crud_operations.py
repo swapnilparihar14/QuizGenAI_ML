@@ -1,3 +1,4 @@
+import json
 import logging
 from constants import LOGGER_FORMAT
 from flask import jsonify
@@ -69,7 +70,7 @@ class CrudOperations:
                 for question in questions:
                     question_type = question['type']
                     question_dict = {'question': question['question'], 'type': question_type}
-                    if question_type  == 'mcq' or question_type == 'fbq':
+                    if question_type == 'mcq' or question_type == 'fbq':
                         question_dict['options'] = question['options']
                     quiz_dict['questions'].append(question_dict)
 
@@ -78,6 +79,50 @@ class CrudOperations:
                 )
             else:
                 return 403, jsonify(message="Invalid access code")
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
+
+    def get_all_questions(self, db, quiz_details):
+        """
+        For taking a quiz that has already been created
+        :params quiz_details: quiz details from API
+        :params db: database object
+        """
+        try:
+            print(quiz_details)
+            all_questions = db.questions.find(
+                {
+                    'quiz_id': quiz_details['quiz_id']
+                }
+            )
+            to_return = list()
+            to_return_dict = dict()
+
+            for question in all_questions:
+                to_return.append(question)
+
+                temp_str = str(question['_id'])
+                temp_dict = dict()
+
+                temp_dict['question'] = question['question']
+                temp_dict['answer'] = question['answer']
+                temp_dict['type'] = question['type']
+
+                if question['type'] == 'mcq':
+                    temp_dict['context'] = question['context']
+                    temp_dict['options'] = question['options']
+
+                if question['type'] == 'fbq':
+                    temp_dict['options'] = question['options']
+
+                to_return_dict[temp_str] = temp_dict
+
+            if all_questions is not None:
+                return 201, jsonify(
+                    to_return_dict
+                )
+
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")

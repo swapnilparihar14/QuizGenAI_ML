@@ -1,4 +1,4 @@
-from long_question_generation import *
+#from long_question_generation import *
 
 #preprocessing.create_folder()
 '''
@@ -24,8 +24,8 @@ t5_tokenizer = copy.deepcopy(model_t.t5_tokenizer)
 
 '''
 
-prod = model_prod()
-prod.import_model()
+#prod = model_prod()
+#prod.import_model()
 
 context ="""There is a lot of volcanic activity at divergent plate boundaries in the oceans. For example, many undersea 
 volcanoes are found along the Mid-Atlantic Ridge. This is a divergent plate boundary that runs north-south through 
@@ -41,4 +41,11 @@ a volcanic arc. The edges of the Pacific plate are long subduction zones lined w
 Pacific rim is called the "Pacific Ring of Fire."""
 answer = "plate melts"
 
-prod.generate_question(context, answer)
+#prod.generate_question(context, answer)
+
+
+import json
+
+abc = "{'_id': ObjectId('61550375040b65a4ef7bad2a'), 'question': 'The ________________ newspaper defined southern California', 'answer': 1, 'options': ['New York Times', 'Los Angeles Times', 'San Jose Tribune', 'San Francisco Tribune'], 'type': 'fbq', 'quiz_id': '615431e616f203abef173db5'}"
+
+print(abc, json.dumps(abc))
