@@ -119,9 +119,11 @@ class CrudOperations:
                 to_return_dict[temp_str] = temp_dict
 
             if all_questions is not None:
-                return 201, jsonify(
+                return 200, jsonify(
                     to_return_dict
                 )
+            else:
+                return 400, jsonify(message="No questions added to the quiz")
 
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
