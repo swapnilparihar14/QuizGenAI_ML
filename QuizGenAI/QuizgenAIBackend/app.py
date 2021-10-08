@@ -25,8 +25,8 @@ def connectdb(app):
 
 db = connectdb(app)
 # #Use CAPITAL LETTERS FOR GLOBAL VARIABLES
-# models = Models()
-# AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
+models = Models()
+AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
 
 
 @app.route('/')
@@ -49,15 +49,6 @@ def login():
         user_details = request.get_json()
         auth = Authentication()
         code, json_message = auth.user_login(db, user_details)
-        return json_message, code
-
-
-@app.route("/get_your_created_quiz", methods=["GET"])
-def get_your_created_quiz():
-    if request.method == "GET":
-        quiz_details = request.get_json()
-        crud_operations = CrudOperations()
-        code, json_message = crud_operations.get_all_questions(db, quiz_details)
         return json_message, code
 
 
@@ -107,6 +98,15 @@ def get_created_quizzes():
         user_details = request.get_json()
         crud_operations = CrudOperations()
         code, json_message = crud_operations.get_created_quizzes(user_details, db)
+        return json_message, code
+
+
+@app.route("/get_your_created_quiz", methods=["GET"])
+def get_your_created_quiz():
+    if request.method == "GET":
+        quiz_details = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_all_questions(db, quiz_details)
         return json_message, code
 
 
