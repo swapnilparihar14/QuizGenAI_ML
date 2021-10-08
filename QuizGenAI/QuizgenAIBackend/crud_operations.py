@@ -97,30 +97,45 @@ class CrudOperations:
                 }
             )
             to_return = list()
-            to_return_dict = dict()
 
+            to_return_tfq = list()
+            to_return_mcq = list()
+            to_return_fbq = list()
+
+            to_return_dict = dict()
+            to_return_wrapper = dict()
+            to_return_wrapper['message'] = 'success'
+            to_return_wrapper['questions'] = ''
             for question in all_questions:
                 to_return.append(question)
-
-                temp_str = str(question['_id'])
                 temp_dict = dict()
 
-                temp_dict['question'] = question['question']
-                temp_dict['answer'] = question['answer']
-                temp_dict['type'] = question['type']
+                if question['type'] == 'tfq':
+                    temp_dict['question'] = question['question']
+                    temp_dict['answer'] = question['answer']
+                    to_return_tfq.append(temp_dict)
 
                 if question['type'] == 'mcq':
+                    temp_dict['question'] = question['question']
+                    temp_dict['answer'] = question['answer']
                     temp_dict['context'] = question['context']
                     temp_dict['options'] = question['options']
+                    to_return_mcq.append(temp_dict)
 
                 if question['type'] == 'fbq':
+                    temp_dict['question'] = question['question']
+                    temp_dict['answer'] = question['answer']
                     temp_dict['options'] = question['options']
+                    to_return_fbq.append(temp_dict)
 
-                to_return_dict[temp_str] = temp_dict
+            to_return_dict['fbq'] = to_return_fbq
+            to_return_dict['mcq'] = to_return_mcq
+            to_return_dict['tfq'] = to_return_tfq
+            to_return_wrapper['questions'] = to_return_dict
 
             if all_questions is not None:
-                return 201, jsonify(
-                    to_return_dict
+                return 200, jsonify(
+                    to_return_wrapper
                 )
 
         except Exception as e:

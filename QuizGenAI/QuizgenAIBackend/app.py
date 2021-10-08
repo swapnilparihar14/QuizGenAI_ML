@@ -24,7 +24,7 @@ def connectdb(app):
 
 
 db = connectdb(app)
-# Use CAPITAL LETTERS FOR GLOBAL VARIABLES
+# #Use CAPITAL LETTERS FOR GLOBAL VARIABLES
 # models = Models()
 # AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
 
