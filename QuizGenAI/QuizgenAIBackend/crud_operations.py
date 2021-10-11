@@ -25,7 +25,7 @@ class CrudOperations:
         try:
             quizzes = db.quiz.find(
                 {
-                    'creator_id': user_details['id']
+                    'creator_id': user_details.get("id")
                 }
             )
 
@@ -39,7 +39,6 @@ class CrudOperations:
                     "times_taken": 5
                 }
                 user_quizzes.append(quiz_dict)
-
             return 200, jsonify(
                 quizzes=user_quizzes
             )
