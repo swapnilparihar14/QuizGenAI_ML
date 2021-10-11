@@ -35,7 +35,8 @@ class CrudOperations:
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
                     "access_code": quiz["access_code"],
-                    "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S')
+                    "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
+                    "times_taken": 5
                 }
                 user_quizzes.append(quiz_dict)
 
