@@ -109,12 +109,12 @@ def get_your_created_quiz():
         return json_message, code
 
 
-@app.route("/take_quiz", methods=["GET"])
-def take_quiz():
+@app.route("/take_created_quiz", methods=["GET"])
+def take_created_quiz():
     if request.method == 'GET':
-        quiz_details = request.get_json()
+        quiz_details = request.args
         crud_operations = CrudOperations()
-        code, json_message = crud_operations.take_quiz(quiz_details, db)
+        code, json_message = crud_operations.take_created_quiz(quiz_details, db)
         return json_message, code
 
 

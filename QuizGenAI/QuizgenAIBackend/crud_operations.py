@@ -3,6 +3,7 @@ import logging
 from constants import LOGGER_FORMAT
 from flask import jsonify
 import inspect
+from bson.objectid import ObjectId
 
 
 class CrudOperations:
@@ -47,7 +48,7 @@ class CrudOperations:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
-    def take_quiz(self, quiz_details, db):
+    def take_created_quiz(self, quiz_details, db):
         """
         For taking a quiz that has already been created
         :params quiz_details: quiz details from API
@@ -56,15 +57,19 @@ class CrudOperations:
         try:
             quiz = db.quiz.find_one(
                 {
-                    '_id': quiz_details["quiz_id"]
+                    '_id': ObjectId(quiz_details.get("quiz_id"))
                 }
             )
 
-            if quiz_details['access_code'] == quiz['access_code']:
-                quiz_dict = {'quiz_id': quiz_details["quiz_id"], 'duration': quiz['duration'], 'questions': []}
-                questions = db.quiz.find_one(
+            if quiz_details.get('access_code') == quiz['access_code']:
+                quiz_dict = {
+                    'quiz_id': quiz_details.get("quiz_id"),
+                    'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
+                    'questions': []
+                }
+                questions = db.questions.find(
                     {
-                        'quiz_id': quiz_details["quiz_id"]
+                        'quiz_id': quiz_details.get("quiz_id")
                     }
                 )
 
@@ -76,7 +81,7 @@ class CrudOperations:
                     quiz_dict['questions'].append(question_dict)
 
                 return 200, jsonify(
-                    quiz=questions
+                    quiz=quiz_dict
                 )
             else:
                 return 403, jsonify(message="Invalid access code")
