@@ -35,8 +35,16 @@ class ConnectedNavBar extends React.Component {
               </Navbar.Brand>
               <Container style={{marginRight: "20px", width: "auto"}}>
                 <Nav id={navbarStyles.nav}>
+                  <Link to={"/my_quizzes"} className={navbarStyles.links_dark} style={{ display: "block", padding: "10px"}}>
+                   Home
+                  </Link>
+                  <span className={navbarStyles.separator}>|</span>
                   <Link to={"/create_quiz"} className={navbarStyles.links_dark} style={{ display: "block", padding: "10px"}}>
                    Create Quiz
+                  </Link>
+                  <span className={navbarStyles.separator}>|</span>
+                  <Link to={"/practice_quiz"} className={navbarStyles.links_dark} style={{ display: "block", padding: "10px"}}>
+                   Practice Quiz
                   </Link>
                   <span className={navbarStyles.separator}>|</span>
                   <Link to={"/take_quiz"}  className={navbarStyles.links_dark} style={{ display: "block", padding: "10px"}}>

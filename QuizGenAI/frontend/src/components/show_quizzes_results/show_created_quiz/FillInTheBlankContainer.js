@@ -1,23 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Col, Card } from "react-bootstrap";
 import FillInTheBlankContainerStyles from "./fillin_the_blank_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
-import { selectQuestion } from "../../actions/review_questions";
-
-class ConnectedFillInTheBlankContainer extends React.Component {
+class FillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
     }
-  }
-
-  setSelected = e =>{
-    e.preventDefault();
-    this.props.dispatch(
-      selectQuestion("fbq", this.props.position-1)
-    );
   }
 
   render() {
@@ -26,7 +16,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
 
     let answers = this.props.fillinTheBlankQuestion.options.map((answer) => { 
       counter++;
-      if(counter-1 === this.props.fillinTheBlankQuestion.correctAnswer)
+      if(counter-1 === this.props.fillinTheBlankQuestion.answer)
         return (<>
           <h6 className={FillInTheBlankContainerStyles.correct_answers} key={"fillinTheBlankAnswers"+counter}>{letters[counter-1]}{answer}</h6>
           <RiCheckboxCircleLine key={"fillinTheBlankAnswersSymbol"+counter} style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
@@ -39,7 +29,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
     });
 
     return (
-      <Card onClick= {this.setSelected} className={this.props.reviewQuestions.questions.fbq[this.props.position-1].isSelected ? FillInTheBlankContainerStyles.cardSelected: FillInTheBlankContainerStyles.card}>
+      <Card className={FillInTheBlankContainerStyles.card}>
         <Col style={{textAlign: "left"}}>
             <h4 className={FillInTheBlankContainerStyles.questions}>{this.props.fillinTheBlankQuestion.question}</h4>
             {answers}
@@ -49,9 +39,4 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { reviewQuestions: state.reviewQuestions };
-};
-
-const FillInTheBlankContainer = connect(mapStateToProps)(ConnectedFillInTheBlankContainer);
 export default FillInTheBlankContainer;

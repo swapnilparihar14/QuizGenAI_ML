@@ -1,28 +1,28 @@
 :root {
-  --pinkish-red: #E63946;
+  --pinkish-red: #e63946;
   --green: #00cc00;
-  --red:#000000;
+  --red: #000000;
   /* --dark-blue: #437FC7; */
-  --dark-blue: #1E3556;
-  --blue: #6DAFFE;
-  --light-blue: #EDF6FF;
+  --dark-blue: #1e3556;
+  --blue: #6daffe;
+  --light-blue: #edf6ff;
   --gray: #424242;
-  --light-gray: #F3F3F3;
-  --white: #FFFFFF;
+  --light-gray: #f3f3f3;
+  --white: #ffffff;
   --black: #000000;
 }
 
 body {
   margin: 0;
-  font-family: hurme_no2-webfont, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: hurme_no2-webfont, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-y: auto;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

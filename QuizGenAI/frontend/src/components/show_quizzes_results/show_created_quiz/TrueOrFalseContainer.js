@@ -1,30 +1,20 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Col, Card } from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 import { RiCheckboxCircleLine } from "react-icons/ri";
 
-import { selectQuestion } from "../../actions/review_questions";
-
-class ConnectedTrueOrFalseContainer extends React.Component {
+class TrueOrFalseContainer extends React.Component {
   constructor(){
     super();
     this.state = {
     }
   }
 
-  setSelected = e =>{
-    e.preventDefault();
-    this.props.dispatch(
-      selectQuestion("tfq", this.props.position-1)
-    );
-  }
-
   render() {
     let t = null;
     let f = null;
 
-    if (this.props.trueOrFalseQuestion.correctAnswer === true) {
+    if (this.props.trueOrFalseQuestion.answer === true) {
       t = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>A. True</h6>
         <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
@@ -36,7 +26,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
       )
     }
 
-    if (this.props.trueOrFalseQuestion.correctAnswer === false) {
+    if (this.props.trueOrFalseQuestion.answer === false) {
       f = (<>
         <h6 className={TrueOrFalseContainerStyles.correct_answers}>B. False</h6>
         <RiCheckboxCircleLine style={{ color: "var(--green)", paddingBottom: "2px"}}></RiCheckboxCircleLine>
@@ -49,7 +39,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     }
 
     return (
-      <Card onClick= {this.setSelected} className={this.props.reviewQuestions.questions.tfq[this.props.position-1].isSelected ? TrueOrFalseContainerStyles.cardSelected: TrueOrFalseContainerStyles.card}>
+      <Card className={TrueOrFalseContainerStyles.card}>
         <Col  style={{textAlign: "left"}}>
             <h4 className={TrueOrFalseContainerStyles.questions}>{this.props.trueOrFalseQuestion.question}</h4>
             {t}
@@ -60,9 +50,4 @@ class ConnectedTrueOrFalseContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { reviewQuestions: state.reviewQuestions };
-};
-
-const TrueOrFalseContainer = connect(mapStateToProps)(ConnectedTrueOrFalseContainer);
 export default TrueOrFalseContainer;

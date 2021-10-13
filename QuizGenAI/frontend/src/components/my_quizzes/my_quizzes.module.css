@@ -108,6 +108,7 @@
 
 .alertSuccess {
   border: 2px solid var(--green);
+  border-radius: 5px;
   background-color: rgb(0 204 0 / 20%);
   padding-top: 3px;
   padding-bottom: 3px;
@@ -130,6 +131,7 @@
 
 .alertFail {
   border: 2px solid red;
+  border-radius: 5px;
   background-color: rgb(255 0 0 / 20%);
   padding-top: 5px;
   padding-bottom: 5px;
@@ -180,14 +182,16 @@
 
 .table {
   padding: 0;
+  border: 1px solid var(--light-gray);
 }
 
 .tableContainer {
   overflow-y: scroll;
   margin-top: 20px;
   margin-bottom: 10px;
-  max-height: 70vh;
+  max-height: 72vh;
   padding: 0;
+  box-shadow: 2px 2px #e8e8e8;
 }
 
 .title {
@@ -195,4 +199,61 @@
   text-align: center;
   font-weight: 700;
   color: var(--gray);
+}
+
+.table tbody tr {
+  background-color: var(--white) !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray);
+}
+
+.table tbody tr:hover td {
+  background-color: var(--light-blue);
+}
+
+.table thead tr {
+  font-size: 0.85rem;
+  font-weight: bolder;
+  color: var(--gray);
+}
+
+.table tbody td {
+  padding: 10px 10px;
+  border-color: var(--light-gray);
+}
+
+.table thead th {
+  padding: 10px 10px;
+  border-color: var(--light-gray);
+}
+
+.table thead {
+  background-color: #fafafa;
+  position: sticky;
+  top: 0;
+}
+
+.link {
+  color: #0645ad;
+}
+
+.ac {
+  display: inline;
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray);
+}
+
+.ac:hover {
+  display: inline;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray);
+  text-security: none;
+  -webkit-text-security: none;
+  -moz-text-security: none;
 }

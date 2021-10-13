@@ -100,7 +100,8 @@ class ConnectedCreateQuizForm extends React.Component {
     // doc = "msword"
     // docx = "vnd.openxmlformats-officedocument.wordprocessingml.document"
 
-    const fileTypes = ["PDF", "HTML", "PLAIN", "vnd.openxmlformats-officedocument.presentationml.presentation"];
+    const fileTypes = ["PDF", "PLAIN", "HTML", "vnd.openxmlformats-officedocument.presentationml.presentation"];
+    const fileTypesToDisplay = ["PDF", "TXT", "HTML", "PPT"];
 
     let { isLoading } = this.state;
     let loading = null;
@@ -229,6 +230,7 @@ class ConnectedCreateQuizForm extends React.Component {
           </Card> 
           
           <Card className={createQuizFormStyles.card}>
+            <h2 className={createQuizFormStyles.instructions}>Enter the number of questions to be generated</h2>
             <Form.Group controlId="multiplechoicequestions" style={{margin: "0"}}>
               <Form.Label className={createQuizFormStyles.labels}>Multiple Choice Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
@@ -249,8 +251,10 @@ class ConnectedCreateQuizForm extends React.Component {
           </Card> 
           
           <Card className={createQuizFormStyles.card}>
+            <h2 className={createQuizFormStyles.instructions}>Upload File</h2>
+            <p className={createQuizFormStyles.fileTypes}>Accepted file types: {fileTypesToDisplay.join(", ")}</p>
             <FileUploader handleChange={this.handleFile} name="file" types={fileTypes} />
-            <p>{this.state.file ? `File name: ${this.state.file.name}` : "No file uploaded yet"}</p>
+            <p>{this.state.file ? `File name: ${this.state.file.name}` : "No file uploaded"}</p>
           </Card>  
         </Form>
 

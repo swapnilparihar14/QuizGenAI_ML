@@ -73,7 +73,7 @@ export const login = (data) => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    console.log(err.response);
+    console.log("err", err);
     const error = err.response.data.message;
 
     dispatch({

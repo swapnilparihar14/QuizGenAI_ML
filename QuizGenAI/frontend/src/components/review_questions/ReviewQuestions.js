@@ -18,6 +18,10 @@ class ConnectedReviewQuestions extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   clickCreateQuiz = async e => {
     e.preventDefault();
 
@@ -45,7 +49,7 @@ class ConnectedReviewQuestions extends React.Component {
     if(review_questions.createQuizStatus)
       redirectVar =  <Redirect to="/my_quizzes" />;
     else {
-      if (review_questions.questions.mcq.lenght !== 0){
+      if (review_questions.questions.mcq.length !== 0){
         multipleChoiceQuestionsHeader = (<Card className={reviewQuestionsStyles.card_header}>
           <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
         </Card>);
@@ -64,7 +68,7 @@ class ConnectedReviewQuestions extends React.Component {
 
       counter = 0;
 
-      if (review_questions.questions.fbq.lenght !== 0){
+      if (review_questions.questions.fbq.length !== 0){
         fillinTheBlankQuestionsHeader=( <Card className={reviewQuestionsStyles.card_header}>
           <Card.Title className={reviewQuestionsStyles.title}>Fill-in the Blank Questions</Card.Title>
         </Card>);
@@ -83,7 +87,7 @@ class ConnectedReviewQuestions extends React.Component {
 
       counter = 0;
 
-      if (review_questions.questions.tfq.lenght !== 0){
+      if (review_questions.questions.tfq.length !== 0){
         trueOrFalseQuestionsHeader=(<Card className={reviewQuestionsStyles.card_header}>
           <Card.Title className={reviewQuestionsStyles.title}>True or False Questions</Card.Title>
         </Card>);

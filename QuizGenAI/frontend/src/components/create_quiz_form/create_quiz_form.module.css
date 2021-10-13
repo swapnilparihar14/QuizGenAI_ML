@@ -55,6 +55,19 @@ body {
   border-radius: 0.25rem;
 }
 
+.card span:nth-of-type(even) {
+  display: none;
+}
+
+.fileTypes {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.instructions {
+  font-size: 1.1rem;
+}
+
 .links:hover {
   color: var(--white);
   text-decoration: none;
