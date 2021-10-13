@@ -36,7 +36,8 @@ class CrudOperations:
                     "name": quiz["quiz_name"],
                     "access_code": quiz["access_code"],
                     "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
-                    "times_taken": 5
+                    "times_taken": 5,
+                    "quiz_type": quiz["quiz_type"]
                 }
                 user_quizzes.append(quiz_dict)
             return 200, jsonify(
