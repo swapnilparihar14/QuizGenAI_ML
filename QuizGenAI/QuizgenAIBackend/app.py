@@ -103,9 +103,9 @@ def get_created_quizzes():
 @app.route("/get_your_created_quiz", methods=["GET"])
 def get_your_created_quiz():
     if request.method == "GET":
-        quiz_details = request.get_json()
+        quiz_details = request.args
         crud_operations = CrudOperations()
-        code, json_message = crud_operations.get_all_questions(db, quiz_details)
+        code, json_message = crud_operations.get_all_created_questions(db, quiz_details)
         return json_message, code
 
 

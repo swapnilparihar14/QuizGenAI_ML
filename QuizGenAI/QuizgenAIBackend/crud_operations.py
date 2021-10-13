@@ -89,17 +89,16 @@ class CrudOperations:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
-    def get_all_questions(self, db, quiz_details):
+    def get_all_created_questions(self, db, quiz_details):
         """
         For taking a quiz that has already been created
         :params quiz_details: quiz details from API
         :params db: database object
         """
         try:
-            print(quiz_details)
             all_questions = db.questions.find(
                 {
-                    'quiz_id': quiz_details['quiz_id']
+                    'quiz_id': quiz_details.get('quiz_id')
                 }
             )
             to_return = list()
