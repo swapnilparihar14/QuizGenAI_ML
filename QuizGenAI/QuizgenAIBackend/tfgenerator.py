@@ -126,7 +126,7 @@ class TrueFalseGenerator:
                 top_p=0.80,  # 0.85
                 top_k=30,  # 30
                 repetition_penalty=10.0,
-                num_return_sequences=10
+                num_return_sequences=4
             )
 
             generated_sentences = []
@@ -149,8 +149,11 @@ class TrueFalseGenerator:
             for idx, distance in results:
                 dissimilar_sentences.append(false_sentences[idx])
             false_sentences_list_final = reversed(dissimilar_sentences)
+            i = 0
             for sent in false_sentences_list_final:
-                return sent
+                i += 1
+                if i == 4:
+                    return sent
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
 

@@ -137,15 +137,23 @@ class GenerateQuiz:
         question = temp_model_obj.generate_question(context, options[correct_ans])
         return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: False}
 
-    def get_tfq_question(self, sentence):
+    def get_tfq_question(self, sentence, iter):
         """
         Get the True or False question for the given content
         :param context: The selected sentence
         :return: dictionary containing all relevant information about mcq for the frontend
         """
-        tfpre = TrueFalsePreprocessing(self.AllenNLPpredictor)
-        question = tfpre.tfdriver(sentence, self.GPT2tokenizer, self.GPT2model, self.BERT_model)
-        correct_ans = False
+        question = sentence
+        correct_ans = True
+        if iter%2 == 0:
+            tfpre = TrueFalsePreprocessing(self.AllenNLPpredictor)
+            generated_question = tfpre.tfdriver(sentence, self.GPT2tokenizer, self.GPT2model, self.BERT_model)
+            if generated_question is None:
+                question = sentence
+                correct_ans = True
+            else:
+                question = generated_question
+                correct_ans = False
         return {QUESTION: question, CORRECT_ANS: correct_ans, IS_SELECTED: False}
 
     def generate_questions(self, no_of_mcq, no_of_fbq, no_of_tfq, file_destination, no_of_saq=0, option_length=4):
@@ -177,7 +185,7 @@ class GenerateQuiz:
                     no_of_mcq -= 1
                     flag = False
             if no_of_tfq and flag:
-                tfquestions.append(self.get_tfq_question(sentences_list[sent_iter]))
+                tfquestions.append(self.get_tfq_question(sentences_list[sent_iter], no_of_tfq))
                 no_of_tfq -= 1
             sent_iter += 1
             total_question_count = no_of_mcq + no_of_fbq + no_of_tfq + no_of_saq

@@ -75,7 +75,11 @@ class CrudOperations:
 
                 for question in questions:
                     question_type = question['type']
-                    question_dict = {'question': question['question'], 'type': question_type}
+                    question_dict = {
+                        'question': question['question'],
+                        'type': question_type,
+                        'question_id': str(question['_id'])
+                    }
                     if question_type == 'mcq' or question_type == 'fbq':
                         question_dict['options'] = question['options']
                     quiz_dict['questions'].append(question_dict)
