@@ -3,7 +3,7 @@ import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, CREAT
 import url from "../config/config";
 
 // Get review questions
-export const createQuizForm = (data, file) => async dispatch => {
+export const getReviewQuestions = (data, file) => async dispatch => {
   const config = {
     headers: {
       'Accept': 'application/json',

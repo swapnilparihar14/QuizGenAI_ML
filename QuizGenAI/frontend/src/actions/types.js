@@ -22,6 +22,10 @@ export const GET_PRACTICE_QUIZ_FAIL = "GET_PRACTICE_QUIZ_FAIL";
 export const GET_TAKEN_QUIZ = "GET_TAKEN_QUIZ";
 export const GET_TAKEN_QUIZ_FAIL = "GET_TAKEN_QUIZ_FAIL";
 export const RESET_SHOW_QUIZ = "RESET_SHOW_QUIZ";
+export const TAKE_QUIZ = "TAKE_QUIZ";
+export const TAKE_QUIZ_FAIL = "TAKE_QUIZ_FAIL";
+export const RESET_TAKE_QUIZ = "RESET_TAKE_QUIZ";
+
 
 
 

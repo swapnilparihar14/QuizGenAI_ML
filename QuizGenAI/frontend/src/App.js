@@ -6,7 +6,6 @@ import CreateQuizForm from "./components/create_quiz_form/CreateQuizForm";
 import ReviewQuestions from "./components/review_questions/ReviewQuestions";
 import TakeQuiz from "./components/take_quiz/TakeQuiz";
 import NewQuiz from "./components/new_quiz/NewQuiz";
-import ExistingQuiz from "./components/existing_quiz/ExistingQuiz";
 import TakeQuizQuestions from "./components/take_quiz_questions/TakeQuizQuestions";
 import MyQuizzes from "./components/my_quizzes/MyQuizzes";
 import ShowCreatedQuiz from "./components/show_quizzes_results/show_created_quiz/showCreatedQuiz";
@@ -23,7 +22,6 @@ function App() {
         <Route path="/review_questions" component={ReviewQuestions} />
         <Route path="/take_quiz" component={TakeQuiz} />
         <Route path="/new_quiz" component={NewQuiz} />
-        <Route path="/existing_quiz" component={ExistingQuiz} />
         <Route path="/take_quiz_questions" component={TakeQuizQuestions} />
         <Route exact path="/my_quizzes" component={MyQuizzes} />
         <Route exact path="/my_quizzes/:quizid" component={ShowCreatedQuiz} />

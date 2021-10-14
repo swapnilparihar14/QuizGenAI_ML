@@ -8,6 +8,8 @@ const show_created_quiz = (state = initialState, action) => {
 
   switch (type) {
     case GET_CREATED_QUIZ:
+      if(state.message)
+        delete state.message;
       return {
         ...state,
         ...payload

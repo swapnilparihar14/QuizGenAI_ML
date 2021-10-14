@@ -8,52 +8,41 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      selected: false,
-      makeSense: null,
+      answer: null
     }
   }
 
-  handleChange = e =>{
-    this.setState({ [e.target.id]: e.target.value });
+  setRadioValue = val =>{
+    this.setState({ answer: val });
   }
 
   render() {
+    console.log("prev", this.state.answer);
+    let counter = 0;
+ 
+    let options = this.props.fillinTheBlankQuestion.options.map((answer) => {
+      counter++;
+      return(<Form.Check key={counter} className={FillInTheBlankContainerStyles.answers} style={{marginLeft: "20px"}}
+        label={answer}
+        value={counter}
+        name="group1"
+        type="radio"
+        id="default-radio-1"
+        onChange={e => this.setRadioValue(e.currentTarget.value)}
+      />)
+    });
+
     return (<>
       <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Fill in the blank in the following sentence.</h2>
       <Card onClick= {this.clickCreateQuiz} className={FillInTheBlankContainerStyles.card}>
         <Row  xs={12} md={12} lg={12}>
-          <Col  xs={8} md={8} lg={8}>
-              <h4 className={FillInTheBlankContainerStyles.questions}>{this.props.fillinTheBlankQuestion.question}</h4>
-              <Form.Group controlId="answer" className={FillInTheBlankContainerStyles.answers}>
-                <Form.Control
-                  onChange={this.handleChange}
-                  type="text"
-                />
-              </Form.Group>
+          <Col xs={12} md={12} lg={12}>
+            <h4 className={FillInTheBlankContainerStyles.questions}>{this.props.fillinTheBlankQuestion.question}</h4>
+            <div>
+              {options}
+            </div>
           </Col>
-          <Col  xs={4} md={4} lg={4}>
-            <h4 className={FillInTheBlankContainerStyles.questions}>Does this question make sense?</h4>
-
-            {['radio'].map((type) => (
-              <div key={`inline-${type}`} >
-                <Form.Check className={FillInTheBlankContainerStyles.answers} style={{marginRight: "50px"}}
-                  inline
-                  label="Yes"
-                  name="group1"
-                  type={type}
-                  id={`inline-${type}-1`}
-                />
-                <Form.Check className={FillInTheBlankContainerStyles.answers}
-                  inline
-                  label="No"
-                  name="group1"
-                  type={type}
-                  id={`inline-${type}-2`}
-                />
-              </div>
-            ))}
-          </Col>
-          </Row>
+        </Row>
       </Card> 
       </>
     );

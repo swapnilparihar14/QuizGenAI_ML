@@ -1,10 +1,10 @@
 .page_header {
   text-align: center;
-  color: var(--gray);
+  color: var(--white);
   font-weight: bolder;
   font-size: 1.3rem;
   text-transform: uppercase;
-  background-color: var(--white);
+  background-color: var(--dark-blue);
   padding-top: 8px;
   padding-bottom: 8px;
 }

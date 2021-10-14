@@ -10,6 +10,12 @@ const auth = (state = initialState, action) => {
   switch (type) {
     case SIGNUP_SUCCESS:
     case LOGIN_SUCCESS:
+      if(state.signup_message)
+        delete state.signup_message;
+
+      if(state.login_message)
+      delete state.login_message;
+
       localStorage.setItem("id", payload._id);
       delete payload._id;
       return {

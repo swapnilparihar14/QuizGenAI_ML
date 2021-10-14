@@ -10,7 +10,7 @@ import createQuizFormStyles from "./create_quiz_form.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
-import { createQuizForm, resetReviewQuestions } from "../../actions/review_questions";
+import { getReviewQuestions, resetReviewQuestions } from "../../actions/review_questions";
 
 class ConnectedCreateQuizForm extends React.Component {
   constructor(){
@@ -66,7 +66,7 @@ class ConnectedCreateQuizForm extends React.Component {
     let id = localStorage.getItem("id");
 
     await this.props.dispatch(
-      createQuizForm({
+      getReviewQuestions({
         quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
       }, file)
     );

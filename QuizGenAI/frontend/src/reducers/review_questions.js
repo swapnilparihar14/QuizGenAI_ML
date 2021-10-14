@@ -8,6 +8,8 @@ const review_questions = (state = initialState, action) => {
 
   switch (type) {
     case REVIEW_QUESTIONS_SUCCESS:
+      if(state.message)
+        delete state.message;
       return {
         ...state,
         ...payload

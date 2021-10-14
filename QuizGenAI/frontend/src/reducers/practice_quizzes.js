@@ -8,6 +8,8 @@ const practice_quizzes = (state = initialState, action) => {
 
   switch (type) {
     case GET_PRACTICE_QUIZZES_LIST:
+      if(state.message)
+       delete state.message;
       return {
         ...state,
         ...payload

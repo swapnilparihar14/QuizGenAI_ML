@@ -8,6 +8,8 @@ const created_quizzes = (state = initialState, action) => {
 
   switch (type) {
     case GET_CREATED_QUIZZES_LIST:
+      if(state.message)
+        delete state.message;
       return {
         ...state,
         ...payload

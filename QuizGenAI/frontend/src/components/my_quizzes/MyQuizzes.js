@@ -59,7 +59,7 @@ class ConnectedMyQuizzes extends React.Component {
     e.preventDefault();
     if(this.props.reviewQuestions)
       this.props.dispatch(
-        resetReviewQuestions(this.props.reviewQuestions)
+        resetReviewQuestions()
       );
   }
 
