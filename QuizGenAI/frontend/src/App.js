@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import SignUp from "./components/auth/Signup/Signup";
-import LogIn from "./components/auth/Login/Login";
+import SignUp from "./components/Auth/Signup/Signup";
+import LogIn from "./components/Auth/Login/Login";
 import LandPage from "./components/landpage/Landpage";
 import CreateQuizForm from "./components/create_quiz_form/CreateQuizForm";
 import ReviewQuestions from "./components/review_questions/ReviewQuestions";

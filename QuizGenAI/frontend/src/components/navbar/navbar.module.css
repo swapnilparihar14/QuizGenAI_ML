@@ -31,8 +31,12 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  text-decoration: 0;
+  text-decoration: none;
   font-weight: 600;
+}
+
+.logout:hover {
+  text-decoration: none;
 }
 
 /* For Desktop/Laptop, 768px and up */
@@ -66,6 +70,15 @@
 
   .links_dark > a:first-of-type {
     color: var(--white) !important;
+  }
+
+  .links_dark:hover {
+    color: var(--pinkish-red) !important;
+    text-decoration: none;
+  }
+
+  .links_dark > a:hover {
+    color: var(--pinkish-red) !important;
   }
 
   .separator {

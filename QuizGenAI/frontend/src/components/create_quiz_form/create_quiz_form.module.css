@@ -55,6 +55,16 @@ body {
   border-radius: 0.25rem;
 }
 
+.links:hover {
+  background-color: var(--blue);
+  color: var(--white) !important;
+  border: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 10px;
+  border-radius: 0.25rem;
+}
+
 .card span:nth-of-type(even) {
   display: none;
 }
