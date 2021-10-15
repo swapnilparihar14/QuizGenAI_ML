@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_CREATED_QUIZZES_LIST, GET_CREATED_QUIZZES_LIST_FAIL, GET_PRACTICE_QUIZZES_LIST, GET_PRACTICE_QUIZZES_LIST_FAIL, GET_TAKEN_QUIZZES_LIST, GET_TAKEN_QUIZZES_LIST_FAIL, GET_CREATED_QUIZ, GET_CREATED_QUIZ_FAIL, GET_PRACTICE_QUIZ, GET_PRACTICE_QUIZ_FAIL, GET_TAKEN_QUIZ, GET_TAKEN_QUIZ_FAIL, RESET_SHOW_QUIZ} from "./types";
+import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, GET_CREATED_QUIZ, GET_CREATED_QUIZ_FAIL, GET_PRACTICE_QUIZ, GET_PRACTICE_QUIZ_FAIL, GET_TAKEN_QUIZ, GET_TAKEN_QUIZ_FAIL, RESET_SHOW_QUIZ} from "./types";
 import url from "../config/config";
 
 // Get Created Quizzes List
@@ -16,7 +16,7 @@ export const getCreatedQuizzes = (id) => async dispatch => {
     );
 
     dispatch({
-      type: GET_CREATED_QUIZZES_LIST,
+      type: GET_QUIZZES_LIST,
       payload: res.data
     });
   } catch (err) {
@@ -24,7 +24,7 @@ export const getCreatedQuizzes = (id) => async dispatch => {
     const error = err.response.data.message;
 
     dispatch({
-      type: GET_CREATED_QUIZZES_LIST_FAIL,
+      type: GET_QUIZZES_LIST_FAIL,
       payload: error
     });
   }

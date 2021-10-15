@@ -18,14 +18,19 @@ export const saveAnswer = (question_id, answer) => dispatch => {
 
 // submit quiz
 export const submitQuiz = (data) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
   try {
     // axios.defaults.withCredentials = true;
     
-    const res = await axios.get(
+    const res = await axios.post(
       url + "/get_quiz_score",
-      {
-        params: data
-      }
+      data,
+      config
     );
 
     dispatch({

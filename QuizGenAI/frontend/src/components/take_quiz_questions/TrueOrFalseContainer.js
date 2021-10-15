@@ -20,7 +20,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
     let button = null;
 
     if(this.props.last){
-      button =  <Button className={TrueOrFalseContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.trueOrFalseQuestion.question_id, this.state.answer-1)}>Submit</Button>
+      button =  <Button className={TrueOrFalseContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.trueOrFalseQuestion.question_id, this.state.answer)}>Submit</Button>
     } else {
       button =  <Button className={TrueOrFalseContainerStyles.buttons} onClick={e => this.props.clickNext(e, this.props.trueOrFalseQuestion.question_id, this.state.answer)}>Next</Button>
     }

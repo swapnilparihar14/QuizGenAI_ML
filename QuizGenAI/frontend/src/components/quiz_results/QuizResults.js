@@ -23,10 +23,10 @@ class ConnectedQuizResults extends React.Component {
     let redirectVar = null;
 
     let auth = this.props.auth;
-    let quiz_results = this.props.quizResult;
+    let quiz_results = this.props.quizResults;
 
     // redirect based on successful signup
-    if (auth.isAuthenticated === false && quiz_results.isEmpty()) {
+    if (auth.isAuthenticated === false || quiz_results === {}) {
       const path = "/my_quizzes";
       redirectVar = <Redirect to={path} />;
     }
@@ -34,8 +34,8 @@ class ConnectedQuizResults extends React.Component {
     return (<>
       {redirectVar}
       <Container fluid className={quizResultsStyles.page_header}>TAKE QUIZ</Container>
-      <h1>Correct Answers: {quiz_results.correct_answers}</h1>
-      <h1>Wrong Answers: {quiz_results.wrong_answers}</h1>
+      <h1>Correct Answers: {quiz_results.correct_ans}</h1>
+      <h1>Wrong Answers: {quiz_results.wrong_ans}</h1>
       <h1>Score: {quiz_results.your_score}</h1>
       <h1>Max Score:{quiz_results.max_score}</h1>
       <Button className={quizResultsStyles.buttons} onClick= {this.clickDone} >Done</Button>
@@ -47,7 +47,7 @@ class ConnectedQuizResults extends React.Component {
 
 const mapStateToProps = state => {
   return { auth: state.auth,
-    quizResult: state.quizResult };
+    quizResults: state.quizResults };
 };
 
 const QuizResults = connect(mapStateToProps)(ConnectedQuizResults);

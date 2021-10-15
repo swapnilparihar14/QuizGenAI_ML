@@ -1,21 +1,21 @@
-import {GET_PRACTICE_QUIZZES_LIST, GET_PRACTICE_QUIZZES_LIST_FAIL, LOG_OUT} from "../actions/types";
+import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
 
-const practice_quizzes = (state = initialState, action) => {
+const list_quizzes = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_PRACTICE_QUIZZES_LIST:
+    case GET_QUIZZES_LIST:
       if(state.message)
-       delete state.message;
+        delete state.message;
       return {
         ...state,
         ...payload
       };
 
-    case GET_PRACTICE_QUIZZES_LIST_FAIL:
+    case GET_QUIZZES_LIST_FAIL:
       return {
         message: payload,
       };
@@ -30,4 +30,4 @@ const practice_quizzes = (state = initialState, action) => {
   }
 }
 
-export default practice_quizzes;
+export default list_quizzes;
