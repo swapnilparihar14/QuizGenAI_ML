@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card, Form } from "react-bootstrap";
+import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import FillInTheBlankContainerStyles from "./fillin_the_blank_container.module.css";
 
 
@@ -17,7 +17,6 @@ class ConnectedFillInTheBlankContainer extends React.Component {
   }
 
   render() {
-    console.log("prev", this.state.answer);
     let counter = 0;
  
     let options = this.props.fillinTheBlankQuestion.options.map((answer) => {
@@ -32,6 +31,14 @@ class ConnectedFillInTheBlankContainer extends React.Component {
       />)
     });
 
+    let button = null;
+
+    if(this.props.last){
+      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.fillinTheBlankQuestion.question_id, this.state.answer-1)}>Submit</Button>
+    } else {
+      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => this.props.clickNext(e, this.props.fillinTheBlankQuestion.question_id, this.state.answer-1)}>Next</Button>
+    }
+
     return (<>
       <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Fill in the blank in the following sentence.</h2>
       <Card onClick= {this.clickCreateQuiz} className={FillInTheBlankContainerStyles.card}>
@@ -44,6 +51,9 @@ class ConnectedFillInTheBlankContainer extends React.Component {
           </Col>
         </Row>
       </Card> 
+      <div style={{float: "right"}}>
+          {button}
+      </div>
       </>
     );
   }

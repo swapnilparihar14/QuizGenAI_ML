@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Card, Form, Col } from "react-bootstrap";
+import { Row, Card, Form, Col, Button } from "react-bootstrap";
 import multipleChoiceContainerStyles from "./multiple_choice_container.module.css";
 
 
@@ -17,7 +17,6 @@ class ConnectedMultipleChoiceContainer extends React.Component {
   }
 
   render() {
-    console.log("prev", this.state.answer);
     let counter = 0;
  
     let options = this.props.multipleChoiceQuestion.options.map((answer) => {
@@ -32,6 +31,14 @@ class ConnectedMultipleChoiceContainer extends React.Component {
       />)
     });
 
+    let button = null;
+
+    if(this.props.last){
+      button =  <Button className={multipleChoiceContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.multipleChoiceQuestion.question_id, this.state.answer-1)}>Submit</Button>
+    } else {
+      button =  <Button className={multipleChoiceContainerStyles.buttons} onClick={e => this.props.clickNext(e, this.props.multipleChoiceQuestion.question_id, this.state.answer-1)}>Next</Button>
+    }
+
     return (<>
       <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Choose the correct answer to the following question.</h2>
       <Card onClick= {this.clickCreateQuiz} className={multipleChoiceContainerStyles.card}>
@@ -44,6 +51,9 @@ class ConnectedMultipleChoiceContainer extends React.Component {
           </Col>
         </Row>
       </Card> 
+      <div style={{float: "right"}}>
+          {button}
+      </div>
       </>
     );
   }

@@ -18,3 +18,12 @@
   font-weight: 600;
   padding: 1px 0;
 }
+
+.buttons {
+  background-color: var(--pinkish-red);
+  color: var(--white);
+  border: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 10px;
+}

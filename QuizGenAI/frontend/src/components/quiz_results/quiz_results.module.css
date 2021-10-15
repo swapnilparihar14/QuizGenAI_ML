@@ -1,0 +1,19 @@
+.page_header {
+  text-align: center;
+  color: var(--white);
+  font-weight: bolder;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  background-color: var(--dark-blue);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.buttons {
+  background-color: var(--pinkish-red);
+  color: var(--white);
+  border: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 10px;
+}

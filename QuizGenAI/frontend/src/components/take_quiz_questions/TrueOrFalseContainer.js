@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Card, Form, Col } from "react-bootstrap";
+import { Row, Card, Form, Col, Button} from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 
 
@@ -17,7 +17,14 @@ class ConnectedTrueOrFalseContainer extends React.Component {
   }
 
   render() {
-    console.log("prev", this.state.answer);
+    let button = null;
+
+    if(this.props.last){
+      button =  <Button className={TrueOrFalseContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.trueOrFalseQuestion.question_id, this.state.answer-1)}>Submit</Button>
+    } else {
+      button =  <Button className={TrueOrFalseContainerStyles.buttons} onClick={e => this.props.clickNext(e, this.props.trueOrFalseQuestion.question_id, this.state.answer)}>Next</Button>
+    }
+
     return (<>
       <h2 style={{fontSize: "1rem", marginBottom: "10px"}}>Select True or False as the correct answer.</h2>
       <Card onClick= {this.clickCreateQuiz} className={TrueOrFalseContainerStyles.card}>
@@ -45,6 +52,9 @@ class ConnectedTrueOrFalseContainer extends React.Component {
           </Col>
         </Row>
       </Card>
+      <div style={{float: "right"}}>
+          {button}
+      </div>
       </> 
     );
   }

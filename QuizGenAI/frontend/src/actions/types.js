@@ -25,6 +25,10 @@ export const RESET_SHOW_QUIZ = "RESET_SHOW_QUIZ";
 export const TAKE_QUIZ = "TAKE_QUIZ";
 export const TAKE_QUIZ_FAIL = "TAKE_QUIZ_FAIL";
 export const RESET_TAKE_QUIZ = "RESET_TAKE_QUIZ";
+export const SAVE_ANSWER = "SAVE_ANSWER";
+export const SUBMIT_QUIZ = "SUBMIT_QUIZ";
+export const SUBMIT_QUIZ_FAIL = "SUBMIT_QUIZ_FAIL";
+export const RESET_ANSWERS = "RESET_ANSWERS";
 
 
 

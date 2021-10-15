@@ -39,11 +39,17 @@ body {
   padding-bottom: 20px;
 }
 
-.buttons {
-  background-color: var(--pinkish-red);
-  color: var(--white);
-  border: none;
-  font-weight: 500;
-  font-size: 1.1rem;
-  padding: 10px;
+.hours {
+  font-weight: bold;
+  display: inline;
+}
+
+.minutes {
+  font-weight: bold;
+  display: inline;
+}
+
+.seconds {
+  display: inline;
+  font-weight: bold;
 }
