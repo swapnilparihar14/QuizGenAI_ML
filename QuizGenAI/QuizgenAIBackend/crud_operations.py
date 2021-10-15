@@ -155,6 +155,8 @@ class CrudOperations:
         try:
             correct_ans, wrong_ans, your_score, max_score = 0, 0, 0, 0
             questions = quiz_details["questions"]
+            user_id = quiz_details["user_id"]
+            user_ans_array = []
             for question in questions:
                 result = db.questions.find_one(
                     {
@@ -166,7 +168,16 @@ class CrudOperations:
                 else:
                     wrong_ans += 1
                 max_score += 1
-            # db.user_table.update_one({"_id": ObjectId(quiz_details["user_id"])}, {"$set": {"questions": questions}})
+                user_ans_array.append({
+                    "question_id": question["question_id"],
+                    "user_id": user_id,
+                    "answer": question["answer"]
+                })
+            db.user_answers.insert_many(user_ans_array)
+            for non_sense in quiz_details["nonsense_questions"]:
+                db.questions.remove({
+                    "_id": ObjectId(non_sense)
+                })
             return 200, jsonify(
                 correct_ans=correct_ans,
                 wrong_ans=wrong_ans,
