@@ -118,5 +118,13 @@ def take_created_quiz():
         return json_message, code
 
 
+@app.route("/get_quiz_score", methods=["POST"])
+def get_quiz_score():
+    if request.method == "POST":
+        quiz_scores = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_quiz_score(db, quiz_scores)
+        return json_message, code
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

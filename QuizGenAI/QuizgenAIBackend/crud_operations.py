@@ -150,3 +150,29 @@ class CrudOperations:
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
+
+    def get_quiz_score(self, db, quiz_details):
+        try:
+            correct_ans, wrong_ans, your_score, max_score = 0, 0, 0, 0
+            questions = quiz_details["questions"]
+            for question in questions:
+                result = db.questions.find_one(
+                    {
+                        '_id': ObjectId(question["question_id"])
+                    })
+                if result["answer"] == question["answer"]:
+                    correct_ans += 1
+                    your_score += 1
+                else:
+                    wrong_ans += 1
+                max_score += 1
+            # db.user_table.update_one({"_id": ObjectId(quiz_details["user_id"])}, {"$set": {"questions": questions}})
+            return 200, jsonify(
+                correct_ans=correct_ans,
+                wrong_ans=wrong_ans,
+                your_score=your_score,
+                max_score=max_score
+            )
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
