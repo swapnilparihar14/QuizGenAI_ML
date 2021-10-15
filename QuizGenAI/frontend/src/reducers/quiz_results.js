@@ -1,19 +1,21 @@
-import {GET_TAKEN_QUIZZES_LIST, GET_TAKEN_QUIZZES_LIST_FAIL, LOG_OUT} from "../actions/types";
+import { SUBMIT_QUIZ, SUBMIT_QUIZ_FAIL, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
 
-const taken_quizzes = (state = initialState, action) => {
+const quiz_results = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_TAKEN_QUIZZES_LIST:
+    case SUBMIT_QUIZ:
+      if(state.message)
+        delete state.message;
       return {
         ...state,
         ...payload
       };
 
-    case GET_TAKEN_QUIZZES_LIST_FAIL:
+    case SUBMIT_QUIZ_FAIL:
       return {
         message: payload,
       };
@@ -28,4 +30,4 @@ const taken_quizzes = (state = initialState, action) => {
   }
 }
 
-export default taken_quizzes;
+export default quiz_results;

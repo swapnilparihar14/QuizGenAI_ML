@@ -4,24 +4,26 @@ import storage from "redux-persist/lib/storage";
 
 import auth from "./auth";
 import reviewQuestions from "./review_questions";
-import createdQuizzes from "./created_quizzes";
-import practiceQuizzes from "./practice_quizzes";
-import takenQuizzes from "./taken_quizzes";
+import listQuizzes from "./list_quizzes";
 import showCreatedQuiz from "./show_created_quiz";
+import takeQuiz from "./take_quiz";
+import userAnswers from "./user_answers";
+import quizResults from "./quiz_results";
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'reviewQuestions', 'createdQuizzes', 'practiceQuizzes', 'takenQuizzes', 'showCreatedQuiz']
+  whitelist: ['auth', 'reviewQuestions', 'listQuizzes', 'showCreatedQuiz', 'takeQuiz', 'userAnswers', 'quizResults']
 }
 
 const rootReducer = combineReducers({
   auth,
   reviewQuestions,
-  createdQuizzes,
-  practiceQuizzes,
-  takenQuizzes,
-  showCreatedQuiz
+  listQuizzes,
+  showCreatedQuiz,
+  takeQuiz,
+  userAnswers,
+  quizResults
 });
 
 export default persistReducer(persistConfig, rootReducer);

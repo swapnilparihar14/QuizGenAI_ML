@@ -18,29 +18,61 @@ body {
   margin: 30px auto 140px auto;
 }
 
-.links {
+.card_header {
+  border: none;
+  border-top: 20px solid var(--blue);
+  padding: 30px 60px 30px 60px;
+  margin-bottom: 20px;
+}
+
+.card {
+  border: none;
+  padding: 30px 60px 30px 60px;
+  margin-bottom: 20px;
+}
+
+.labels {
+  margin-bottom: 5px;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+.required {
+  color: var(--pinkish-red);
+}
+
+.form {
+  padding-bottom: 20px;
+}
+
+.buttons {
   background-color: var(--pinkish-red);
   color: var(--white);
   border: none;
   font-weight: 500;
   font-size: 1.1rem;
-  padding: 20px 10px;
-  border-radius: 0.25rem;
-  display: block;
-  margin: 0 auto;
-  text-align: center;
+  padding: 10px;
 }
 
-.links:hover {
-  color: var(--white);
-  text-decoration: none;
+.alertFail {
+  border: 2px solid red;
+  border-radius: 5px;
+  background-color: rgb(255 0 0 / 20%);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  min-width: 400px;
+  width: 400px;
 }
 
-.row {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  width: 80%;
+.alertFail > p {
+  color: red;
+  padding: 0;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.alertFail > p > span {
+  font-weight: bolder;
 }

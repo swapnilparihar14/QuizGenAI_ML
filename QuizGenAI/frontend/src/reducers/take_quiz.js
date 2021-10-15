@@ -1,13 +1,13 @@
-import {GET_CREATED_QUIZ, GET_CREATED_QUIZ_FAIL, RESET_SHOW_QUIZ,LOG_OUT} from "../actions/types";
+import { TAKE_QUIZ, TAKE_QUIZ_FAIL, RESET_TAKE_QUIZ, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
 
-const show_created_quiz = (state = initialState, action) => {
+const take_quiz = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_CREATED_QUIZ:
+    case TAKE_QUIZ:
       if(state.message)
         delete state.message;
       return {
@@ -15,12 +15,12 @@ const show_created_quiz = (state = initialState, action) => {
         ...payload
       };
 
-    case GET_CREATED_QUIZ_FAIL:
+    case TAKE_QUIZ_FAIL:
       return {
         message: payload,
       };
 
-    case RESET_SHOW_QUIZ:
+    case RESET_TAKE_QUIZ:
       return {};
 
     case LOG_OUT:
@@ -33,4 +33,4 @@ const show_created_quiz = (state = initialState, action) => {
   }
 }
 
-export default show_created_quiz;
+export default take_quiz;

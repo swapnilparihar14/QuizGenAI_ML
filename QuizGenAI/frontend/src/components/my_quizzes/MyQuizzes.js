@@ -59,7 +59,7 @@ class ConnectedMyQuizzes extends React.Component {
     e.preventDefault();
     if(this.props.reviewQuestions)
       this.props.dispatch(
-        resetReviewQuestions(this.props.reviewQuestions)
+        resetReviewQuestions()
       );
   }
 
@@ -107,24 +107,24 @@ class ConnectedMyQuizzes extends React.Component {
 
     let createdQuizzesRows = null;
 
-    if (this.props.createdQuizzes.quizzes){
-      
-      createdQuizzesRows = this.props.createdQuizzes.quizzes.map((createdQuizzesRow) => {
-        counter++;
-        return (
-          <tr
-            key={counter}
-            position={counter}
-          >
-            <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/${createdQuizzesRow.id}`} onClick={(e) => {this.getCreatedQuiz(createdQuizzesRow.id)}}>{createdQuizzesRow.id}</Link></td>
-            <td>{createdQuizzesRow.name}</td>
-            <td>{createdQuizzesRow.quiz_type}</td>
-            <td><p className={myQuizzesStyles.ac}>{createdQuizzesRow.access_code}</p></td>
-            <td>{createdQuizzesRow.times_taken}</td>
-            <td>{createdQuizzesRow.created_on}</td>
-          </tr>
-        )
-      });
+    if (this.props.listQuizzes.quizzes){
+      if(this.state.onCreatedQuizzes)
+        createdQuizzesRows = this.props.listQuizzes.quizzes.map((createdQuizzesRow) => {
+          counter++;
+          return (
+            <tr
+              key={counter}
+              position={counter}
+            >
+              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/${createdQuizzesRow.id}`} onClick={(e) => {this.getCreatedQuiz(createdQuizzesRow.id)}}>{createdQuizzesRow.id}</Link></td>
+              <td>{createdQuizzesRow.name}</td>
+              <td>{createdQuizzesRow.quiz_type}</td>
+              <td><p className={myQuizzesStyles.ac}>{createdQuizzesRow.access_code}</p></td>
+              <td>{createdQuizzesRow.times_taken}</td>
+              <td>{createdQuizzesRow.created_on}</td>
+            </tr>
+          )
+        });
     }
 
     if(this.state.onCreatedQuizzes){
@@ -193,7 +193,7 @@ class ConnectedMyQuizzes extends React.Component {
 const mapStateToProps = state => {
   return {  auth: state.auth,
     reviewQuestions: state.reviewQuestions,
-    createdQuizzes: state.createdQuizzes };
+    listQuizzes: state.listQuizzes };
 };
 
 const MyQuizzes = connect(mapStateToProps)(ConnectedMyQuizzes);

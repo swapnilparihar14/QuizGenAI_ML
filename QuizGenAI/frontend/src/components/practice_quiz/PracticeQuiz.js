@@ -5,13 +5,13 @@ import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { Container, Row, Card, Form } from "react-bootstrap";
 import { Redirect } from "react-router";
-import createQuizFormStyles from "./create_quiz_form.module.css";
+import practiceQuizStyles from "./practice_quiz.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
 
-import { getReviewQuestions, resetReviewQuestions } from "../../actions/review_questions";
+import { getReviewQuestions } from "../../actions/review_questions";
 
-class ConnectedCreateQuizForm extends React.Component {
+class ConnectedPracticeQuiz extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -20,20 +20,11 @@ class ConnectedCreateQuizForm extends React.Component {
       timed: "",
       hours: 0,
       minutes: 0,
-      privacy: "",
-      password: "",
       multiplechoicequestions: 0,
       fillintheblankquestions: 0,
       trueorfalsequestions: 0,
       file: null,
     }
-  }
-
-  componentDidMount() {
-    window.scrollTo(0, 0);
-    this.props.dispatch(
-      resetReviewQuestions()
-    );
   }
 
   componentWillUnmount(){
@@ -58,14 +49,14 @@ class ConnectedCreateQuizForm extends React.Component {
     });
    
     const {
-      quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, file
+      quizname, timed, hours, minutes, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, file
     } = this.state;
 
     let id = localStorage.getItem("id");
 
     await this.props.dispatch(
       getReviewQuestions({
-        quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
+        quizname, timed, hours, minutes, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id 
       }, file)
     );
   }
@@ -106,39 +97,25 @@ class ConnectedCreateQuizForm extends React.Component {
     loading = (
       <div>
         {isLoading ? (
-           <div className={createQuizFormStyles.loadingScreen}>
-              <VscLoading className={createQuizFormStyles.loadingIcon}/>
+           <div className={practiceQuizStyles.loadingScreen}>
+              <VscLoading className={practiceQuizStyles.loadingIcon}/>
               <h1>Generating Questions ...</h1>
               <h2>Hang on, this might take some time.</h2>
               <h2>DO NOT CLOSE OR RELOAD THIS WINDOW</h2>
            </div>
         ) : (
-          <div className={createQuizFormStyles.loadingScreen} style={{display: "none"}}></div>
+          <div className={practiceQuizStyles.loadingScreen} style={{display: "none"}}></div>
         )}
       </div>
     );
 
-    let passwordField = "";
-    if (this.state.privacy === "private") {
-      passwordField = (
-        <Form.Group controlId="password">
-          <Form.Label className={createQuizFormStyles.labels}>Password</Form.Label>
-          <Form.Control
-            onChange={this.handleChange}
-            name="password"
-            type="text"
-          />
-        </Form.Group>
-      );
-    }
-
     let durationFields = "";
     if (this.state.timed === "yes") {
       durationFields = (<>
-        <Form.Label className={createQuizFormStyles.labels}>Duration</Form.Label>
+        <Form.Label className={practiceQuizStyles.labels}>Duration</Form.Label>
         <Row style={{marginLeft: "1px"}}>
           <Form.Group controlId="hours" style={{marginRight: "20px"}}>
-            <Form.Label className={createQuizFormStyles.labels} >Hours</Form.Label>
+            <Form.Label className={practiceQuizStyles.labels} >Hours</Form.Label>
             <Form.Control
               onChange={this.handleChange}
               name="hours"
@@ -147,7 +124,7 @@ class ConnectedCreateQuizForm extends React.Component {
           </Form.Group>
 
           <Form.Group controlId="minutes">
-            <Form.Label className={createQuizFormStyles.labels}>Minutes</Form.Label>
+            <Form.Label className={practiceQuizStyles.labels}>Minutes</Form.Label>
             <Form.Control
               onChange={this.handleChange}
               name="minutes"
@@ -164,21 +141,21 @@ class ConnectedCreateQuizForm extends React.Component {
       {redirectQuiz}
       {loading}
       <NavigationBar></NavigationBar>
-      <Container fluid className={createQuizFormStyles.page_header}>CREATE QUIZ</Container>
-      <Container className={createQuizFormStyles.container}> 
-        <Form id="create-quiz-form" className={createQuizFormStyles.form}>
+      <Container fluid className={practiceQuizStyles.page_header}>PRACTICE QUIZ</Container>
+      <Container className={practiceQuizStyles.container}> 
+        <Form id="create-quiz-form" className={practiceQuizStyles.form}>
           
           {/* Enter Quiz Title */}
-          <Card className={createQuizFormStyles.card_header}>
+          <Card className={practiceQuizStyles.card_header}>
             <Form.Group controlId="quizname" style={{margin: "0"}}>
               <Form.Control type="text" placeholder="Untitled Quiz" onChange={this.handleChange} style={{border: "none", fontSize: "2.5rem", paddingLeft: "0"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
           </Card>
           
-          <Card className={createQuizFormStyles.card}>
+          <Card className={practiceQuizStyles.card}>
             <Form.Group controlId="timed" style={{margin: "0"}}>
-              <Form.Label className={createQuizFormStyles.labels}>Timed or Untimed</Form.Label>
+              <Form.Label className={practiceQuizStyles.labels}>Timed or Untimed</Form.Label>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
@@ -194,56 +171,37 @@ class ConnectedCreateQuizForm extends React.Component {
             {durationFields}
           </Card>
           
-          <Card className={createQuizFormStyles.card}>
-            <Form.Group controlId="privacy" style={{margin: "0"}}>
-              <Form.Label className={createQuizFormStyles.labels}>Public or Private</Form.Label>
-              <Form.Control
-                as="select"
-                onChange={this.handleChange}
-                name="privacy"
-                style={{marginBottom: "10px"}}
-              >
-                <option hidden>{"Select"} </option>
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-              </Form.Control>
-            </Form.Group>
-
-            {passwordField}
-          </Card> 
-          
-          <Card className={createQuizFormStyles.card}>
-            <h2 className={createQuizFormStyles.instructions}>Enter the number of questions to be generated</h2>
+          <Card className={practiceQuizStyles.card}>
+            <h2 className={practiceQuizStyles.instructions}>Enter the number of questions to be generated</h2>
             <Form.Group controlId="multiplechoicequestions" style={{margin: "0"}}>
-              <Form.Label className={createQuizFormStyles.labels}>Multiple Choice Questions</Form.Label>
+              <Form.Label className={practiceQuizStyles.labels}>Multiple Choice Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
            
             <Form.Group controlId="fillintheblankquestions" style={{margin: "0"}}>
-            <Form.Label className={createQuizFormStyles.labels}>Fill-in the Blank Questions</Form.Label>
+            <Form.Label className={practiceQuizStyles.labels}>Fill-in the Blank Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
            
             <Form.Group controlId="trueorfalsequestions" style={{margin: "0"}}>
-            <Form.Label className={createQuizFormStyles.labels}>True or False Questions</Form.Label>
+            <Form.Label className={practiceQuizStyles.labels}>True or False Questions</Form.Label>
               <Form.Control type="number" placeholder="Enter number" onChange={this.handleChange} style={{marginBottom: "10px"}}/>
               {/* <p className="errormessage"> {fnameerrormsg}</p> */}
             </Form.Group>
           </Card> 
           
-          <Card className={createQuizFormStyles.card}>
-            <h2 className={createQuizFormStyles.instructions}>Upload File</h2>
-            <p className={createQuizFormStyles.fileTypes}>Accepted file types: {fileTypesToDisplay.join(", ")}</p>
+          <Card className={practiceQuizStyles.card}>
+            <h2 className={practiceQuizStyles.instructions}>Upload File</h2>
+            <p className={practiceQuizStyles.fileTypes}>Accepted file types: {fileTypesToDisplay.join(", ")}</p>
             <FileUploader handleChange={this.handleFile} name="file" types={fileTypes} />
             <p>{this.state.file ? `File name: ${this.state.file.name}` : "No file uploaded"}</p>
           </Card>  
         </Form>
 
         <div style={{float: "right"}}>
-        <Link to="/review_questions" onClick= {this.clickReview} className={`btn btn-primary ${createQuizFormStyles.links}`}>Review Questions</Link>
-          {/* <Button className={createQuizFormStyles.buttons} onClick= {this.clickTakeQuiz} >Take Quiz</Button> */}
+        <Link to="/review_questions" onClick= {this.clickReview} className={`btn btn-primary ${practiceQuizStyles.links}`}>Take Practice Quiz</Link>
         </div>
       </Container>
       <Footer></Footer>
@@ -259,5 +217,5 @@ const mapStateToProps = state => {
   };
 };
 
-const CreateQuizForm = connect(mapStateToProps)(ConnectedCreateQuizForm);
-export default CreateQuizForm;
+const PracticeQuiz = connect(mapStateToProps)(ConnectedPracticeQuiz);
+export default PracticeQuiz;
