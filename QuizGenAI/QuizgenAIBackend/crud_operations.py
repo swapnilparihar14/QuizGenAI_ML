@@ -55,11 +55,8 @@ class CrudOperations:
         :params db: database object
         """
         try:
-            quiz = db.quiz.find_one(
-                {
-                    '_id': ObjectId(quiz_details.get("quiz_id"))
-                }
-            )
+            quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
+
 
             if quiz_details.get('access_code') == quiz['access_code']:
                 quiz_dict = {

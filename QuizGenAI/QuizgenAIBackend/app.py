@@ -9,7 +9,7 @@ from constants import UPLOAD_FOLDER
 from generate_quiz import GenerateQuiz
 from long_question_generation import model_prod
 from crud_operations import CrudOperations
-
+from constants import ERROR_MESSAGE
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -125,6 +125,23 @@ def get_quiz_score():
         crud_operations = CrudOperations()
         code, json_message = crud_operations.get_quiz_score(db, quiz_scores)
         return json_message, code
+
+
+@app.route("/take_practice_quiz", methods=["POST"])
+def take_practice_quiz():
+    if request.method == "POST":
+        quiz_details = request.form
+        file = request.files['file']
+        json_message = ERROR_MESSAGE
+        gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer)
+        code, questions_data = gen_quiz.generate_quiz_driver(quiz_details, file, db)
+        if code == 200:
+            code, message = gen_quiz.save_questions(questions_data, db)
+            if code == 200:
+                crud_operations = CrudOperations()
+                code, json_message = crud_operations.take_created_quiz(quiz_details, db)
+        return json_message, code
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
