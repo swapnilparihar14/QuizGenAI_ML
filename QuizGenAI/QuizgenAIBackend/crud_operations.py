@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 from constants import LOGGER_FORMAT
 from flask import jsonify
 import inspect
@@ -64,6 +65,7 @@ class CrudOperations:
                     'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
                     'questions': []
                 }
+                question_list = []
                 questions = db.questions.find(
                     {
                         'quiz_id': quiz_details.get("quiz_id")
@@ -79,8 +81,9 @@ class CrudOperations:
                     }
                     if question_type == 'mcq' or question_type == 'fbq':
                         question_dict['options'] = question['options']
-                    quiz_dict['questions'].append(question_dict)
-
+                    question_list.append(question_dict)
+                random.shuffle(question_list)
+                quiz_dict['questions'] = question_list
                 return 200, jsonify(
                     quiz=quiz_dict
                 )
