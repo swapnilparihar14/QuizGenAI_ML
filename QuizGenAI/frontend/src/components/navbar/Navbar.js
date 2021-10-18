@@ -23,6 +23,11 @@ class ConnectedNavBar extends React.Component {
     );
   }
 
+  
+  scrollToTop = () => {
+    window.scrollTo(0, 0);
+  }
+
   render(){
 
     let nav = null;
@@ -83,7 +88,7 @@ class ConnectedNavBar extends React.Component {
     else {
       nav =  <Navbar collapseOnSelect id={navbarStyles.navbar_light} expand="md">
               <Navbar.Brand href="#">
-                  <Image src={logo} alt="QuizGenAI Logo" style={{paddingTop: "0.5rem", maxWidth: "50%", width: "50%"}}/>
+                  <Image src={logo} alt="QuizGenAI Logo" onClick={this.scrollToTop} style={{paddingTop: "0.5rem", maxWidth: "50%", width: "50%"}}/>
               </Navbar.Brand>
               <Container style={{marginRight: "20px", width: "auto"}}>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav'style={{borderColor: "var(--blue)", color: "var(--blue)"}}/>
