@@ -60,7 +60,8 @@ class GenerateQuiz:
             return 200, jsonify(
                 message=message,
                 questions=questions,
-                quiz_id=str(quiz_id)
+                quiz_id=str(quiz_id),
+                access_code=quiz_details['access_code']
             )
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
