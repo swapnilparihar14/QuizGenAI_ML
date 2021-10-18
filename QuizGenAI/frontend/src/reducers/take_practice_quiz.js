@@ -1,24 +1,23 @@
 import {
-  SUBMIT_QUIZ,
-  SUBMIT_QUIZ_FAIL,
-  RESET_QUIZ_RESULTS,
+  TAKE_PRACTICE_QUIZ_FAIL,
+  TAKE_PRACTICE_QUIZ,
   LOG_OUT,
 } from "../actions/types";
 
 const initialState = {};
 
-const quiz_results = (state = initialState, action) => {
+const take_practice_quiz = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case SUBMIT_QUIZ:
+    case TAKE_PRACTICE_QUIZ:
       if (state.message) delete state.message;
       return {
         ...state,
         ...payload,
       };
 
-    case SUBMIT_QUIZ_FAIL:
+    case TAKE_PRACTICE_QUIZ_FAIL:
       return {
         message: payload,
       };
@@ -28,14 +27,9 @@ const quiz_results = (state = initialState, action) => {
         ...initialState,
       };
 
-    case RESET_QUIZ_RESULTS:
-      return {
-        ...initialState,
-      };
-
     default:
       return state;
   }
 };
 
-export default quiz_results;
+export default take_practice_quiz;

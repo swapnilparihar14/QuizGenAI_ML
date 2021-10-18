@@ -12,46 +12,42 @@ import TrueOrFalseContainer from "./TrueOrFalseContainer";
 import { saveAnswer, submitQuiz } from "../../actions/user_answers";
 
 class ConnectedTakeQuizQuestions extends React.Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       questionCounter: 0,
-      submit: false
-    }
+      submit: false,
+    };
   }
 
   clickNext = async (e, questionId, answer) => {
     e.preventDefault();
 
-    await this.props.dispatch(
-      saveAnswer(questionId, answer)
-    );
+    await this.props.dispatch(saveAnswer(questionId, answer));
 
-    this.setState((prevState) => ({ questionCounter: prevState.questionCounter + 1  }));
-  }
+    this.setState((prevState) => ({
+      questionCounter: prevState.questionCounter + 1,
+    }));
+  };
 
   clickSubmit = async (e, questionId, answer) => {
     e.preventDefault();
 
-    await this.props.dispatch(
-      saveAnswer(questionId, answer)
-    );
+    await this.props.dispatch(saveAnswer(questionId, answer));
 
     let data = {
       user_id: localStorage.getItem("id"),
       quiz_id: this.props.takeQuiz.quiz.quiz_id,
       questions: this.props.userAnswers.questions,
-      nonsense_questions: this.props.userAnswers.nonsense_questions
-    }
+      nonsense_questions: this.props.userAnswers.nonsense_questions,
+    };
 
     console.log("data", data.questions);
 
-    await this.props.dispatch(
-      submitQuiz(data)
-    );
+    await this.props.dispatch(submitQuiz(data));
 
-    this.setState({submit: true});
-  }
+    this.setState({ submit: true });
+  };
 
   render() {
     let redirectVar = null;
@@ -69,42 +65,46 @@ class ConnectedTakeQuizQuestions extends React.Component {
     let questionCounter = this.state.questionCounter;
     let totalQuestions = 0;
 
-    if(take_quiz.quiz){
+    if (take_quiz.quiz) {
       totalQuestions = take_quiz.quiz.questions.length;
-      if(take_quiz.quiz.questions.length !== 0) {
-        let last = false; 
-        if(questionCounter < take_quiz.quiz.questions.length){
-          if(questionCounter === take_quiz.quiz.questions.length-1)
+      if (take_quiz.quiz.questions.length !== 0) {
+        let last = false;
+        if (questionCounter < take_quiz.quiz.questions.length) {
+          if (questionCounter === take_quiz.quiz.questions.length - 1)
             last = true;
 
-          if(take_quiz.quiz.questions[questionCounter].type === "mcq")
+          if (take_quiz.quiz.questions[questionCounter].type === "mcq")
             question = (
               <MultipleChoiceContainer
                 key={questionCounter}
-                multipleChoiceQuestion={take_quiz.quiz.questions[questionCounter]}
-                last = {last}
-                clickNext = {this.clickNext}
-                clickSubmit = {this.clickSubmit}
+                multipleChoiceQuestion={
+                  take_quiz.quiz.questions[questionCounter]
+                }
+                last={last}
+                clickNext={this.clickNext}
+                clickSubmit={this.clickSubmit}
               />
             );
-          else if(take_quiz.quiz.questions[questionCounter].type === "fbq")
+          else if (take_quiz.quiz.questions[questionCounter].type === "fbq")
             question = (
               <FillInTheBlankContainer
                 key={questionCounter}
-                fillinTheBlankQuestion={take_quiz.quiz.questions[questionCounter]}
-                last = {last}
-                clickNext = {this.clickNext}
-                clickSubmit = {this.clickSubmit}
+                fillinTheBlankQuestion={
+                  take_quiz.quiz.questions[questionCounter]
+                }
+                last={last}
+                clickNext={this.clickNext}
+                clickSubmit={this.clickSubmit}
               />
             );
-          else if(take_quiz.quiz.questions[questionCounter].type === "tfq")
+          else if (take_quiz.quiz.questions[questionCounter].type === "tfq")
             question = (
               <TrueOrFalseContainer
-                key={questionCounter}  
+                key={questionCounter}
                 trueOrFalseQuestion={take_quiz.quiz.questions[questionCounter]}
-                last = {last}
-                clickNext = {this.clickNext}
-                clickSubmit = {this.clickSubmit}
+                last={last}
+                clickNext={this.clickNext}
+                clickSubmit={this.clickSubmit}
               />
             );
         }
@@ -113,52 +113,67 @@ class ConnectedTakeQuizQuestions extends React.Component {
 
     let timer = null;
 
-    if(take_quiz.quiz)
-      if(take_quiz.quiz.duration !== "")
-        timer = (<Timer
-          initialTime={take_quiz.quiz.duration * 60000}
-          direction="backward"
-          checkpoints={[
+    if (take_quiz.quiz)
+      if (take_quiz.quiz.duration !== "")
+        timer = (
+          <Timer
+            initialTime={take_quiz.quiz.duration * 60000}
+            direction="backward"
+            checkpoints={[
               {
-                  time: 0,
-                  callback: () => {
-                    this.clickSubmit();
-                  }
+                time: 0,
+                callback: () => {
+                  this.clickSubmit();
+                },
               },
-          ]}
-        >
-          <p style={{display: "inline", fontWeight: "500"}}>Timer: </p>
-          <p className={takeQuizQuestionsStyles.hours}><Timer.Hours /><span>hours </span></p> 
-          <p className={takeQuizQuestionsStyles.minutes}><Timer.Minutes /><span>minutes </span></p>
-          <p className={takeQuizQuestionsStyles.seconds}><Timer.Seconds /><span>seconds </span></p>
-        </Timer>);
+            ]}
+          >
+            <p style={{ display: "inline", fontWeight: "500" }}>Timer: </p>
+            <p className={takeQuizQuestionsStyles.hours}>
+              <Timer.Hours />
+              <span>hours </span>
+            </p>
+            <p className={takeQuizQuestionsStyles.minutes}>
+              <Timer.Minutes />
+              <span>minutes </span>
+            </p>
+            <p className={takeQuizQuestionsStyles.seconds}>
+              <Timer.Seconds />
+              <span>seconds </span>
+            </p>
+          </Timer>
+        );
 
-        let submitRedirect = null;
-        if(this.state.submit)
-          submitRedirect = <Redirect to="/quiz_results"/>;
-  
-    return (<>
-      {redirectVar}
-      {submitRedirect}
-      <Container fluid className={takeQuizQuestionsStyles.page_header}>QUESTION {questionCounter + 1} OUT OF {totalQuestions} </Container>
-      <Container className={takeQuizQuestionsStyles.container}> 
-        <div style={{float: "right"}}>
-          {timer}
-        </div>
-        <Form id="review-questions-form" className={takeQuizQuestionsStyles.form}>    
-          {question}
-        </Form>
-      </Container>
-      <Footer></Footer>
+    let submitRedirect = null;
+    if (this.state.submit) submitRedirect = <Redirect to="/quiz_results" />;
+
+    return (
+      <>
+        {redirectVar}
+        {submitRedirect}
+        <Container fluid className={takeQuizQuestionsStyles.page_header}>
+          QUESTION {questionCounter + 1} OUT OF {totalQuestions}{" "}
+        </Container>
+        <Container className={takeQuizQuestionsStyles.container}>
+          <div style={{ float: "right" }}>{timer}</div>
+          <Form
+            id="review-questions-form"
+            className={takeQuizQuestionsStyles.form}
+          >
+            {question}
+          </Form>
+        </Container>
+        <Footer></Footer>
       </>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return { auth: state.auth,
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
     takeQuiz: state.takeQuiz,
-    userAnswers: state.userAnswers
+    userAnswers: state.userAnswers,
   };
 };
 
