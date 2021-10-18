@@ -3,16 +3,18 @@ import { connect } from "react-redux";
 import { Row, Card, Form, Col, Button } from "react-bootstrap";
 import TrueOrFalseContainerStyles from "./true_or_false_container.module.css";
 
+import { saveAnswer } from "../../actions/user_answers";
+
 class ConnectedTrueOrFalseContainer extends React.Component {
   constructor() {
     super();
-    this.state = {
-      answer: null,
-    };
+    this.state = {};
   }
 
-  setRadioValue = (val) => {
-    this.setState({ answer: val });
+  saveAnswerOption = async (answer) => {
+    await this.props.dispatch(
+      saveAnswer(this.props.trueOrFalseQuestion.question_id, answer)
+    );
   };
 
   render() {
@@ -22,13 +24,10 @@ class ConnectedTrueOrFalseContainer extends React.Component {
       button = (
         <Button
           className={TrueOrFalseContainerStyles.buttons}
-          onClick={(e) =>
-            this.props.clickSubmit(
-              e,
-              this.props.trueOrFalseQuestion.question_id,
-              this.state.answer
-            )
-          }
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.clickSubmit();
+          }}
           disabled={this.state.answer === null ? true : false}
           style={{
             visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
@@ -41,13 +40,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
       button = (
         <Button
           className={TrueOrFalseContainerStyles.buttons}
-          onClick={(e) =>
-            this.props.clickNext(
-              e,
-              this.props.trueOrFalseQuestion.question_id,
-              this.state.answer
-            )
-          }
+          onClick={(e) => this.props.clickNext(e)}
           disabled={this.state.answer === null ? true : false}
           style={{
             visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
@@ -81,7 +74,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
                   name="group1"
                   type="radio"
                   id="default-radio-1"
-                  onChange={(e) => this.setRadioValue(e.currentTarget.value)}
+                  onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
                 />
                 <Form.Check
                   className={TrueOrFalseContainerStyles.answers}
@@ -91,7 +84,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
                   name="group1"
                   type="radio"
                   id="default-radio-2"
-                  onChange={(e) => this.setRadioValue(e.currentTarget.value)}
+                  onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
                 />
               </div>
             </Col>

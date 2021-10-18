@@ -3,16 +3,18 @@ import { connect } from "react-redux";
 import { Row, Card, Form, Col, Button } from "react-bootstrap";
 import multipleChoiceContainerStyles from "./multiple_choice_container.module.css";
 
+import { saveAnswer } from "../../actions/user_answers";
+
 class ConnectedMultipleChoiceContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      answer: null,
-    };
+    this.state = {};
   }
 
-  setRadioValue = (val) => {
-    this.setState({ answer: val });
+  saveAnswerOption = async (answer) => {
+    await this.props.dispatch(
+      saveAnswer(this.props.multipleChoiceQuestion.question_id, answer - 1)
+    );
   };
 
   render() {
@@ -30,7 +32,7 @@ class ConnectedMultipleChoiceContainer extends React.Component {
           name="group1"
           type="radio"
           id="default-radio-1"
-          onChange={(e) => this.setRadioValue(e.currentTarget.value)}
+          onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
         />
       );
     });
@@ -41,13 +43,10 @@ class ConnectedMultipleChoiceContainer extends React.Component {
       button = (
         <Button
           className={multipleChoiceContainerStyles.buttons}
-          onClick={(e) =>
-            this.props.clickSubmit(
-              e,
-              this.props.multipleChoiceQuestion.question_id,
-              this.state.answer - 1
-            )
-          }
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.clickSubmit();
+          }}
           disabled={this.state.answer === null ? true : false}
           style={{
             visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
@@ -60,13 +59,7 @@ class ConnectedMultipleChoiceContainer extends React.Component {
       button = (
         <Button
           className={multipleChoiceContainerStyles.buttons}
-          onClick={(e) =>
-            this.props.clickNext(
-              e,
-              this.props.multipleChoiceQuestion.question_id,
-              this.state.answer - 1
-            )
-          }
+          onClick={(e) => this.props.clickNext(e)}
           disabled={this.state.answer === null ? true : false}
           style={{
             visibility: `${this.state.answer === null ? "hidden" : "visible"}`,

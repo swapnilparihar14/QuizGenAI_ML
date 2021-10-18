@@ -9,7 +9,7 @@ import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
 
-import { saveAnswer, submitQuiz } from "../../actions/user_answers";
+import { submitQuiz } from "../../actions/user_answers";
 
 class ConnectedTakeQuizQuestions extends React.Component {
   constructor() {
@@ -20,21 +20,14 @@ class ConnectedTakeQuizQuestions extends React.Component {
     };
   }
 
-  clickNext = async (e, questionId, answer) => {
+  clickNext = async (e) => {
     e.preventDefault();
-
-    await this.props.dispatch(saveAnswer(questionId, answer));
-
     this.setState((prevState) => ({
       questionCounter: prevState.questionCounter + 1,
     }));
   };
 
-  clickSubmit = async (e, questionId, answer) => {
-    e.preventDefault();
-
-    await this.props.dispatch(saveAnswer(questionId, answer));
-
+  clickSubmit = async () => {
     let data = {
       user_id: localStorage.getItem("id"),
       quiz_id: this.props.takeQuiz.quiz.quiz_id,
