@@ -7,7 +7,7 @@ from flask import jsonify
 from werkzeug.utils import secure_filename
 
 from constants import LOGGER_FORMAT, UPLOAD_FOLDER, CONTEXT, QUESTION, OPTIONS, CORRECT_ANS, IS_SELECTED
-from constants import STATUS, MESSAGE
+from constants import STATUS, MESSAGE, SUCCESS_MESSAGE, LESS_QUESTIONS
 from distractor_generation import DistractorGeneration
 from keyword_pos_extraction import KeywordAndPOS
 from text_extractor import Dotx2text
@@ -52,9 +52,13 @@ class GenerateQuiz:
             no_of_fbq = int(quiz_details['fbq'])
             no_of_tfq = int(quiz_details['tfq'])
             questions = self.generate_questions(no_of_mcq, no_of_fbq, no_of_tfq, file_destination)
+            if self.validate_quiz(questions, no_of_mcq+no_of_fbq+no_of_tfq):
+                message = SUCCESS_MESSAGE
+            else:
+                message = LESS_QUESTIONS
             quiz_id = db.quiz.insert_one(quiz_details_dict).inserted_id
             return 200, jsonify(
-                message="success",
+                message=message,
                 questions=questions,
                 quiz_id=str(quiz_id)
             )
@@ -75,6 +79,17 @@ class GenerateQuiz:
         except OSError as exc:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {exc}")
             return ""
+
+    def validate_quiz(self, questions, total):
+        """
+        Validates if the number of questions generated matches the number of requested question
+        :param questions: Dictionary containing all questions
+        :return: True if questions_generated=questions_requested else False
+        """
+        count = 0
+        for i in questions:
+            count += len(questions[i])
+        return count == total
 
     def text_preprocessing(self, filename, total_question_count):
         """

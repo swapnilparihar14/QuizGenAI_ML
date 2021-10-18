@@ -36,3 +36,4 @@ QUESTION = 'question'
 OPTIONS = 'options'
 CORRECT_ANS = 'correctAnswer'
 IS_SELECTED = 'isSelected'
+LESS_QUESTIONS = "Insufficient Content to generate the requested amount of Questions"
