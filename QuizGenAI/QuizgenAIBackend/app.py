@@ -10,6 +10,7 @@ from generate_quiz import GenerateQuiz
 from long_question_generation import model_prod
 from crud_operations import CrudOperations
 from constants import ERROR_MESSAGE
+import json
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -134,9 +135,9 @@ def take_practice_quiz():
         file = request.files['file']
         json_message = ERROR_MESSAGE
         gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer)
-        code, questions_data = gen_quiz.generate_quiz_driver(quiz_details, file, db)
+        code, questions_data = gen_quiz.generate_quiz_driver(json.loads(quiz_details.data), file, db)
         if code == 200:
-            code, message = gen_quiz.save_questions(questions_data, db)
+            code, message = gen_quiz.save_questions(questions_data, db, setselected=True)
             if code == 200:
                 crud_operations = CrudOperations()
                 code, json_message = crud_operations.take_created_quiz(quiz_details, db)

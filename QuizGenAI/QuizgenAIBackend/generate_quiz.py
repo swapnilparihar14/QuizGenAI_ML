@@ -206,9 +206,22 @@ class GenerateQuiz:
             total_question_count = no_of_mcq + no_of_fbq + no_of_tfq + no_of_saq
         return {'mcq': mcquestions, 'fbq': fbquestions, 'tfq': tfquestions}
 
-    def save_questions(self, questions_data, db):
+    def set_is_selected(self, questions):
+        """
+        To set isSelected as True
+        :param questions: Dictionary containing a list of questions
+        :return: Dictionary containing a list of questions with all isSelected as True
+        """
+        for question in questions:
+            for que in range(len(questions[question])):
+                questions[question][que][IS_SELECTED] = True
+        return questions
+
+    def save_questions(self, questions_data, db, setselected=False):
         try:
             questions = questions_data['questions']
+            if setselected:
+                questions = self.set_is_selected(questions)
             tfq = questions['tfq']
             mcq = questions['mcq']
             fbq = questions['fbq']
