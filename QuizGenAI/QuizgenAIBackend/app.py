@@ -26,8 +26,8 @@ def connectdb(app):
 
 db = connectdb(app)
 # # #Use CAPITAL LETTERS FOR GLOBAL VARIABLES
-models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
+# models = Models()
+# AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
 
 @app.route('/')
 def hello_world():
@@ -107,6 +107,15 @@ def get_your_created_quiz():
         quiz_details = request.args
         crud_operations = CrudOperations()
         code, json_message = crud_operations.get_all_created_questions(db, quiz_details)
+        return json_message, code
+
+
+@app.route("/get_taken_questions", methods=["GET"])
+def get_taken_questions():
+    if request.method == "GET":
+        quiz_details = request.args
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_taken_questions(db, quiz_details)
         return json_message, code
 
 
