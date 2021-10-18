@@ -3,17 +3,19 @@ import { connect } from "react-redux";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import FillInTheBlankContainerStyles from "./fillin_the_blank_container.module.css";
 
+import { saveAnswer } from "../../actions/user_answers";
 
 class ConnectedFillInTheBlankContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      answer: null
     }
   }
 
-  setRadioValue = val =>{
-    this.setState({ answer: val });
+  saveAnswerOption = async answer =>{
+    await this.props.dispatch(
+      saveAnswer(this.props.fillinTheBlankQuestion.question_id, answer-1)
+    );
   }
 
   render() {
@@ -27,16 +29,16 @@ class ConnectedFillInTheBlankContainer extends React.Component {
         name="group1"
         type="radio"
         id="default-radio-1"
-        onChange={e => this.setRadioValue(e.currentTarget.value)}
+        onChange={e => this.saveAnswerOption(e.currentTarget.value)}
       />)
     });
 
     let button = null;
 
     if(this.props.last){
-      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => this.props.clickSubmit(e, this.props.fillinTheBlankQuestion.question_id, this.state.answer-1)}>Submit</Button>
+      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => {e.preventDefault(); this.props.clickSubmit()}}>Submit</Button>
     } else {
-      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => this.props.clickNext(e, this.props.fillinTheBlankQuestion.question_id, this.state.answer-1)}>Next</Button>
+      button =  <Button className={FillInTheBlankContainerStyles.buttons} onClick={e => this.props.clickNext(e)}>Next</Button>
     }
 
     return (<>
