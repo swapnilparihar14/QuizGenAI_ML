@@ -5,7 +5,7 @@ from constants import LOGGER_FORMAT
 from flask import jsonify
 import inspect
 from bson.objectid import ObjectId
-
+import datetime
 
 class CrudOperations:
 
@@ -156,11 +156,10 @@ class CrudOperations:
             questions = quiz_details["questions"]
             user_id = quiz_details["user_id"]
             user_ans_array = []
+            time_right_now= datetime.datetime.now()
             for question in questions:
-                result = db.questions.find_one(
-                    {
-                        '_id': ObjectId(question["question_id"])
-                    })
+                result = db.questions.find_one({'_id': ObjectId(question["question_id"])})
+
                 if result["answer"] == question["answer"]:
                     correct_ans += 1
                     your_score += 1
