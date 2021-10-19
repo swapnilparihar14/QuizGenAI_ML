@@ -9,12 +9,13 @@ import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
 
-import { createQuiz } from "../../actions/review_questions";
+import { createQuiz, resetReviewQuestions } from "../../actions/review_questions";
 
 class ConnectedReviewQuestions extends React.Component {
   constructor(){
     super();
     this.state = {
+      cancel: false
     }
   }
 
@@ -30,7 +31,20 @@ class ConnectedReviewQuestions extends React.Component {
     );
   }
 
+  clickCancel = async e => {
+    e.preventDefault();
+
+    await this.props.dispatch(
+      resetReviewQuestions()
+    );
+
+    this.setState({cancel: true})
+  }
+
   render() {
+    let cancelRedirect = null;
+    if (this.state.cancel) cancelRedirect = <Redirect to="/my_quizzes" />;
+
     let redirectVar = null;
     const review_questions = this.props.reviewQuestions;
 
@@ -44,11 +58,9 @@ class ConnectedReviewQuestions extends React.Component {
 
     let counter = 0;
 
-
-
     if(review_questions.createQuizStatus)
       redirectVar =  <Redirect to="/my_quizzes" />;
-    else {
+    else if (review_questions.questions) {
       if (review_questions.questions.mcq.length !== 0){
         multipleChoiceQuestionsHeader = (<Card className={reviewQuestionsStyles.card_header}>
           <Card.Title className={reviewQuestionsStyles.title}>Multiple Choice Questions</Card.Title>
@@ -103,10 +115,11 @@ class ConnectedReviewQuestions extends React.Component {
           )
         });
       }
-  }
+    }
 
     return (<>
       {redirectVar}
+      {cancelRedirect}
       <NavigationBar></NavigationBar>
       <Container fluid className={reviewQuestionsStyles.page_header}>REVIEW QUESTIONS</Container>
       <Container className={reviewQuestionsStyles.container}> 
@@ -129,7 +142,8 @@ class ConnectedReviewQuestions extends React.Component {
         </Form>
 
         <div style={{float: "right"}}>
-          <Button className={reviewQuestionsStyles.buttons} onClick= {this.clickCreateQuiz} >Create Quiz</Button>
+          <Button className={reviewQuestionsStyles.buttonCancel} onClick= {this.clickCancel} >Cancel</Button>
+          <Button className={reviewQuestionsStyles.buttonCreate} onClick= {this.clickCreateQuiz} >Create Quiz</Button>
         </div>
       </Container>
       <Footer></Footer>

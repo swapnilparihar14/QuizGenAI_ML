@@ -18,9 +18,8 @@ class ConnectedQuizResults extends React.Component {
   clickDone = async (e) => {
     e.preventDefault();
 
-    //erase quizresults in store
-    //redirect to main page
     this.props.dispatch(resetQuizScores());
+   
     this.setState({
       redirect: true,
     });
@@ -33,7 +32,7 @@ class ConnectedQuizResults extends React.Component {
     let quiz_results = this.props.quizResults;
 
     // redirect based on successful signup
-    if (this.state.redirect === true) {
+    if (auth.isAuthenticated === false || this.state.redirect === true) {
       const path = "/my_quizzes";
       redirectVar = <Redirect to={path} />;
     }
@@ -48,7 +47,7 @@ class ConnectedQuizResults extends React.Component {
           <img
             className={quizResultsStyles.congratulations_image}
             src={congratulations}
-            alt="congrats image"
+            alt="congrats"
           />
           <h2>
             You scored{" "}
