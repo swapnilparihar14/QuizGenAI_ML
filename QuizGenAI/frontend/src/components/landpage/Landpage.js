@@ -7,7 +7,7 @@ import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import container1Image from "../../assets/landpage-container1.png";
 import uploadLogo from "../../assets/upload-logo.png";
-import { Link } from "react-router-dom";
+import quizLogo from "../../assets/quiz.png";
 import { MdFileUpload } from "react-icons/md";
 import {GiClick} from "react-icons/gi";
 
@@ -35,73 +35,40 @@ class ConnectedLandpage extends React.Component {
       </div>
       <div id={landpageStyles.flex}>
         <div className={landpageStyles.flexChild}>
-          <Col id={landpageStyles.column1}>
-            <h1>AI Automated Quiz Generator</h1>
-            <h2 id={landpageStyles.tagline}>Generating  Quizzes<br/> 
-            Saving Time<br/>  
-            Empowering educators and students</h2>
-          </Col>
-          <Col id={landpageStyles.column2}>
-            <Image id={landpageStyles.container1_image} src={container1Image}/>
-          </Col>
+          <Row xs={12} md={12} lg={12} id={landpageStyles.row}>
+            <Col xs={6} md={6} lg={6} id={landpageStyles.column1}>
+              <h1>AI Automated Quiz Generator</h1>
+              <h2 className={landpageStyles.tagline}>Saving Time<br/></h2>
+              <h2 className={landpageStyles.tagline}>&nbsp;Generating Quizzes<br/></h2>  
+              <h2 className={landpageStyles.tagline}>&nbsp;&nbsp;Empowering instructors and students</h2>
+            </Col>
+            <Col xs={6} md={6} lg={6} id={landpageStyles.column2}>
+              <Image id={landpageStyles.container1_image} src={container1Image}/>
+            </Col>
+          </Row>
         </div>
-        <div className={landpageStyles.flexChild}>
+        <div className={landpageStyles.flexChild} id={landpageStyles.container2}>
           <h1>How It Works</h1>
           <hr></hr>
-          <Container className={landpageStyles.steps}>
-            <div className={landpageStyles.circles}><MdFileUpload className={landpageStyles.logos}></MdFileUpload></div>
-            <h3>1. Upload a text file</h3> 
-          </Container>
-          <Container className={landpageStyles.steps}>
-            <div className={landpageStyles.circles}><img src={uploadLogo} className={landpageStyles.logos}></img></div>
-          </Container>
-          <Container className={landpageStyles.steps}>
-            <div className={landpageStyles.circles}><GiClick className={landpageStyles.logos}></GiClick></div>
-          </Container>
-          <Container className={landpageStyles.steps}>
-            <div className={landpageStyles.circles}><img src=""></img></div>
-          </Container>
+          <div id={landpageStyles.stepsContainer}>
+            <Container className={landpageStyles.steps}>
+              <div className={landpageStyles.circles}><MdFileUpload className={landpageStyles.logos}></MdFileUpload></div>
+              <h4>1. Upload a text file</h4> 
+            </Container>
+            <Container className={landpageStyles.steps}>
+              <div className={landpageStyles.circles}><img src={uploadLogo} className={landpageStyles.logos} alt="upload logo"></img></div>
+              <h4>2. Wait for quiz creation</h4> 
+            </Container>
+            <Container className={landpageStyles.steps}>
+              <div className={landpageStyles.circles}><GiClick className={landpageStyles.logos}></GiClick></div>
+              <h4>3. Select questions</h4> 
+            </Container>
+            <Container className={landpageStyles.steps}>
+              <div className={landpageStyles.circles}><img src={quizLogo} className={landpageStyles.logos} alt="quiz logo"></img></div>
+              <h4>4. Quiz is ready</h4>
+            </Container>
+          </div>
         </div>
-      {/* <Row id={landpageStyles.row}>
-        <Col id={landpageStyles.column1}>
-          <h1>AI Automated Quiz Generator</h1>
-          <h2 id={landpageStyles.tagline}>Generating  Quizzes<br/> 
-          Saving Time<br/>  
-          Empowering educators and students</h2>
-        </Col>
-        <Col id={landpageStyles.column2}>
-          <Image id={landpageStyles.container1_image} src={container1Image}/>
-        </Col>
-      </Row>
-      <Container id={landpageStyles.container2}>
-        <h1>How It Works</h1>
-        <hr></hr>
-        <Container className={landpageStyles.steps}>
-          <div className={landpageStyles.circles}><MdFileUpload className={landpageStyles.logos}></MdFileUpload></div>
-          <h3>1. Upload a text file</h3> 
-        </Container>
-        <Container className={landpageStyles.steps}>
-          <div className={landpageStyles.circles}><img src={uploadLogo} className={landpageStyles.logos}></img></div>
-        </Container>
-        <Container className={landpageStyles.steps}>
-          <div className={landpageStyles.circles}><GiClick className={landpageStyles.logos}></GiClick></div>
-        </Container>
-        <Container className={landpageStyles.steps}>
-          <div className={landpageStyles.circles}><img src=""></img></div>
-        </Container>
-      </Container> */}
-      {/* <Container id={landpageStyles.container3}>
-        <h1>Company</h1>
-        <hr></hr>
-        <div id={landpageStyles.links}>
-          <Link to="#" >Services</Link>
-          <br></br>
-          <Link to="#" >Contact Us</Link>
-          <br></br>
-          <Link to="#">About Us</Link>
-        </div>
-      </Container>
-        <p>Copyright &#169; 2021-2022 | <span>QuizGenAI Inc.</span> | Privacy Policy | Terms of use</p> */}
       </div>
       <Footer></Footer>
       </>

@@ -48,6 +48,7 @@ class ConnectedQuizResults extends React.Component {
           <img
             className={quizResultsStyles.congratulations_image}
             src={congratulations}
+            alt="congrats image"
           />
           <h2>
             You scored{" "}
