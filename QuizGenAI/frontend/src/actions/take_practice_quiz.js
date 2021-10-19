@@ -23,6 +23,8 @@ export const getPracticeQuestions = (data, file) => async (dispatch) => {
 
   let formData = new FormData();
   formData.append("quiz_name", quizname);
+  formData.append("quiz_type", "practice");
+  formData.append("access_code", "");
   formData.append("timed", timed);
   formData.append("hours", hours);
   formData.append("minutes", minutes);
@@ -40,11 +42,7 @@ export const getPracticeQuestions = (data, file) => async (dispatch) => {
   try {
     // axios.defaults.withCredentials = true;
 
-    const res = await axios.post(
-      "http://127.0.0.1:5000/take_practice_quiz",
-      formData,
-      config
-    );
+    const res = await axios.post(url + "/take_practice_quiz", formData, config);
 
     dispatch({
       type: TAKE_PRACTICE_QUIZ,
