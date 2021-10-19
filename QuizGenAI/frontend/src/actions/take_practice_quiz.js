@@ -41,7 +41,7 @@ export const getPracticeQuestions = (data, file) => async (dispatch) => {
     // axios.defaults.withCredentials = true;
 
     const res = await axios.post(
-      "http://127.0.0.1:5000/take_practice_quiz",
+      url + "/take_practice_quiz",
       formData,
       config
     );

@@ -8,7 +8,9 @@ import { saveAnswer } from "../../actions/user_answers";
 class ConnectedMultipleChoiceContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      answer: false
+    };
   }
 
   saveAnswerOption = async (answer) => {
@@ -32,7 +34,10 @@ class ConnectedMultipleChoiceContainer extends React.Component {
           name="group1"
           type="radio"
           id="default-radio-1"
-          onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
+          onChange={(e) => {
+            this.setState({answer: true});
+            this.saveAnswerOption(e.currentTarget.value);
+          }}
         />
       );
     });
@@ -47,9 +52,8 @@ class ConnectedMultipleChoiceContainer extends React.Component {
             e.preventDefault();
             this.props.clickSubmit();
           }}
-          disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Submit
@@ -60,9 +64,8 @@ class ConnectedMultipleChoiceContainer extends React.Component {
         <Button
           className={multipleChoiceContainerStyles.buttons}
           onClick={(e) => this.props.clickNext(e)}
-          disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Next

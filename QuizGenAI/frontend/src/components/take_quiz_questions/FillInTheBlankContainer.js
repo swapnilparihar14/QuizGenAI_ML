@@ -8,7 +8,9 @@ import { saveAnswer } from "../../actions/user_answers";
 class ConnectedFillInTheBlankContainer extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      answer: false
+    };
   }
 
   saveAnswerOption = async (answer) => {
@@ -32,7 +34,10 @@ class ConnectedFillInTheBlankContainer extends React.Component {
           name="group1"
           type="radio"
           id="default-radio-1"
-          onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
+          onChange={(e) => {
+            this.setState({answer: true});
+            this.saveAnswerOption(e.currentTarget.value);
+          }}
         />
       );
     });
@@ -47,9 +52,8 @@ class ConnectedFillInTheBlankContainer extends React.Component {
             e.preventDefault();
             this.props.clickSubmit();
           }}
-          disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Submit
@@ -60,9 +64,8 @@ class ConnectedFillInTheBlankContainer extends React.Component {
         <Button
           className={FillInTheBlankContainerStyles.buttons}
           onClick={(e) => this.props.clickNext(e)}
-          disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Next
@@ -73,7 +76,7 @@ class ConnectedFillInTheBlankContainer extends React.Component {
     return (
       <>
         <h2 style={{ fontSize: "1rem", marginBottom: "10px" }}>
-          Fill in the blank in the following sentence.
+          Choose the option to fill in the blank in the following sentence.
         </h2>
         <Card
           onClick={this.clickCreateQuiz}
