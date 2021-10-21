@@ -33,10 +33,14 @@ class CrudOperations:
 
             user_quizzes = []
             for quiz in quizzes:
-                max_score = 0
+                duration, max_score = "", 0
                 all_questions = db.questions.find({'quiz_id': str(quiz["_id"])})
                 for question in all_questions:
                     max_score += 1
+                if "duration" in quiz:
+                    hrs = str(int(quiz["duration"]/60))
+                    min = str(int(quiz["duration"]%60))
+                    duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
                 quiz_dict = {
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
@@ -44,7 +48,7 @@ class CrudOperations:
                     "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
                     "no_of_questions": max_score,
                     "quiz_type": quiz["quiz_type"],
-                    "duration": quiz["duration"] if "duration" in quiz else ""
+                    "duration": duration
                 }
                 user_quizzes.append(quiz_dict)
             return 200, jsonify(
