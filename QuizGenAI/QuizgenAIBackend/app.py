@@ -26,8 +26,8 @@ def connectdb(app):
 
 db = connectdb(app)
 # # #Use CAPITAL LETTERS FOR GLOBAL VARIABLES
-models = Models()
-AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
+# models = Models()
+# AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer = models.generate_all_models()
 
 @app.route('/')
 def hello_world():
@@ -110,6 +110,24 @@ def get_your_created_quiz():
         return json_message, code
 
 
+@app.route("/get_taken_questions", methods=["GET"])
+def get_taken_questions():
+    if request.method == "GET":
+        quiz_details = request.args
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_taken_questions(db, quiz_details)
+        return json_message, code
+
+
+@app.route("/get_taken_quizzes", methods=["GET"])
+def get_taken_quizzes():
+    if request.method == "GET":
+        quiz_details = request.args
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.get_taken_quizzes(db, quiz_details)
+        return json_message, code
+
+
 @app.route("/take_created_quiz", methods=["GET"])
 def take_created_quiz():
     if request.method == 'GET':
@@ -134,10 +152,11 @@ def take_practice_quiz():
         quiz_details = request.form
         file = request.files['file']
         json_message = ERROR_MESSAGE
-        gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model, BERT_model_tfquestions, t5_model, t5_tokenizer)
+        gen_quiz = GenerateQuiz(AllenNLPpredictor, GPT2tokenizer, GPT2model,
+                                BERT_model_tfquestions, t5_model, t5_tokenizer, is_selected=True)
         code, questions_data = gen_quiz.generate_quiz_driver(quiz_details, file, db)
         if code == 200:
-            code, message = gen_quiz.save_questions(json.loads(questions_data.data), db, setselected=True)
+            code, message = gen_quiz.save_questions(json.loads(questions_data.data), db)
             if code == 200:
                 crud_operations = CrudOperations()
                 code, json_message = crud_operations.take_created_quiz(json.loads(questions_data.data), db)

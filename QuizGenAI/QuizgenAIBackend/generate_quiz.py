@@ -21,7 +21,7 @@ import datetime;
 class GenerateQuiz:
     """ Generates the complete quiz """
 
-    def __init__(self, predictor, GPT2tokenizer, GPT2model, BERT_model, t5_model, t5_tokenizer):
+    def __init__(self, predictor, GPT2tokenizer, GPT2model, BERT_model, t5_model, t5_tokenizer, is_selected=False):
         """ Constructor """
         self.AllenNLPpredictor = predictor
         self.GPT2tokenizer = GPT2tokenizer
@@ -34,6 +34,7 @@ class GenerateQuiz:
         formatter = logging.Formatter(LOGGER_FORMAT)
         file_handler.setFormatter(formatter)
         self.log.addHandler(file_handler)
+        self.is_selected = is_selected
 
     def generate_quiz_driver(self, quiz_details, file, db):
         try:
@@ -121,7 +122,7 @@ class GenerateQuiz:
         :return: dictionary containing all relevant information about fnb for the frontend
         """
         question = get_fill_in_the_blank(options[correct_ans], context)
-        return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: False}
+        return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: self.is_selected }
 
     def get_distractor(self, keywords, sentences, option_length):
         """
@@ -151,7 +152,7 @@ class GenerateQuiz:
         """
         temp_model_obj = model_prod(self.t5_model, self.t5_tokenizer)
         question = temp_model_obj.generate_question(context, options[correct_ans])
-        return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: False}
+        return {CONTEXT: context, QUESTION: question, OPTIONS: options, CORRECT_ANS: correct_ans, IS_SELECTED: self.is_selected}
 
     def get_tfq_question(self, sentence, iter):
         """
@@ -170,7 +171,7 @@ class GenerateQuiz:
             else:
                 question = generated_question
                 correct_ans = False
-        return {QUESTION: question, CORRECT_ANS: correct_ans, IS_SELECTED: False}
+        return {QUESTION: question, CORRECT_ANS: correct_ans, IS_SELECTED: self.is_selected}
 
     def generate_questions(self, no_of_mcq, no_of_fbq, no_of_tfq, file_destination, no_of_saq=0, option_length=4):
         """
@@ -207,22 +208,9 @@ class GenerateQuiz:
             total_question_count = no_of_mcq + no_of_fbq + no_of_tfq + no_of_saq
         return {'mcq': mcquestions, 'fbq': fbquestions, 'tfq': tfquestions}
 
-    def set_is_selected(self, questions):
-        """
-        To set isSelected as True
-        :param questions: Dictionary containing a list of questions
-        :return: Dictionary containing a list of questions with all isSelected as True
-        """
-        for question in questions:
-            for que in range(len(questions[question])):
-                questions[question][que][IS_SELECTED] = True
-        return questions
-
-    def save_questions(self, questions_data, db, setselected=False):
+    def save_questions(self, questions_data, db):
         try:
             questions = questions_data['questions']
-            if setselected:
-                questions = self.set_is_selected(questions)
             tfq = questions['tfq']
             mcq = questions['mcq']
             fbq = questions['fbq']
