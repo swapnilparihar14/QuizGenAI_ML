@@ -29,11 +29,16 @@ const user_answers = (state = initialState, action) => {
       return state;
 
     case RESET_ANSWERS:
-      return initialState;
+      console.log("reset answers");
+      return {
+        questions: [],
+        nonsense_questions: []
+      };
 
     case LOG_OUT:
       return {
-        ...initialState
+        questions: [],
+        nonsense_questions: []
       };
 
     default:

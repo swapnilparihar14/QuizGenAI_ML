@@ -30,7 +30,7 @@ class ConnectedShowCreatedQuiz extends React.Component {
   }
 
   componentWillUnmount(){
-    if(this.props.showCreatedQuiz)
+    if(this.props.showSpecificQuiz)
       this.props.dispatch(
         resetShowQuiz()
       );
@@ -45,7 +45,7 @@ class ConnectedShowCreatedQuiz extends React.Component {
       redirectVar = <Redirect to={path} />;
     }
 
-    const show_created_quiz = this.props.showCreatedQuiz;
+    const show_created_quiz = this.props.showSpecificQuiz;
 
     let multipleChoiceQuestions = null;
     let fillinTheBlankQuestions = null;
@@ -143,7 +143,7 @@ class ConnectedShowCreatedQuiz extends React.Component {
 
 const mapStateToProps = state => {
   return { auth: state.auth,
-    showCreatedQuiz: state.showCreatedQuiz };
+    showSpecificQuiz: state.showSpecificQuiz };
 };
 
 const ShowCreatedQuiz = connect(mapStateToProps)(ConnectedShowCreatedQuiz);

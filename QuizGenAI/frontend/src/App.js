@@ -26,7 +26,7 @@ function App() {
         <Route path="/quiz_results" component={QuizResults} />
         <Route path="/take_quiz_questions" component={TakeQuizQuestions} />
         <Route exact path="/my_quizzes" component={MyQuizzes} />
-        <Route exact path="/my_quizzes/:quizid" component={ShowCreatedQuiz} />
+        <Route exact path="/my_quizzes/created/:quizid" component={ShowCreatedQuiz} />
       </Switch>
     </BrowserRouter>
   );
