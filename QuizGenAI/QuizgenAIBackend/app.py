@@ -129,7 +129,7 @@ def get_taken_quizzes():
 
 
 @app.route("/get_practice_quizzes", methods=["GET"])
-def get_taken_quizzes():
+def get_practice_quizzes():
     if request.method == "GET":
         quiz_details = request.args
         crud_operations = CrudOperations()
