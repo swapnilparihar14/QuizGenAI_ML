@@ -159,9 +159,6 @@ class CrudOperations:
     def get_quiz_score(self, db, quiz_details):
         try:
             correct_ans, wrong_ans, your_score, max_score = 0, 0, 0, 0
-            all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
-            for question in all_questions:
-                max_score +=1
             questions = quiz_details["questions"]
             user_id = quiz_details["user_id"]
             user_ans_array = []
@@ -185,6 +182,9 @@ class CrudOperations:
                 db.questions.remove({
                     "_id": ObjectId(non_sense)
                 })
+            all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
+            for question in all_questions:
+                max_score += 1
             return 200, jsonify(
                 correct_ans=correct_ans,
                 wrong_ans=wrong_ans,
