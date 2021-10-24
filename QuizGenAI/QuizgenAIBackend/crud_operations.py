@@ -59,7 +59,7 @@ class CrudOperations:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
-    def get_practice_quizzes(self, user_details, db):
+    def get_practice_quizzes(self, db, user_details):
         """
         For home page to see created quizzes by the user
         :param user_details: user details from API
