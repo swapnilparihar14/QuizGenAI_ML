@@ -5,7 +5,7 @@ from constants import LOGGER_FORMAT
 from flask import jsonify
 import inspect
 from bson.objectid import ObjectId
-
+import datetime
 
 class CrudOperations:
 
@@ -27,19 +27,69 @@ class CrudOperations:
         try:
             quizzes = db.quiz.find(
                 {
-                    'creator_id': user_details.get("id")
+                    'creator_id': user_details.get("id"),
+                    'quiz_type': { '$ne': "practice"}
                 }
             )
 
             user_quizzes = []
             for quiz in quizzes:
+                duration, max_score = "", 0
+                all_questions = db.questions.find({'quiz_id': str(quiz["_id"])})
+                for question in all_questions:
+                    max_score += 1
+                if "duration" in quiz:
+                    hrs = str(int(quiz["duration"]/60))
+                    min = str(int(quiz["duration"]%60))
+                    duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
                 quiz_dict = {
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
                     "access_code": quiz["access_code"],
                     "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
-                    "times_taken": 5,
-                    "quiz_type": quiz["quiz_type"]
+                    "no_of_questions": max_score,
+                    "quiz_type": quiz["quiz_type"],
+                    "duration": duration
+                }
+                user_quizzes.append(quiz_dict)
+            return 200, jsonify(
+                quizzes=user_quizzes
+            )
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
+
+    def get_practice_quizzes(self, db, user_details):
+        """
+        For home page to see created quizzes by the user
+        :param user_details: user details from API
+        :param db: Mongodb database object
+        :return: list of user quizzes and
+        """
+        try:
+            quizzes = db.quiz.find(
+                {
+                    'creator_id': user_details.get("id"),
+                    'quiz_type': "practice"
+                }
+            )
+
+            user_quizzes = []
+            for quiz in quizzes:
+                duration, max_score = "", 0
+                all_questions = db.questions.find({'quiz_id': str(quiz["_id"])})
+                for question in all_questions:
+                    max_score += 1
+                if "duration" in quiz:
+                    hrs = str(int(quiz["duration"]/60))
+                    min = str(int(quiz["duration"]%60))
+                    duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
+                quiz_dict = {
+                    "id": str(quiz["_id"]),
+                    "name": quiz["quiz_name"],
+                    "taken_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
+                    "no_of_questions": max_score,
+                    "duration": duration
                 }
                 user_quizzes.append(quiz_dict)
             return 200, jsonify(
@@ -150,17 +200,13 @@ class CrudOperations:
     def get_quiz_score(self, db, quiz_details):
         try:
             correct_ans, wrong_ans, your_score, max_score = 0, 0, 0, 0
-            all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
-            for question in all_questions:
-                max_score +=1
             questions = quiz_details["questions"]
             user_id = quiz_details["user_id"]
             user_ans_array = []
+            time_right_now= datetime.datetime.now()
             for question in questions:
-                result = db.questions.find_one(
-                    {
-                        '_id': ObjectId(question["question_id"])
-                    })
+                result = db.questions.find_one({'_id': ObjectId(question["question_id"])})
+
                 if result["answer"] == question["answer"]:
                     correct_ans += 1
                     your_score += 1
@@ -171,11 +217,15 @@ class CrudOperations:
                     "user_id": user_id,
                     "answer": question["answer"]
                 })
-            db.user_answers.insert_many(user_ans_array)
+            if user_ans_array:
+                db.user_answers.insert_many(user_ans_array)
             for non_sense in quiz_details["nonsense_questions"]:
                 db.questions.remove({
                     "_id": ObjectId(non_sense)
                 })
+            all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
+            for question in all_questions:
+                max_score += 1
             return 200, jsonify(
                 correct_ans=correct_ans,
                 wrong_ans=wrong_ans,
