@@ -27,7 +27,8 @@ class CrudOperations:
         try:
             quizzes = db.quiz.find(
                 {
-                    'creator_id': user_details.get("id")
+                    'creator_id': user_details.get("id"),
+                    'quiz_type': { '$ne': "practice"}
                 }
             )
 
@@ -48,6 +49,46 @@ class CrudOperations:
                     "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
                     "no_of_questions": max_score,
                     "quiz_type": quiz["quiz_type"],
+                    "duration": duration
+                }
+                user_quizzes.append(quiz_dict)
+            return 200, jsonify(
+                quizzes=user_quizzes
+            )
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
+
+    def get_practice_quizzes(self, user_details, db):
+        """
+        For home page to see created quizzes by the user
+        :param user_details: user details from API
+        :param db: Mongodb database object
+        :return: list of user quizzes and
+        """
+        try:
+            quizzes = db.quiz.find(
+                {
+                    'creator_id': user_details.get("id"),
+                    'quiz_type': "practice"
+                }
+            )
+
+            user_quizzes = []
+            for quiz in quizzes:
+                duration, max_score = "", 0
+                all_questions = db.questions.find({'quiz_id': str(quiz["_id"])})
+                for question in all_questions:
+                    max_score += 1
+                if "duration" in quiz:
+                    hrs = str(int(quiz["duration"]/60))
+                    min = str(int(quiz["duration"]%60))
+                    duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
+                quiz_dict = {
+                    "id": str(quiz["_id"]),
+                    "name": quiz["quiz_name"],
+                    "taken_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
+                    "no_of_questions": max_score,
                     "duration": duration
                 }
                 user_quizzes.append(quiz_dict)
