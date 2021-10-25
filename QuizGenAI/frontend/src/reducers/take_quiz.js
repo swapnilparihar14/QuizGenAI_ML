@@ -21,7 +21,10 @@ const take_quiz = (state = initialState, action) => {
       };
 
     case RESET_TAKE_QUIZ:
-      return {};
+      console.log("reset take quiz");
+      return {
+        ...initialState
+      };
 
     case LOG_OUT:
       return {

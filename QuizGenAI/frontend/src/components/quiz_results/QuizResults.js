@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Footer from "../footer/Footer";
 import { Container, Button } from "react-bootstrap";
 import quizResultsStyles from "./quiz_results.module.css";
-import congratulations from "./congratulations.png";
+import congratulations from "../../assets/congratulations.png"
 import { resetQuizScores } from "../../actions/user_answers";
 
 class ConnectedQuizResults extends React.Component {
@@ -18,9 +18,8 @@ class ConnectedQuizResults extends React.Component {
   clickDone = async (e) => {
     e.preventDefault();
 
-    //erase quizresults in store
-    //redirect to main page
     this.props.dispatch(resetQuizScores());
+   
     this.setState({
       redirect: true,
     });
@@ -42,12 +41,13 @@ class ConnectedQuizResults extends React.Component {
       <>
         {redirectVar}
         <Container fluid className={quizResultsStyles.page_header}>
-          TAKE QUIZ
+          QUIZ RESULTS
         </Container>
         <Container className={quizResultsStyles.custom_container}>
           <img
             className={quizResultsStyles.congratulations_image}
             src={congratulations}
+            alt="congrats"
           />
           <h2>
             You scored{" "}

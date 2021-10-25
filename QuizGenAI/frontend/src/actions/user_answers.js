@@ -64,6 +64,7 @@ export const submitQuiz = (data) => async (dispatch) => {
     dispatch({
       type: RESET_ANSWERS,
     });
+    
   } catch (err) {
     console.log("err", err);
     const error = err.response.data.message;

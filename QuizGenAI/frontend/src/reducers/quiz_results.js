@@ -12,6 +12,7 @@ const quiz_results = (state = initialState, action) => {
 
   switch (type) {
     case SUBMIT_QUIZ:
+      console.log("submit quiz");
       if (state.message) delete state.message;
       return {
         ...state,

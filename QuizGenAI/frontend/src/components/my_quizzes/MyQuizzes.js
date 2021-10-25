@@ -8,7 +8,7 @@ import { Redirect } from "react-router";
 import Footer from "../footer/Footer";
 
 import { resetReviewQuestions } from "../../actions/review_questions";
-import { getCreatedQuizzes, getCreatedQuiz } from "../../actions/my_quizzes";
+import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz} from "../../actions/my_quizzes";
 
 class ConnectedMyQuizzes extends React.Component {
   constructor(){
@@ -28,8 +28,14 @@ class ConnectedMyQuizzes extends React.Component {
     );
   }
 
-  onClickCreatedQuizzes = e => {
+  onClickCreatedQuizzes = async e => {
     e.preventDefault();
+    let id = localStorage.getItem("id");
+
+    await this.props.dispatch(
+      getCreatedQuizzes(id)
+    );
+
     this.setState({
       onCreatedQuizzes: true,
       onTakenQuizzes: false,
@@ -37,8 +43,14 @@ class ConnectedMyQuizzes extends React.Component {
     })
   }
 
-  onClickTakenQuizzes = e => {
+  onClickTakenQuizzes = async e => {
     e.preventDefault();
+    let id = localStorage.getItem("id");
+
+    await this.props.dispatch(
+      getTakenQuizzes(id)
+    );
+
     this.setState({
       onCreatedQuizzes: false,
       onTakenQuizzes: true,
@@ -46,8 +58,14 @@ class ConnectedMyQuizzes extends React.Component {
     })
   }
 
-  onClickPracticeQuizzes = e => {
+  onClickPracticeQuizzes = async e => {
     e.preventDefault();
+    let id = localStorage.getItem("id");
+
+    await this.props.dispatch(
+      getPracticeQuizzes(id)
+    );
+
     this.setState({
       onCreatedQuizzes: false,
       onTakenQuizzes: false,
@@ -66,6 +84,32 @@ class ConnectedMyQuizzes extends React.Component {
   getCreatedQuiz = async (quizId) => {
     await this.props.dispatch(
       getCreatedQuiz(quizId)
+    );
+  }
+
+  getPracticeQuiz = async (quizId) => {
+    let id = localStorage.getItem("id");
+
+    let data = {
+      quiz_id: quizId,
+      user_id: id 
+    }
+
+    await this.props.dispatch(
+      getPracticeQuiz(data)
+    );
+  }
+
+  getTakenQuiz = async (quizId) => {
+    let id = localStorage.getItem("id");
+
+    let data = {
+      quiz_id: quizId,
+      user_id: id 
+    }
+
+    await this.props.dispatch(
+      getTakenQuiz(data)
     );
   }
 
@@ -106,6 +150,9 @@ class ConnectedMyQuizzes extends React.Component {
     let counter = 0;
 
     let createdQuizzesRows = null;
+    let practiceQuizzesRows = null;
+    let takenQuizzesRows = null;
+
 
     if (this.props.listQuizzes.quizzes){
       if(this.state.onCreatedQuizzes)
@@ -116,12 +163,43 @@ class ConnectedMyQuizzes extends React.Component {
               key={counter}
               position={counter}
             >
-              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/${createdQuizzesRow.id}`} onClick={(e) => {this.getCreatedQuiz(createdQuizzesRow.id)}}>{createdQuizzesRow.id}</Link></td>
+              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/created/${createdQuizzesRow.id}`} onClick={(e) => {this.getCreatedQuiz(createdQuizzesRow.id)}}>{createdQuizzesRow.id}</Link></td>
               <td>{createdQuizzesRow.name}</td>
               <td>{createdQuizzesRow.quiz_type}</td>
               <td><p className={myQuizzesStyles.ac}>{createdQuizzesRow.access_code}</p></td>
-              <td>{createdQuizzesRow.times_taken}</td>
+              <td>{createdQuizzesRow.no_of_questions}</td>
+              <td>{createdQuizzesRow.duration}</td>
               <td>{createdQuizzesRow.created_on}</td>
+            </tr>
+          )
+        });
+      else if(this.state.onTakenQuizzes)
+        takenQuizzesRows = this.props.listQuizzes.quizzes.map((takenQuizzesRow) => {
+          counter++;
+          return (
+            <tr
+              key={counter}
+              position={counter}
+            >
+              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/taken/${takenQuizzesRow.id}`} onClick={(e) => {this.getTakenQuiz(takenQuizzesRow.id)}}>{takenQuizzesRow.id}</Link></td>
+              <td>{takenQuizzesRow.name}</td>
+              <td>{takenQuizzesRow.score}</td>
+              <td>{takenQuizzesRow.taken_on}</td>
+            </tr>
+          )
+        });
+      else if(this.state.onPracticeQuizzes)
+        practiceQuizzesRows = this.props.listQuizzes.quizzes.map((practiceQuizzesRow) => {
+          counter++;
+          return (
+            <tr
+              key={counter}
+              position={counter}
+            >
+              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/practice/${practiceQuizzesRow.id}`} onClick={(e) => {this.getPracticeQuiz(practiceQuizzesRow.id)}}>{practiceQuizzesRow.id}</Link></td>
+              <td>{practiceQuizzesRow.name}</td>
+              <td>{practiceQuizzesRow.score}</td>
+              <td>{practiceQuizzesRow.taken_on}</td>
             </tr>
           )
         });
@@ -135,7 +213,8 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz Name</th>
             <th>Quiz Type</th>
             <th style={{width: "200px"}}>Password</th>
-            <th>Times Taken</th>
+            <th># of Questions</th>
+            <th>Duration</th>
             <th>Created On</th>
           </tr>
         </thead>
@@ -144,29 +223,33 @@ class ConnectedMyQuizzes extends React.Component {
         </tbody>
       </Table>)
     }
+    else if (this.state.onPracticeQuizzes){
+      table = (<Table className={myQuizzesStyles.table} striped bordered hover >
+        <thead>
+          <tr>
+            <th>Quiz ID</th>
+            <th>Quiz Name</th>
+            <th>Score</th>
+            <th>Taken On</th> 
+          </tr>
+        </thead>
+        <tbody>
+          {practiceQuizzesRows}
+        </tbody>
+      </Table>)
+    }
     else if ( this.state.onTakenQuizzes){
       table = (<Table className={myQuizzesStyles.table} striped bordered hover >
         <thead>
           <tr>
-            <th>#</th>
+            <th>Quiz ID</th>
             <th>Quiz Name</th>
-            <th>Created At</th>
             <th>Score</th>
+            <th>Taken On</th> 
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Quiz 1</td>
-            <td>Aug 21, 2021</td>
-            <td>20</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Quiz 2</td>
-            <td>Sept 1, 2021</td>
-            <td>10</td>
-          </tr>
+          {takenQuizzesRows}
         </tbody>
       </Table>)
     }
@@ -177,8 +260,9 @@ class ConnectedMyQuizzes extends React.Component {
       <NavigationBar></NavigationBar> 
       {alert}
       <Container fluid>
-        <div className={this.state.onCreatedQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected} onClick= {this.onClickCreatedQuizzes} >Quizzes Created</div>
-        <div className={this.state.onTakenQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickTakenQuizzes} >Quizzes Taken</div>
+        <div className={this.state.onCreatedQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected} onClick= {this.onClickCreatedQuizzes} >Created Quizzes</div>
+        <div className={this.state.onPracticeQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickPracticeQuizzes} >Practice Quizzes</div>
+        <div className={this.state.onTakenQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickTakenQuizzes} >Taken Quizzes</div>
         {/* {title} */}
         <div className={myQuizzesStyles.tableContainer}>
           {table}

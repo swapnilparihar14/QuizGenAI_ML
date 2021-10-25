@@ -39,7 +39,9 @@ const review_questions = (state = initialState, action) => {
       };
 
     case RESET_REVIEW_QUESTIONS:
-      return {};
+      return {
+        ...initialState
+      };
 
     case LOG_OUT:
       return {

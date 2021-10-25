@@ -4,14 +4,14 @@ import NavigationBar from "../../navbar/Navbar";
 import Footer from "../../footer/Footer";
 import { Container, Card, Form } from "react-bootstrap";
 import { Redirect } from "react-router";
-import showCreatedQuizStyles from "./showCreatedQuizStyles.module.css";
+import showPracticeOrTakenQuizStyles from "./showPracticeOrTakenQuizStyles.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
 
 import { resetShowQuiz } from "../../../actions/my_quizzes";
 
-class ConnectedShowCreatedQuiz extends React.Component {
+class ConnectedShowPracticeOrTakenQuiz extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -45,7 +45,7 @@ class ConnectedShowCreatedQuiz extends React.Component {
       redirectVar = <Redirect to={path} />;
     }
 
-    const show_created_quiz = this.props.showSpecificQuiz;
+    const show_quiz = this.props.showSpecificQuiz;
 
     let multipleChoiceQuestions = null;
     let fillinTheBlankQuestions = null;
@@ -57,13 +57,13 @@ class ConnectedShowCreatedQuiz extends React.Component {
 
     let counter = 0;
 
-    if(show_created_quiz.questions){
-      if (show_created_quiz.questions.mcq.length !== 0){
-        multipleChoiceQuestionsHeader = (<Card className={showCreatedQuizStyles.card_header}>
-          <Card.Title className={showCreatedQuizStyles.title}>Multiple Choice Questions</Card.Title>
+    if(show_quiz.questions){
+      if (show_quiz.questions.mcq.length !== 0){
+        multipleChoiceQuestionsHeader = (<Card className={showPracticeOrTakenQuizStyles.card_header}>
+          <Card.Title className={showPracticeOrTakenQuizStyles.title}>Multiple Choice Questions</Card.Title>
         </Card>);
 
-        multipleChoiceQuestions = show_created_quiz.questions.mcq.map((multipleChoiceQuestion) => {
+        multipleChoiceQuestions = show_quiz.questions.mcq.map((multipleChoiceQuestion) => {
           counter++;
           return (
             <MultipleChoiceContainer
@@ -77,12 +77,12 @@ class ConnectedShowCreatedQuiz extends React.Component {
 
       counter = 0;
 
-      if (show_created_quiz.questions.fbq.length !== 0){
-        fillinTheBlankQuestionsHeader=( <Card className={showCreatedQuizStyles.card_header}>
-          <Card.Title className={showCreatedQuizStyles.title}>Fill-in the Blank Questions</Card.Title>
+      if (show_quiz.questions.fbq.length !== 0){
+        fillinTheBlankQuestionsHeader=( <Card className={showPracticeOrTakenQuizStyles.card_header}>
+          <Card.Title className={showPracticeOrTakenQuizStyles.title}>Fill-in the Blank Questions</Card.Title>
         </Card>);
 
-        fillinTheBlankQuestions = show_created_quiz.questions.fbq.map((fillinTheBlankQuestion) => {
+        fillinTheBlankQuestions = show_quiz.questions.fbq.map((fillinTheBlankQuestion) => {
           counter++;
           return (
             <FillInTheBlankContainer
@@ -96,12 +96,12 @@ class ConnectedShowCreatedQuiz extends React.Component {
 
       counter = 0;
 
-      if (show_created_quiz.questions.tfq.length !== 0){
-        trueOrFalseQuestionsHeader=(<Card className={showCreatedQuizStyles.card_header}>
-          <Card.Title className={showCreatedQuizStyles.title}>True or False Questions</Card.Title>
+      if (show_quiz.questions.tfq.length !== 0){
+        trueOrFalseQuestionsHeader=(<Card className={showPracticeOrTakenQuizStyles.card_header}>
+          <Card.Title className={showPracticeOrTakenQuizStyles.title}>True or False Questions</Card.Title>
         </Card>);
 
-        trueOrFalseQuestions = show_created_quiz.questions.tfq.map((trueOrFalseQuestion) => {
+        trueOrFalseQuestions = show_quiz.questions.tfq.map((trueOrFalseQuestion) => {
           counter++;
           return (
             <TrueOrFalseContainer
@@ -117,10 +117,9 @@ class ConnectedShowCreatedQuiz extends React.Component {
     return (<>
       {redirectVar}
       <NavigationBar></NavigationBar>
-      {/* <Container fluid className={showCreatedQuizStyles.page_header}>REVIEW QUESTIONS</Container> */}
-      <Container className={showCreatedQuizStyles.container}> 
+      <Container className={showPracticeOrTakenQuizStyles.container}> 
 
-        <Form className={showCreatedQuizStyles.form}>
+        <Form className={showPracticeOrTakenQuizStyles.form}>
           
           {multipleChoiceQuestionsHeader}
 
@@ -146,5 +145,5 @@ const mapStateToProps = state => {
     showSpecificQuiz: state.showSpecificQuiz };
 };
 
-const ShowCreatedQuiz = connect(mapStateToProps)(ConnectedShowCreatedQuiz);
-export default ShowCreatedQuiz;
+const ShowPracticeOrTakenQuiz = connect(mapStateToProps)(ConnectedShowPracticeOrTakenQuiz);
+export default ShowPracticeOrTakenQuiz;

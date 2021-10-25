@@ -53,7 +53,8 @@ const user_answers = (state = initialState, action) => {
 
     case LOG_OUT:
       return {
-        ...initialState,
+        questions: [],
+        nonsense_questions: [],
       };
 
     default:

@@ -122,18 +122,18 @@ class ConnectedTakeQuizQuestions extends React.Component {
               },
             ]}
           >
-            <p style={{ display: "inline", fontWeight: "500" }}>Timer: </p>
+            <p style={{ display: "inline", fontWeight: "500" }}>Time Running: </p>
             <p className={takeQuizQuestionsStyles.hours}>
               <Timer.Hours />
-              <span>hours </span>
+              <span> Hours, </span>
             </p>
             <p className={takeQuizQuestionsStyles.minutes}>
               <Timer.Minutes />
-              <span>minutes </span>
+              <span> Minutes, </span>
             </p>
             <p className={takeQuizQuestionsStyles.seconds}>
               <Timer.Seconds />
-              <span>seconds </span>
+              <span> Seconds </span>
             </p>
           </Timer>
         );

@@ -1,13 +1,13 @@
-import {GET_CREATED_QUIZ, GET_CREATED_QUIZ_FAIL, RESET_SHOW_QUIZ,LOG_OUT} from "../actions/types";
+import {GET_SPECIFIC_QUIZ, GET_SPECIFIC_QUIZ_FAIL, RESET_SHOW_QUIZ, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
 
-const show_created_quiz = (state = initialState, action) => {
+const show_specific_quiz = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_CREATED_QUIZ:
+    case GET_SPECIFIC_QUIZ:
       if(state.message)
         delete state.message;
       return {
@@ -15,13 +15,15 @@ const show_created_quiz = (state = initialState, action) => {
         ...payload
       };
 
-    case GET_CREATED_QUIZ_FAIL:
+    case GET_SPECIFIC_QUIZ_FAIL:
       return {
         message: payload,
       };
 
     case RESET_SHOW_QUIZ:
-      return {};
+      return {
+        ...initialState
+      };
 
     case LOG_OUT:
       return {
@@ -33,4 +35,4 @@ const show_created_quiz = (state = initialState, action) => {
   }
 }
 
-export default show_created_quiz;
+export default show_specific_quiz;
