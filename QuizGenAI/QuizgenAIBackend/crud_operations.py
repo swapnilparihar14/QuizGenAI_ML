@@ -331,24 +331,14 @@ class CrudOperations:
         :params db: database object
         """
         try:
-            all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
-            to_return = list()
+            quiz_details = db.user_table.find_one({'_id': ObjectId(quiz_details.get('user_id'))})
 
-            to_return_tfq = list()
-            to_return_mcq = list()
-            to_return_fbq = list()
-
-            to_return_dict = dict()
-            to_return_wrapper = dict()
-            to_return_wrapper['message'] = 'success'
-            to_return_dict['tfq'] = to_return_tfq
-            to_return_wrapper['questions'] = to_return_dict
+            quizzes = quiz_details["quizzes_taken"]
 
             # print(to_return)
-            if all_questions is not None:
-                return 200, jsonify(
-                    to_return_wrapper
-                )
+            return 200, jsonify(
+                quizzes=quizzes
+            )
 
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
