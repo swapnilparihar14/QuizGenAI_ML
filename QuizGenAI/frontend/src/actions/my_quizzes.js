@@ -87,13 +87,12 @@ export const getPracticeQuizzes = (id) => async dispatch => {
 };
 
 // Get Practice Quiz
-export const getPracticeQuiz = (quizId) => async dispatch => {
-  let data = {"quiz_id": quizId};
+export const getPracticeQuiz = (data) => async dispatch => {
   try {
     // axios.defaults.withCredentials = true;
     
     const res = await axios.get(
-      url + "/get_your_practice_quiz",
+      url + "/get_your_taken_or_practice_quiz",
       {
         params: data
       }
@@ -143,13 +142,12 @@ export const getTakenQuizzes = (id) => async dispatch => {
 };
 
 // Get Taken Quiz
-export const getTakenQuiz = (quizId) => async dispatch => {
-  let data = {"quiz_id": quizId};
+export const getTakenQuiz = (data) => async dispatch => {
   try {
     // axios.defaults.withCredentials = true;
     
     const res = await axios.get(
-      url + "/get_your_taken_quiz",
+      url + "/get_your_taken_or_practice_quiz",
       {
         params: data
       }

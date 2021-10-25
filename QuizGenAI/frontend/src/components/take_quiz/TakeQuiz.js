@@ -25,7 +25,10 @@ class ConnectedTakeQuiz extends React.Component {
   clickTakeQuiz = async (e)=> {
     e.preventDefault();
 
+    let id = localStorage.getItem("id");
+
     let data = {
+      user_id: id,
       quiz_id: this.state.quiz_id,
       access_code: this.state.password
     }

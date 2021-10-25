@@ -88,14 +88,28 @@ class ConnectedMyQuizzes extends React.Component {
   }
 
   getPracticeQuiz = async (quizId) => {
+    let id = localStorage.getItem("id");
+
+    let data = {
+      quiz_id: quizId,
+      user_id: id 
+    }
+
     await this.props.dispatch(
-      getPracticeQuiz(quizId)
+      getPracticeQuiz(data)
     );
   }
 
   getTakenQuiz = async (quizId) => {
+    let id = localStorage.getItem("id");
+
+    let data = {
+      quiz_id: quizId,
+      user_id: id 
+    }
+
     await this.props.dispatch(
-      getTakenQuiz(quizId)
+      getTakenQuiz(data)
     );
   }
 
