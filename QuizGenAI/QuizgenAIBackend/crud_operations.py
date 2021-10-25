@@ -243,11 +243,11 @@ class CrudOperations:
                 }, {
                     "$push": {
                         "quizzes_taken": {
-                                "quiz_id": quiz_details.get('quiz_id'),
+                                "id": quiz_details.get('quiz_id'),
                                 "score": your_score,
                                 "no_of_questions": max_score,
                                 "taken_on": datetime.datetime.now(),
-                                "quiz_name": quiz["quiz_name"]
+                                "name": quiz["quiz_name"]
                         }
                     }
                 })
