@@ -7,6 +7,7 @@ import inspect
 from bson.objectid import ObjectId
 import datetime
 
+
 class CrudOperations:
 
     def __init__(self):
@@ -28,7 +29,7 @@ class CrudOperations:
             quizzes = db.quiz.find(
                 {
                     'creator_id': user_details.get("id"),
-                    'quiz_type': { '$ne': "practice"}
+                    'quiz_type': {'$ne': "practice"}
                 }
             )
 
@@ -39,8 +40,8 @@ class CrudOperations:
                 for question in all_questions:
                     max_score += 1
                 if "duration" in quiz:
-                    hrs = str(int(quiz["duration"]/60))
-                    min = str(int(quiz["duration"]%60))
+                    hrs = str(int(quiz["duration"] / 60))
+                    min = str(int(quiz["duration"] % 60))
                     duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
                 quiz_dict = {
                     "id": str(quiz["_id"]),
@@ -81,15 +82,16 @@ class CrudOperations:
                 for question in all_questions:
                     max_score += 1
                 if "duration" in quiz:
-                    hrs = str(int(quiz["duration"]/60))
-                    min = str(int(quiz["duration"]%60))
+                    hrs = str(int(quiz["duration"] / 60))
+                    min = str(int(quiz["duration"] % 60))
                     duration = hrs + " hr " + min + " min" if hrs != "0" else min + " min"
                 quiz_dict = {
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
                     "taken_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
                     "no_of_questions": max_score,
-                    "duration": duration
+                    "duration": duration,
+                    "score": quiz["score"]
                 }
                 user_quizzes.append(quiz_dict)
             return 200, jsonify(
@@ -107,7 +109,6 @@ class CrudOperations:
         """
         try:
             quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
-
 
             if quiz_details.get('access_code') == quiz['access_code']:
                 quiz_dict = {
@@ -202,8 +203,9 @@ class CrudOperations:
             correct_ans, wrong_ans, your_score, max_score = 0, 0, 0, 0
             questions = quiz_details["questions"]
             user_id = quiz_details["user_id"]
+            quiz_type = quiz_details["quiz_type"]
             user_ans_array = []
-            time_right_now= datetime.datetime.now()
+            time_right_now = datetime.datetime.now()
             for question in questions:
                 result = db.questions.find_one({'_id': ObjectId(question["question_id"])})
 
@@ -226,6 +228,14 @@ class CrudOperations:
             all_questions = db.questions.find({'quiz_id': quiz_details.get('quiz_id')})
             for question in all_questions:
                 max_score += 1
+            if quiz_type == "practice":
+                db.quiz.update_one({
+                    "_id": ObjectId(quiz_details.get('quiz_id'))
+                }, {
+                    "$set": {
+                        "score": your_score
+                    }
+                })
             return 200, jsonify(
                 correct_ans=correct_ans,
                 wrong_ans=wrong_ans,
@@ -277,7 +287,7 @@ class CrudOperations:
                     temp_dict['answer'] = question['answer']
                     temp_dict['options'] = question['options']
                     temp_id = "6166a0e932579036f436ef32"
-                    #temp_id = str(question['_id'])
+                    # temp_id = str(question['_id'])
                     abc = db.user_answers.find_one({'question_id': temp_id})
                     print(abc['answer'])
                     temp_dict['yourAnswers'] = abc['answer']
@@ -288,7 +298,7 @@ class CrudOperations:
             to_return_dict['tfq'] = to_return_tfq
             to_return_wrapper['questions'] = to_return_dict
 
-            #print(to_return)
+            # print(to_return)
             if all_questions is not None:
                 return 200, jsonify(
                     to_return_wrapper
@@ -317,7 +327,7 @@ class CrudOperations:
             to_return_dict['tfq'] = to_return_tfq
             to_return_wrapper['questions'] = to_return_dict
 
-            #print(to_return)
+            # print(to_return)
             if all_questions is not None:
                 return 200, jsonify(
                     to_return_wrapper
