@@ -236,6 +236,21 @@ class CrudOperations:
                         "score": your_score
                     }
                 })
+            else:
+                quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
+                db.user_table.update_one({
+                    "_id": ObjectId(user_id)
+                }, {
+                    "$push": {
+                        "quizzes_taken": {
+                                "quiz_id": quiz_details.get('quiz_id'),
+                                "score": your_score,
+                                "no_of_questions": max_score,
+                                "taken_on": datetime.datetime.now(),
+                                "quiz_name": quiz["quiz_name"]
+                        }
+                    }
+                })
             return 200, jsonify(
                 correct_ans=correct_ans,
                 wrong_ans=wrong_ans,
@@ -276,7 +291,7 @@ class CrudOperations:
                 else:
                     temp_dict['yourAnswer'] = ""
 
-                print(tmp, question['answer'], user_ans['answer'])
+                # print(tmp, question['answer'], user_ans['answer'])
 
                 if question['type'] == 'tfq':
                     temp_dict['question'] = question['question']
@@ -293,11 +308,6 @@ class CrudOperations:
                     temp_dict['question'] = question['question']
                     temp_dict['correctAnswer'] = question['answer']
                     temp_dict['options'] = question['options']
-                    temp_id = "6166a0e932579036f436ef32"
-                    # temp_id = str(question['_id'])
-                    abc = db.user_answers.find_one({'question_id': temp_id})
-                    print(abc['answer'])
-                    temp_dict['yourAnswers'] = abc['answer']
                     to_return_fbq.append(temp_dict)
 
             to_return_dict['fbq'] = to_return_fbq
@@ -305,7 +315,7 @@ class CrudOperations:
             to_return_dict['tfq'] = to_return_tfq
             to_return_wrapper['questions'] = to_return_dict
 
-            # print(to_return)
+            #print(to_return)
             if all_questions is not None:
                 return 200, jsonify(
                     to_return_wrapper
