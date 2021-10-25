@@ -91,10 +91,10 @@ class ConnectedPracticeQuiz extends React.Component {
 
     // redirect to review questions once the quiz is created
     let redirectQuiz = null;
-    const review_questions = this.props.reviewQuestions;
+    const practiceQuiz = this.props.practiceQuiz;
 
-    if (review_questions.quiz_id) {
-      redirectQuiz = <Redirect to={"/review_questions"} />;
+    if (practiceQuiz.quiz) {
+      redirectQuiz = <Redirect to={"/take_practice_questions"} />;
     }
 
     // Send file types in the following form because of how the library react-drag-drop-files works
@@ -288,7 +288,6 @@ class ConnectedPracticeQuiz extends React.Component {
 
           <div style={{ float: "right" }}>
             <Link
-              to="/review_questions"
               onClick={this.clickReview}
               className={`btn btn-primary ${practiceQuizStyles.links}`}
             >
@@ -305,7 +304,7 @@ class ConnectedPracticeQuiz extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    reviewQuestions: state.reviewQuestions,
+    practiceQuiz: state.practiceQuiz,
   };
 };
 

@@ -8,7 +8,9 @@ import { saveAnswer } from "../../actions/user_answers";
 class ConnectedTrueOrFalseContainer extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      answer: false
+    };
   }
 
   saveAnswerOption = async (answer) => {
@@ -30,7 +32,7 @@ class ConnectedTrueOrFalseContainer extends React.Component {
           }}
           disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Submit
@@ -41,9 +43,8 @@ class ConnectedTrueOrFalseContainer extends React.Component {
         <Button
           className={TrueOrFalseContainerStyles.buttons}
           onClick={(e) => this.props.clickNext(e)}
-          disabled={this.state.answer === null ? true : false}
           style={{
-            visibility: `${this.state.answer === null ? "hidden" : "visible"}`,
+            visibility: `${this.state.answer === false ? "hidden" : "visible"}`,
           }}
         >
           Next
@@ -74,7 +75,10 @@ class ConnectedTrueOrFalseContainer extends React.Component {
                   name="group1"
                   type="radio"
                   id="default-radio-1"
-                  onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
+                  onChange={(e) => {
+                    this.setState({answer: true});
+                    this.saveAnswerOption(e.currentTarget.value);
+                  }}
                 />
                 <Form.Check
                   className={TrueOrFalseContainerStyles.answers}
@@ -84,7 +88,10 @@ class ConnectedTrueOrFalseContainer extends React.Component {
                   name="group1"
                   type="radio"
                   id="default-radio-2"
-                  onChange={(e) => this.saveAnswerOption(e.currentTarget.value)}
+                  onChange={(e) => {
+                    this.setState({answer: true});
+                    this.saveAnswerOption(e.currentTarget.value);
+                  }}
                 />
               </div>
             </Col>

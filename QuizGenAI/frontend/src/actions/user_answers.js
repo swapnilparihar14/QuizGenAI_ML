@@ -6,6 +6,8 @@ import {
   RESET_ANSWERS,
   RESET_TAKE_QUIZ,
   RESET_QUIZ_RESULTS,
+  RESET_PRACTICE_QUIZ,
+  SAVE_NON_SENSE_QUESTION,
 } from "./types";
 import url from "../config/config";
 
@@ -18,6 +20,17 @@ export const saveAnswer = (question_id, answer) => (dispatch) => {
 
   dispatch({
     type: SAVE_ANSWER,
+    payload: data,
+  });
+};
+
+export const saveNonSenseQuestion = (question_id) => (dispatch) => {
+  let data = {
+    question_id,
+  };
+
+  dispatch({
+    type: SAVE_NON_SENSE_QUESTION,
     payload: data,
   });
 };
@@ -42,6 +55,10 @@ export const submitQuiz = (data) => async (dispatch) => {
 
     dispatch({
       type: RESET_TAKE_QUIZ,
+    });
+
+    dispatch({
+      type: RESET_PRACTICE_QUIZ,
     });
 
     dispatch({

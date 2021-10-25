@@ -33,6 +33,7 @@ class ConnectedTakeQuizQuestions extends React.Component {
       quiz_id: this.props.takeQuiz.quiz.quiz_id,
       questions: this.props.userAnswers.questions,
       nonsense_questions: this.props.userAnswers.nonsense_questions,
+      quiz_type: "taken",
     };
 
     console.log("data", data.questions);

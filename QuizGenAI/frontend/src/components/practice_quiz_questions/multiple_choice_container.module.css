@@ -19,3 +19,11 @@
   padding: 1px 0;
 }
 
+.click {
+  color: blue;
+  cursor: pointer;
+}
+
+.click:hover {
+  color: #000;
+}

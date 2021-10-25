@@ -1,6 +1,7 @@
 import {
   TAKE_PRACTICE_QUIZ_FAIL,
   TAKE_PRACTICE_QUIZ,
+  RESET_PRACTICE_QUIZ,
   LOG_OUT,
 } from "../actions/types";
 
@@ -16,6 +17,9 @@ const take_practice_quiz = (state = initialState, action) => {
         ...state,
         ...payload,
       };
+
+    case RESET_PRACTICE_QUIZ:
+      return {};
 
     case TAKE_PRACTICE_QUIZ_FAIL:
       return {

@@ -4,12 +4,15 @@ import { Redirect } from "react-router";
 import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
 import { Container, Button, Form } from "react-bootstrap";
-import takeQuizQuestionsStyles from "./take_quiz_questions.module.css";
+import Timer from "react-compound-timer";
+import practiceQuizQuestionsStyles from "./take_quiz_questions.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
 
-class ConnectedTakeQuizQuestions extends React.Component {
+import { submitQuiz } from "../../actions/user_answers";
+
+class ConnectedpracticeQuizQuestions extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -18,8 +21,7 @@ class ConnectedTakeQuizQuestions extends React.Component {
     };
   }
 
-  clickNext = async (e) => {
-    e.preventDefault();
+  clickNext = async () => {
     this.setState((prevState) => ({
       questionCounter: prevState.questionCounter + 1,
     }));
@@ -28,9 +30,10 @@ class ConnectedTakeQuizQuestions extends React.Component {
   clickSubmit = async () => {
     let data = {
       user_id: localStorage.getItem("id"),
-      quiz_id: this.props.takeQuiz.quiz.quiz_id,
+      quiz_id: this.props.practiceQuiz.quiz.quiz_id,
       questions: this.props.userAnswers.questions,
       nonsense_questions: this.props.userAnswers.nonsense_questions,
+      quiz_type: "practice",
     };
 
     console.log("data", data.questions);
@@ -44,7 +47,7 @@ class ConnectedTakeQuizQuestions extends React.Component {
     let redirectVar = null;
 
     let auth = this.props.auth;
-    let take_quiz = this.props.takeQuiz;
+    let take_quiz = this.props.practiceQuiz;
 
     // redirect based on successful signup
     if (auth.isAuthenticated === false) {
@@ -120,15 +123,15 @@ class ConnectedTakeQuizQuestions extends React.Component {
             ]}
           >
             <p style={{ display: "inline", fontWeight: "500" }}>Timer: </p>
-            <p className={takeQuizQuestionsStyles.hours}>
+            <p className={practiceQuizQuestionsStyles.hours}>
               <Timer.Hours />
               <span>hours </span>
             </p>
-            <p className={takeQuizQuestionsStyles.minutes}>
+            <p className={practiceQuizQuestionsStyles.minutes}>
               <Timer.Minutes />
               <span>minutes </span>
             </p>
-            <p className={takeQuizQuestionsStyles.seconds}>
+            <p className={practiceQuizQuestionsStyles.seconds}>
               <Timer.Seconds />
               <span>seconds </span>
             </p>
@@ -142,14 +145,14 @@ class ConnectedTakeQuizQuestions extends React.Component {
       <>
         {redirectVar}
         {submitRedirect}
-        <Container fluid className={takeQuizQuestionsStyles.page_header}>
+        <Container fluid className={practiceQuizQuestionsStyles.page_header}>
           QUESTION {questionCounter + 1} OUT OF {totalQuestions}{" "}
         </Container>
-        <Container className={takeQuizQuestionsStyles.container}>
+        <Container className={practiceQuizQuestionsStyles.container}>
           <div style={{ float: "right" }}>{timer}</div>
           <Form
             id="review-questions-form"
-            className={takeQuizQuestionsStyles.form}
+            className={practiceQuizQuestionsStyles.form}
           >
             {question}
           </Form>
@@ -161,8 +164,14 @@ class ConnectedTakeQuizQuestions extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { auth: state.auth, practiceQuiz: state.practiceQuiz };
+  return {
+    auth: state.auth,
+    practiceQuiz: state.practiceQuiz,
+    userAnswers: state.userAnswers,
+  };
 };
 
-const TakeQuizQuestions = connect(mapStateToProps)(ConnectedTakeQuizQuestions);
-export default TakeQuizQuestions;
+const practiceQuizQuestions = connect(mapStateToProps)(
+  ConnectedpracticeQuizQuestions
+);
+export default practiceQuizQuestions;

@@ -6,10 +6,11 @@ import CreateQuizForm from "./components/create_quiz_form/CreateQuizForm";
 import ReviewQuestions from "./components/review_questions/ReviewQuestions";
 import TakeQuiz from "./components/take_quiz/TakeQuiz";
 import PracticeQuiz from "./components/practice_quiz/PracticeQuiz";
+import TakePracticeQuiz from "./components/practice_quiz_questions/TakeQuizQuestions";
 import TakeQuizQuestions from "./components/take_quiz_questions/TakeQuizQuestions";
 import MyQuizzes from "./components/my_quizzes/MyQuizzes";
 import ShowCreatedQuiz from "./components/show_quizzes_results/show_created_quiz/showCreatedQuiz";
-import QuizResults from "./components/quiz_results/QuizResults"
+import QuizResults from "./components/quiz_results/QuizResults";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/take_quiz_questions" component={TakeQuizQuestions} />
         <Route exact path="/my_quizzes" component={MyQuizzes} />
         <Route exact path="/my_quizzes/:quizid" component={ShowCreatedQuiz} />
+        <Route path="/take_practice_questions" component={TakePracticeQuiz} />
       </Switch>
     </BrowserRouter>
   );

@@ -33,7 +33,7 @@ class ConnectedQuizResults extends React.Component {
     let quiz_results = this.props.quizResults;
 
     // redirect based on successful signup
-    if (this.state.redirect === true) {
+    if (auth.isAuthenticated === false || this.state.redirect === true) {
       const path = "/my_quizzes";
       redirectVar = <Redirect to={path} />;
     }
