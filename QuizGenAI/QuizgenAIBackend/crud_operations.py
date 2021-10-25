@@ -7,7 +7,6 @@ import inspect
 from bson.objectid import ObjectId
 import datetime
 
-
 class CrudOperations:
 
     def __init__(self):
@@ -109,6 +108,7 @@ class CrudOperations:
         """
         try:
             quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
+
 
             if quiz_details.get('access_code') == quiz['access_code']:
                 quiz_dict = {
@@ -246,7 +246,7 @@ class CrudOperations:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
-    def get_taken_questions(self, db, quiz_details):
+    def get_your_taken_or_practice_quiz(self, db, quiz_details):
         """
         For taking a quiz that has already been created
         :params quiz_details: quiz details from API
@@ -267,24 +267,31 @@ class CrudOperations:
             for question in all_questions:
                 to_return.append(question)
                 temp_dict = dict()
+                tmp = str(question['_id'])
+
+                if db.user_answers.find_one({'question_id': tmp, 'user_id': quiz_details.get('user_id')}):
+                    user_ans = db.user_answers.find_one({'question_id': tmp, 'user_id': quiz_details.get('user_id')})
+                    temp_dict['yourAnswer'] = user_ans['answer']
+
+                else:
+                    temp_dict['yourAnswer'] = ""
+
+                print(tmp, question['answer'], user_ans['answer'])
 
                 if question['type'] == 'tfq':
                     temp_dict['question'] = question['question']
-                    temp_dict['answer'] = question['answer']
-                    temp_dict['yourAnswer'] = str(question['_id'])
+                    temp_dict['correctAnswer'] = question['answer']
                     to_return_tfq.append(temp_dict)
 
                 if question['type'] == 'mcq':
                     temp_dict['question'] = question['question']
-                    temp_dict['answer'] = question['answer']
-                    temp_dict['context'] = question['context']
+                    temp_dict['correctAnswer'] = question['answer']
                     temp_dict['options'] = question['options']
-                    temp_dict['yourAnswer'] = str(question['_id'])
                     to_return_mcq.append(temp_dict)
 
                 if question['type'] == 'fbq':
                     temp_dict['question'] = question['question']
-                    temp_dict['answer'] = question['answer']
+                    temp_dict['correctAnswer'] = question['answer']
                     temp_dict['options'] = question['options']
                     temp_id = "6166a0e932579036f436ef32"
                     # temp_id = str(question['_id'])
