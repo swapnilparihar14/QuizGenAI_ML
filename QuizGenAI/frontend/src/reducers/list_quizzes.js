@@ -1,4 +1,4 @@
-import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, LOG_OUT} from "../actions/types";
+import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, RESET_GET_QUIZZES, LOG_OUT} from "../actions/types";
 
 const initialState = {
 };
@@ -18,6 +18,11 @@ const list_quizzes = (state = initialState, action) => {
     case GET_QUIZZES_LIST_FAIL:
       return {
         message: payload,
+      };
+
+    case RESET_GET_QUIZZES:
+      return {
+        ...initialState,
       };
 
     case LOG_OUT:

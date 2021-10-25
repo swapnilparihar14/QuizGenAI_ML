@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, GET_SPECIFIC_QUIZ, GET_SPECIFIC_QUIZ_FAIL, RESET_SHOW_QUIZ} from "./types";
+import {GET_QUIZZES_LIST, GET_QUIZZES_LIST_FAIL, GET_SPECIFIC_QUIZ, GET_SPECIFIC_QUIZ_FAIL, RESET_SHOW_QUIZ, RESET_GET_QUIZZES} from "./types";
 import url from "../config/config";
 
 // Get Created Quizzes List
@@ -172,6 +172,14 @@ export const getTakenQuiz = (data) => async dispatch => {
 export const resetShowQuiz = () => dispatch => {
   dispatch({
     type: RESET_SHOW_QUIZ,
+  });
+
+};
+
+// Reset get quizzes
+export const resetGetQuizzes = () => dispatch => {
+  dispatch({
+    type: RESET_GET_QUIZZES,
   });
 
 };

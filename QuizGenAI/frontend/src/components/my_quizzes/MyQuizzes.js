@@ -8,7 +8,7 @@ import { Redirect } from "react-router";
 import Footer from "../footer/Footer";
 
 import { resetReviewQuestions } from "../../actions/review_questions";
-import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz} from "../../actions/my_quizzes";
+import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz, resetGetQuizzes} from "../../actions/my_quizzes";
 
 class ConnectedMyQuizzes extends React.Component {
   constructor(){
@@ -118,6 +118,11 @@ class ConnectedMyQuizzes extends React.Component {
       this.props.dispatch(
         resetReviewQuestions()
       );
+
+    if(this.props.listQuizzes)
+      this.props.dispatch(
+        resetGetQuizzes()
+      );
   }
 
   render() {
@@ -184,6 +189,8 @@ class ConnectedMyQuizzes extends React.Component {
               <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/taken/${takenQuizzesRow.id}`} onClick={(e) => {this.getTakenQuiz(takenQuizzesRow.id)}}>{takenQuizzesRow.id}</Link></td>
               <td>{takenQuizzesRow.name}</td>
               <td>{takenQuizzesRow.score}</td>
+              <td>{takenQuizzesRow.no_of_questions}</td>
+              <td>{takenQuizzesRow.duration}</td>
               <td>{takenQuizzesRow.taken_on}</td>
             </tr>
           )
@@ -199,6 +206,8 @@ class ConnectedMyQuizzes extends React.Component {
               <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/practice/${practiceQuizzesRow.id}`} onClick={(e) => {this.getPracticeQuiz(practiceQuizzesRow.id)}}>{practiceQuizzesRow.id}</Link></td>
               <td>{practiceQuizzesRow.name}</td>
               <td>{practiceQuizzesRow.score}</td>
+              <td>{practiceQuizzesRow.no_of_questions}</td>
+              <td>{practiceQuizzesRow.duration}</td>
               <td>{practiceQuizzesRow.taken_on}</td>
             </tr>
           )
@@ -213,7 +222,7 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz Name</th>
             <th>Quiz Type</th>
             <th style={{width: "200px"}}>Password</th>
-            <th># of Questions</th>
+            <th>No. of Questions</th>
             <th>Duration</th>
             <th>Created On</th>
           </tr>
@@ -230,6 +239,8 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz ID</th>
             <th>Quiz Name</th>
             <th>Score</th>
+            <th>No. of Questions</th>
+            <th>Duration</th>
             <th>Taken On</th> 
           </tr>
         </thead>
@@ -245,6 +256,8 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz ID</th>
             <th>Quiz Name</th>
             <th>Score</th>
+            <th>No. of Questions</th>
+            <th>Duration</th>
             <th>Taken On</th> 
           </tr>
         </thead>

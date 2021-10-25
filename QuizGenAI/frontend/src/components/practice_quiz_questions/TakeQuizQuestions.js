@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import NavigationBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import Timer from "react-compound-timer";
 import practiceQuizQuestionsStyles from "./take_quiz_questions.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Card, Form, Col, Button } from "react-bootstrap";
 import multipleChoiceContainerStyles from "./multiple_choice_container.module.css";
