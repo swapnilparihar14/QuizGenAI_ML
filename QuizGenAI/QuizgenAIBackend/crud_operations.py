@@ -331,7 +331,7 @@ class CrudOperations:
         :params db: database object
         """
         try:
-            quiz_details = db.user_table.find_one({'_id': ObjectId(quiz_details.get('user_id'))})
+            quiz_details = db.user_table.find_one({'_id': ObjectId(quiz_details.get('id'))})
 
             quizzes = quiz_details["quizzes_taken"]
 
