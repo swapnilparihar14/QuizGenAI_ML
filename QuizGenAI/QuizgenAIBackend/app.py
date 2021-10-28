@@ -142,7 +142,7 @@ def take_created_quiz():
     if request.method == 'GET':
         quiz_details = request.args
         crud_operations = CrudOperations()
-        code, json_message = crud_operations.take_created_quiz(quiz_details, db)
+        code, json_message = crud_operations.take_created_quiz(quiz_details, False, db)
         return json_message, code
 
 
@@ -168,7 +168,7 @@ def take_practice_quiz():
             code, message = gen_quiz.save_questions(json.loads(questions_data.data), db)
             if code == 200:
                 crud_operations = CrudOperations()
-                code, json_message = crud_operations.take_created_quiz(json.loads(questions_data.data), db)
+                code, json_message = crud_operations.take_created_quiz(json.loads(questions_data.data), True, db)
         return json_message, code
 
 

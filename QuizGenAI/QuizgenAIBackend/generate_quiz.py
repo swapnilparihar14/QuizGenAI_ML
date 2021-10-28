@@ -49,6 +49,8 @@ class GenerateQuiz:
             quiz_details_dict['active'] = False
             if timed == "yes":
                 quiz_details_dict['duration'] = (int(quiz_details['hours']) * 60) + int(quiz_details['minutes'])
+            if quiz_details['quiz_type'] == "practice":
+                quiz_details_dict['score'] = "Not completed"
             no_of_mcq = int(quiz_details['mcq'])
             no_of_fbq = int(quiz_details['fbq'])
             no_of_tfq = int(quiz_details['tfq'])
@@ -66,7 +68,7 @@ class GenerateQuiz:
             )
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
-            return 400, jsonify(message="Error")
+            return 400, jsonify(message="Error generating quiz")
 
     def upload_files(self, file):
         try:
@@ -242,10 +244,10 @@ class GenerateQuiz:
                         'type': 'fbq',
                         'quiz_id': quiz_id
                     })
-            return 200, jsonify(message="Success")
+            return 200, jsonify(message="Successfully created quiz")
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
-            return 400, jsonify(message="Error")
+            return 400, jsonify(message="Error in creating quiz")
 
 """
 Driver Code if you want to run and test your code for MCQ and TF generation

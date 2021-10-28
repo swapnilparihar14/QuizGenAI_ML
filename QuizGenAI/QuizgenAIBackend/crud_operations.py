@@ -7,6 +7,7 @@ import inspect
 from bson.objectid import ObjectId
 import datetime
 
+
 class CrudOperations:
 
     def __init__(self):
@@ -46,7 +47,7 @@ class CrudOperations:
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
                     "access_code": quiz["access_code"],
-                    "created_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
+                    "created_on": quiz["created_on"],
                     "no_of_questions": max_score,
                     "quiz_type": quiz["quiz_type"],
                     "duration": duration
@@ -87,7 +88,7 @@ class CrudOperations:
                 quiz_dict = {
                     "id": str(quiz["_id"]),
                     "name": quiz["quiz_name"],
-                    "taken_on": quiz["created_on"].strftime('%Y-%m-%d %H:%M:%S'),
+                    "taken_on": quiz["created_on"],
                     "no_of_questions": max_score,
                     "duration": duration,
                     "score": quiz["score"]
@@ -100,49 +101,55 @@ class CrudOperations:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
-    def take_created_quiz(self, quiz_details, db):
+    def take_created_quiz(self, quiz_details, practice, db):
         """
         For taking a quiz that has already been created
         :params quiz_details: quiz details from API
         :params db: database object
         """
         try:
-            quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
+            found = db.user_table.find_one({
+                '_id': ObjectId(quiz_details.get("user_id")),
+                "quizzes_taken.id": quiz_details.get("quiz_id")
+            })
+            if found is None:
+                quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
 
-
-            if quiz_details.get('access_code') == quiz['access_code']:
-                quiz_dict = {
-                    'quiz_id': quiz_details.get("quiz_id"),
-                    'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
-                    'questions': []
-                }
-                question_list = []
-                questions = db.questions.find(
-                    {
-                        'quiz_id': quiz_details.get("quiz_id")
+                if quiz_details.get('access_code') == quiz['access_code']:
+                    quiz_dict = {
+                        'quiz_id': quiz_details.get("quiz_id"),
+                        'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
+                        'questions': []
                     }
-                )
+                    question_list = []
+                    questions = db.questions.find(
+                        {
+                            'quiz_id': quiz_details.get("quiz_id")
+                        }
+                    )
 
-                for question in questions:
-                    question_type = question['type']
-                    question_dict = {
-                        'question': question['question'],
-                        'type': question_type,
-                        'question_id': str(question['_id'])
-                    }
-                    if question_type == 'mcq' or question_type == 'fbq':
-                        question_dict['options'] = question['options']
-                    question_list.append(question_dict)
-                random.shuffle(question_list)
-                quiz_dict['questions'] = question_list
-                return 200, jsonify(
-                    quiz=quiz_dict
-                )
+                    for question in questions:
+                        question_type = question['type']
+                        question_dict = {
+                            'question': question['question'],
+                            'type': question_type,
+                            'question_id': str(question['_id'])
+                        }
+                        if question_type == 'mcq' or question_type == 'fbq':
+                            question_dict['options'] = question['options']
+                        question_list.append(question_dict)
+                    random.shuffle(question_list)
+                    quiz_dict['questions'] = question_list
+                    return 200, jsonify(
+                        quiz=quiz_dict
+                    )
+                else:
+                    return 403, jsonify(message="Invalid access code")
             else:
-                return 403, jsonify(message="Invalid access code")
+                return 403, jsonify(message="You have already taken this quiz")
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
-            return 400, jsonify(message="Error")
+            return 400, jsonify(message="Error quiz could not be fetched")
 
     def get_all_created_questions(self, db, quiz_details):
         """
@@ -209,7 +216,7 @@ class CrudOperations:
             for question in questions:
                 result = db.questions.find_one({'_id': ObjectId(question["question_id"])})
 
-                if result["answer"] == question["answer"]:
+                if str(result["answer"]).lower() == str(question["answer"]).lower():
                     correct_ans += 1
                     your_score += 1
                 else:
@@ -243,11 +250,11 @@ class CrudOperations:
                 }, {
                     "$push": {
                         "quizzes_taken": {
-                                "id": quiz_details.get('quiz_id'),
-                                "score": your_score,
-                                "no_of_questions": max_score,
-                                "taken_on": datetime.datetime.now(),
-                                "name": quiz["quiz_name"]
+                            "id": quiz_details.get('quiz_id'),
+                            "score": your_score,
+                            "no_of_questions": max_score,
+                            "taken_on": datetime.datetime.now(),
+                            "name": quiz["quiz_name"]
                         }
                     }
                 })
@@ -315,7 +322,7 @@ class CrudOperations:
             to_return_dict['tfq'] = to_return_tfq
             to_return_wrapper['questions'] = to_return_dict
 
-            #print(to_return)
+            # print(to_return)
             if all_questions is not None:
                 return 200, jsonify(
                     to_return_wrapper
