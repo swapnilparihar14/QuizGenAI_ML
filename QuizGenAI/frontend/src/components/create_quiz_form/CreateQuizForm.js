@@ -8,6 +8,7 @@ import { Redirect } from "react-router";
 import createQuizFormStyles from "./create_quiz_form.module.css";
 import { FileUploader } from "react-drag-drop-files";
 import {VscLoading} from "react-icons/vsc";
+import Alert from "../alert/Alert";
 
 import { getReviewQuestions, resetReviewQuestions } from "../../actions/review_questions";
 
@@ -31,6 +32,16 @@ class ConnectedCreateQuizForm extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.props.dispatch(
+      resetReviewQuestions()
+    );
+  }
+
+  deleteAlert = e => {
+    this.setState({
+      isLoading: false
+    });
+
     this.props.dispatch(
       resetReviewQuestions()
     );
@@ -86,9 +97,15 @@ class ConnectedCreateQuizForm extends React.Component {
     let redirectQuiz = null;
     const review_questions = this.props.reviewQuestions;
 
+    let alert = null;
+
     if (review_questions.quiz_id){
       redirectQuiz = <Redirect to={"/review_questions"} />;
-    } 
+    } else if (review_questions.message === "Error" || review_questions.message === "Server Error"){
+      let type = "fail";
+      let message = "Not able to generate questions.";
+      alert = (<Alert type={type} message={message} delete={this.deleteAlert}></Alert>);
+    }
 
     // Send file types in the following form because of how the library react-drag-drop-files works
     // txt = "plain"
@@ -103,20 +120,26 @@ class ConnectedCreateQuizForm extends React.Component {
 
     let { isLoading } = this.state;
     let loading = null;
-    loading = (
+  
+;    loading = (
       <div>
         {isLoading ? (
-           <div className={createQuizFormStyles.loadingScreen}>
-              <VscLoading className={createQuizFormStyles.loadingIcon}/>
-              <h1>Generating Questions ...</h1>
-              <h2>Hang on, this might take some time.</h2>
-              <h2>DO NOT CLOSE OR RELOAD THIS WINDOW</h2>
-           </div>
+          <div className={createQuizFormStyles.loadingScreen}>
+            <VscLoading className={createQuizFormStyles.loadingIcon}/>
+            <h1>Generating Questions ...</h1>
+            <h2>Hang on, this might take some time.</h2>
+            <h2>DO NOT CLOSE OR RELOAD THIS WINDOW</h2>
+          </div>
         ) : (
           <div className={createQuizFormStyles.loadingScreen} style={{display: "none"}}></div>
         )}
       </div>
     );
+
+    if(alert !== null){
+      window.scrollTo(0, 0);
+      loading = (<div className={createQuizFormStyles.loadingScreen} style={{display: "none"}}></div>);
+    }
 
     let passwordField = "";
     if (this.state.privacy === "private") {
@@ -165,6 +188,7 @@ class ConnectedCreateQuizForm extends React.Component {
       {loading}
       <NavigationBar></NavigationBar>
       <Container fluid className={createQuizFormStyles.page_header}>CREATE QUIZ</Container>
+      {alert}
       <Container className={createQuizFormStyles.container}> 
         <Form id="create-quiz-form" className={createQuizFormStyles.form}>
           
