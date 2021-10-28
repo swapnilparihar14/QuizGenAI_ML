@@ -40,7 +40,7 @@ class ConnectedLandpage extends React.Component {
               <h1>AI Automated Quiz Generator</h1>
               <h2 className={landpageStyles.tagline}>Saving Time<br/></h2>
               <h2 className={landpageStyles.tagline}>&nbsp;Generating Quizzes<br/></h2>  
-              <h2 className={landpageStyles.tagline}>&nbsp;&nbsp;Empowering instructors and students</h2>
+              <h2 className={landpageStyles.tagline}>&nbsp;&nbsp;Empowering Instructors and Students</h2>
             </Col>
             <Col xs={6} md={6} lg={6} id={landpageStyles.column2}>
               <Image id={landpageStyles.container1_image} src={container1Image}/>

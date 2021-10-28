@@ -6,9 +6,10 @@ import NavigationBar from "../navbar/Navbar";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import Footer from "../footer/Footer";
+import Alert from "../alert/Alert";
 
 import { resetReviewQuestions } from "../../actions/review_questions";
-import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz} from "../../actions/my_quizzes";
+import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz, resetGetQuizzes} from "../../actions/my_quizzes";
 
 class ConnectedMyQuizzes extends React.Component {
   constructor(){
@@ -73,11 +74,19 @@ class ConnectedMyQuizzes extends React.Component {
     })
   }
 
-  clickDeleteAlert =  e => {
+  clickDeleteAlert = e => {
     e.preventDefault();
     if(this.props.reviewQuestions)
       this.props.dispatch(
         resetReviewQuestions()
+      );
+  }
+
+  clickDeleteQuizzesAlert = e => {
+    e.preventDefault();
+    if(this.props.listQuizzes)
+      this.props.dispatch(
+        resetGetQuizzes()
       );
   }
 
@@ -118,6 +127,11 @@ class ConnectedMyQuizzes extends React.Component {
       this.props.dispatch(
         resetReviewQuestions()
       );
+
+    if(this.props.listQuizzes)
+      this.props.dispatch(
+        resetGetQuizzes()
+      );
   }
 
   render() {
@@ -134,16 +148,16 @@ class ConnectedMyQuizzes extends React.Component {
     let alert = null;
 
     if(this.props.reviewQuestions.createQuizStatus){
-      if(this.props.reviewQuestions.createQuizStatus === "success")
-        alert = (<Container  className={myQuizzesStyles.alertSuccess}> 
-          <p><span>Success:</span> Quiz Created</p>
-          <p style={{float: "right", cursor: "pointer"}}><span onClick={this.clickDeleteAlert}>X</span></p>
-        </Container>);
-      if(this.props.reviewQuestions.createQuizStatus === "fail")
-      alert = (<Container  className={myQuizzesStyles.alertFail}> 
-        <p><span>Error:</span> Quiz could not be created. Retry.</p>
-        <p style={{float: "right", cursor: "pointer"}}><span onClick={this.clickDeleteAlert}>X</span></p>
-      </Container>);
+      if(this.props.reviewQuestions.createQuizStatus === "success"){
+        let type = "success";
+        let message = "Quiz Created.";
+        alert = (<Alert type={type} message={message} delete={this.clickDeleteAlert}></Alert>);
+      }
+      if(this.props.reviewQuestions.createQuizStatus === "fail"){
+        let type = "fail";
+        let message = "Quiz could not be created. Retry.";
+        alert = (<Alert type={type} message={message} delete={this.clickDeleteAlert}></Alert>);
+      }
     }
 
     let table = null;
@@ -153,6 +167,7 @@ class ConnectedMyQuizzes extends React.Component {
     let practiceQuizzesRows = null;
     let takenQuizzesRows = null;
 
+    let alert2 = null;
 
     if (this.props.listQuizzes.quizzes){
       if(this.state.onCreatedQuizzes)
@@ -184,6 +199,8 @@ class ConnectedMyQuizzes extends React.Component {
               <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/taken/${takenQuizzesRow.id}`} onClick={(e) => {this.getTakenQuiz(takenQuizzesRow.id)}}>{takenQuizzesRow.id}</Link></td>
               <td>{takenQuizzesRow.name}</td>
               <td>{takenQuizzesRow.score}</td>
+              <td>{takenQuizzesRow.no_of_questions}</td>
+              <td>{takenQuizzesRow.duration}</td>
               <td>{takenQuizzesRow.taken_on}</td>
             </tr>
           )
@@ -199,10 +216,17 @@ class ConnectedMyQuizzes extends React.Component {
               <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/practice/${practiceQuizzesRow.id}`} onClick={(e) => {this.getPracticeQuiz(practiceQuizzesRow.id)}}>{practiceQuizzesRow.id}</Link></td>
               <td>{practiceQuizzesRow.name}</td>
               <td>{practiceQuizzesRow.score}</td>
+              <td>{practiceQuizzesRow.no_of_questions}</td>
+              <td>{practiceQuizzesRow.duration}</td>
               <td>{practiceQuizzesRow.taken_on}</td>
             </tr>
           )
         });
+    }
+    else if (this.props.listQuizzes.message){
+      let type = "fail";
+      let message = "Could not fetch quizzes.";
+      alert2 = (<Alert type={type} message={message} delete={this.clickDeleteQuizzesAlert}></Alert>);
     }
 
     if(this.state.onCreatedQuizzes){
@@ -213,7 +237,7 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz Name</th>
             <th>Quiz Type</th>
             <th style={{width: "200px"}}>Password</th>
-            <th># of Questions</th>
+            <th>No. of Questions</th>
             <th>Duration</th>
             <th>Created On</th>
           </tr>
@@ -230,6 +254,8 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz ID</th>
             <th>Quiz Name</th>
             <th>Score</th>
+            <th>No. of Questions</th>
+            <th>Duration</th>
             <th>Taken On</th> 
           </tr>
         </thead>
@@ -245,6 +271,8 @@ class ConnectedMyQuizzes extends React.Component {
             <th>Quiz ID</th>
             <th>Quiz Name</th>
             <th>Score</th>
+            <th>No. of Questions</th>
+            <th>Duration</th>
             <th>Taken On</th> 
           </tr>
         </thead>
@@ -259,6 +287,7 @@ class ConnectedMyQuizzes extends React.Component {
       {redirectVar}
       <NavigationBar></NavigationBar> 
       {alert}
+      {alert2}
       <Container fluid>
         <div className={this.state.onCreatedQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected} onClick= {this.onClickCreatedQuizzes} >Created Quizzes</div>
         <div className={this.state.onPracticeQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickPracticeQuizzes} >Practice Quizzes</div>

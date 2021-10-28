@@ -48,7 +48,12 @@ export const getReviewQuestions = (data, file) => async dispatch => {
     });
   } catch (err) {
     console.log(err.response);
-    const error = err.response.data.message;
+    let error = null;
+    
+    if(err.response)
+      error = err.response.data.message;
+    else 
+      error = "Server Error";
 
     dispatch({
       type: REVIEW_QUESTIONS_FAIL,

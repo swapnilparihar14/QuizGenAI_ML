@@ -1,0 +1,45 @@
+.alertSuccess {
+  border: 2px solid var(--green);
+  border-radius: 5px;
+  background-color: rgb(0 204 0 / 20%);
+  padding-top: 3px;
+  padding-bottom: 3px;
+  min-width: 400px;
+  width: 400px;
+}
+
+.alertSuccess > p {
+  color: var(--green);
+  padding: 0;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.alertSuccess > p > span {
+  font-weight: bolder;
+}
+
+.alertFail {
+  border: 2px solid var(--red);
+  border-radius: 5px;
+  background-color: rgb(255 0 0 / 20%);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  min-width: 400px;
+  width: 400px;
+}
+
+.alertFail > p {
+  color: var(--red);
+  padding: 0;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.alertFail > p > span {
+  font-weight: bolder;
+}
