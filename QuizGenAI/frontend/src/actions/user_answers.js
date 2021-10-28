@@ -8,6 +8,7 @@ import {
   RESET_QUIZ_RESULTS,
   RESET_PRACTICE_QUIZ,
   SAVE_NON_SENSE_QUESTION,
+  DELETE_QUESTION,
 } from "./types";
 import url from "../config/config";
 
@@ -31,6 +32,11 @@ export const saveNonSenseQuestion = (question_id) => (dispatch) => {
 
   dispatch({
     type: SAVE_NON_SENSE_QUESTION,
+    payload: data,
+  });
+
+  dispatch({
+    type: DELETE_QUESTION,
     payload: data,
   });
 };
@@ -64,7 +70,6 @@ export const submitQuiz = (data) => async (dispatch) => {
     dispatch({
       type: RESET_ANSWERS,
     });
-    
   } catch (err) {
     console.log("err", err);
     const error = err.response.data.message;
