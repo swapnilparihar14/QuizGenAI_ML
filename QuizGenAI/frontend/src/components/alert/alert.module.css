@@ -31,6 +31,10 @@
   width: 400px;
 }
 
+.paragraph {
+  width: 300px;
+}
+
 .alertFail > p {
   color: var(--red);
   padding: 0;

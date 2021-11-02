@@ -8,6 +8,7 @@ import practiceQuizQuestionsStyles from "./take_quiz_questions.module.css";
 import MultipleChoiceContainer from "./MultipleChoiceContainer";
 import FillInTheBlankContainer from "./FillInTheBlankContainer";
 import TrueOrFalseContainer from "./TrueOrFalseContainer";
+import Alert from "../alert/Alert";
 
 import { submitQuiz } from "../../actions/user_answers";
 
@@ -57,6 +58,19 @@ class ConnectedpracticeQuizQuestions extends React.Component {
     let question = null;
     let questionCounter = this.state.questionCounter;
     let totalQuestions = 0;
+
+    if (
+      this.props.practiceQuiz.message &&
+      this.props.practiceQuiz.message != "Success"
+    ) {
+      alert = (
+        <Alert
+          type="fail"
+          message={this.props.reviewQuestions.message}
+          delete={this.clickDeleteAlert}
+        />
+      );
+    }
 
     if (take_quiz.quiz) {
       totalQuestions = take_quiz.quiz.questions.length;

@@ -1,18 +1,35 @@
 import axios from "axios";
-import { REVIEW_QUESTIONS_SUCCESS, REVIEW_QUESTIONS_FAIL, SELECT_QUESTION, CREATE_QUIZ_SUCCESS, CREATE_QUIZ_FAIL, RESET_REVIEW_QUESTIONS} from "./types";
+import {
+  REVIEW_QUESTIONS_SUCCESS,
+  REVIEW_QUESTIONS_FAIL,
+  SELECT_QUESTION,
+  CREATE_QUIZ_SUCCESS,
+  CREATE_QUIZ_FAIL,
+  RESET_REVIEW_QUESTIONS,
+  DELETE_ERROR_REVIEW_QUESTION_MESSAGE,
+} from "./types";
 import url from "../config/config";
 
 // Get review questions
-export const getReviewQuestions = (data, file) => async dispatch => {
+export const getReviewQuestions = (data, file) => async (dispatch) => {
   const config = {
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'multipart/form-data'
-    }
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    },
   };
 
   const {
-    quizname, timed, hours, minutes, privacy, password, multiplechoicequestions, fillintheblankquestions, trueorfalsequestions, id
+    quizname,
+    timed,
+    hours,
+    minutes,
+    privacy,
+    password,
+    multiplechoicequestions,
+    fillintheblankquestions,
+    trueorfalsequestions,
+    id,
   } = data;
 
   let formData = new FormData();
@@ -29,80 +46,89 @@ export const getReviewQuestions = (data, file) => async dispatch => {
 
   formData.append("file", file);
 
-  for(var pair of formData.entries()) {
-    console.log(pair[0]+ ', '+ pair[1]);
- }
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+  }
 
   try {
     // axios.defaults.withCredentials = true;
-    
-    const res = await axios.post(
-      url + "/review_questions",
-      formData,
-      config
-    );
+
+    const res = await axios.post(url + "/review_questions", formData, config);
 
     dispatch({
       type: REVIEW_QUESTIONS_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     console.log(err.response);
     let error = null;
-    
-    if(err.response)
-      error = err.response.data.message;
-    else 
-      error = "Server Error";
+
+    if (err.response) error = err.response.data.message;
+    else error = "Server Error";
 
     dispatch({
       type: REVIEW_QUESTIONS_FAIL,
-      payload: error
+      payload: error,
     });
   }
 };
 
 // Select question
-export const selectQuestion = (type, position) => dispatch => {
-
-  let data={type, position};
+export const selectQuestion = (type, position) => (dispatch) => {
+  let data = { type, position };
 
   dispatch({
     type: SELECT_QUESTION,
-    payload: data
+    payload: data,
   });
-
 };
 
 // Reset review questions store
-export const resetReviewQuestions = () => dispatch => {
-
+export const resetReviewQuestions = () => (dispatch) => {
   dispatch({
     type: RESET_REVIEW_QUESTIONS,
   });
-
 };
 
-// Create Quiz
-export const createQuiz = (data) => async dispatch => {
+export const deleteMessage = () => (dispatch) => {
+  dispatch({
+    type: DELETE_ERROR_REVIEW_QUESTION_MESSAGE,
+  });
+};
+
+export const cancelReviewQuestions = (data) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   };
 
   try {
     // axios.defaults.withCredentials = true;
-    
-    const res = await axios.post(
-      url + "/create_quiz",
-      data,
-      config
-    );
+
+    const res = await axios.post(url + "/cancel_created_quiz", data, config);
+  } catch (err) {
+    console.log(err);
+    const error = err.response.data.message;
+  }
+};
+
+// Create Quiz
+export const createQuiz = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    // axios.defaults.withCredentials = true;
+
+    const res = await axios.post(url + "/create_quiz", data, config);
 
     dispatch({
       type: CREATE_QUIZ_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     console.log(err);
@@ -110,7 +136,7 @@ export const createQuiz = (data) => async dispatch => {
 
     dispatch({
       type: CREATE_QUIZ_FAIL,
-      payload: error
+      payload: error,
     });
   }
 };

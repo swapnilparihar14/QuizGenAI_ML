@@ -9,129 +9,112 @@ import Footer from "../footer/Footer";
 import Alert from "../alert/Alert";
 
 import { resetReviewQuestions } from "../../actions/review_questions";
-import { getCreatedQuizzes, getCreatedQuiz, getPracticeQuizzes, getPracticeQuiz, getTakenQuizzes, getTakenQuiz, resetGetQuizzes} from "../../actions/my_quizzes";
+import {
+  getCreatedQuizzes,
+  getCreatedQuiz,
+  getPracticeQuizzes,
+  getPracticeQuiz,
+  getTakenQuizzes,
+  getTakenQuiz,
+  resetGetQuizzes,
+} from "../../actions/my_quizzes";
 
 class ConnectedMyQuizzes extends React.Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       onCreatedQuizzes: true,
       onTakenQuizzes: false,
-      onPracticeQuizzes: false
-    }
+      onPracticeQuizzes: false,
+    };
   }
 
-  async componentDidMount() {  
+  async componentDidMount() {
     let id = localStorage.getItem("id");
 
-    await this.props.dispatch(
-      getCreatedQuizzes(id)
-    );
+    await this.props.dispatch(getCreatedQuizzes(id));
   }
 
-  onClickCreatedQuizzes = async e => {
+  onClickCreatedQuizzes = async (e) => {
     e.preventDefault();
     let id = localStorage.getItem("id");
 
-    await this.props.dispatch(
-      getCreatedQuizzes(id)
-    );
+    await this.props.dispatch(getCreatedQuizzes(id));
 
     this.setState({
       onCreatedQuizzes: true,
       onTakenQuizzes: false,
-      onPracticeQuizzes: false
-    })
-  }
+      onPracticeQuizzes: false,
+    });
+  };
 
-  onClickTakenQuizzes = async e => {
+  onClickTakenQuizzes = async (e) => {
     e.preventDefault();
     let id = localStorage.getItem("id");
 
-    await this.props.dispatch(
-      getTakenQuizzes(id)
-    );
+    await this.props.dispatch(getTakenQuizzes(id));
 
     this.setState({
       onCreatedQuizzes: false,
       onTakenQuizzes: true,
-      onPracticeQuizzes: false
-    })
-  }
+      onPracticeQuizzes: false,
+    });
+  };
 
-  onClickPracticeQuizzes = async e => {
+  onClickPracticeQuizzes = async (e) => {
     e.preventDefault();
     let id = localStorage.getItem("id");
 
-    await this.props.dispatch(
-      getPracticeQuizzes(id)
-    );
+    await this.props.dispatch(getPracticeQuizzes(id));
 
     this.setState({
       onCreatedQuizzes: false,
       onTakenQuizzes: false,
-      onPracticeQuizzes: true
-    })
-  }
+      onPracticeQuizzes: true,
+    });
+  };
 
-  clickDeleteAlert = e => {
+  clickDeleteAlert = (e) => {
+    console.log("Hello");
     e.preventDefault();
-    if(this.props.reviewQuestions)
-      this.props.dispatch(
-        resetReviewQuestions()
-      );
-  }
+    if (this.props.reviewQuestions) this.props.dispatch(resetReviewQuestions());
+  };
 
-  clickDeleteQuizzesAlert = e => {
+  clickDeleteQuizzesAlert = (e) => {
     e.preventDefault();
-    if(this.props.listQuizzes)
-      this.props.dispatch(
-        resetGetQuizzes()
-      );
-  }
+    if (this.props.listQuizzes) this.props.dispatch(resetGetQuizzes());
+  };
 
   getCreatedQuiz = async (quizId) => {
-    await this.props.dispatch(
-      getCreatedQuiz(quizId)
-    );
-  }
+    await this.props.dispatch(getCreatedQuiz(quizId));
+  };
 
   getPracticeQuiz = async (quizId) => {
     let id = localStorage.getItem("id");
 
     let data = {
       quiz_id: quizId,
-      user_id: id 
-    }
+      user_id: id,
+    };
 
-    await this.props.dispatch(
-      getPracticeQuiz(data)
-    );
-  }
+    await this.props.dispatch(getPracticeQuiz(data));
+  };
 
   getTakenQuiz = async (quizId) => {
     let id = localStorage.getItem("id");
 
     let data = {
       quiz_id: quizId,
-      user_id: id 
-    }
+      user_id: id,
+    };
 
-    await this.props.dispatch(
-      getTakenQuiz(data)
-    );
-  }
+    await this.props.dispatch(getTakenQuiz(data));
+  };
 
-  componentWillUnmount(){
-    if(this.props.reviewQuestions)
-      this.props.dispatch(
-        resetReviewQuestions()
-      );
+  componentWillUnmount() {
+    if (this.props.reviewQuestions) this.props.dispatch(resetReviewQuestions());
 
-    if(this.props.listQuizzes)
-      this.props.dispatch(
-        resetGetQuizzes()
-      );
+    if (this.props.listQuizzes) this.props.dispatch(resetGetQuizzes());
   }
 
   render() {
@@ -147,16 +130,28 @@ class ConnectedMyQuizzes extends React.Component {
 
     let alert = null;
 
-    if(this.props.reviewQuestions.createQuizStatus){
-      if(this.props.reviewQuestions.createQuizStatus === "success"){
+    if (this.props.reviewQuestions.createQuizStatus) {
+      if (this.props.reviewQuestions.createQuizStatus === "success") {
         let type = "success";
         let message = "Quiz Created.";
-        alert = (<Alert type={type} message={message} delete={this.clickDeleteAlert}></Alert>);
+        alert = (
+          <Alert
+            type={type}
+            message={message}
+            delete={this.clickDeleteAlert}
+          ></Alert>
+        );
       }
-      if(this.props.reviewQuestions.createQuizStatus === "fail"){
+      if (this.props.reviewQuestions.createQuizStatus === "fail") {
         let type = "fail";
         let message = "Quiz could not be created. Retry.";
-        alert = (<Alert type={type} message={message} delete={this.clickDeleteAlert}></Alert>);
+        alert = (
+          <Alert
+            type={type}
+            message={message}
+            delete={this.clickDeleteAlert}
+          ></Alert>
+        );
       }
     }
 
@@ -169,144 +164,205 @@ class ConnectedMyQuizzes extends React.Component {
 
     let alert2 = null;
 
-    if (this.props.listQuizzes.quizzes){
-      if(this.state.onCreatedQuizzes)
-        createdQuizzesRows = this.props.listQuizzes.quizzes.map((createdQuizzesRow) => {
-          counter++;
-          return (
-            <tr
-              key={counter}
-              position={counter}
-            >
-              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/created/${createdQuizzesRow.id}`} onClick={(e) => {this.getCreatedQuiz(createdQuizzesRow.id)}}>{createdQuizzesRow.id}</Link></td>
-              <td>{createdQuizzesRow.name}</td>
-              <td>{createdQuizzesRow.quiz_type}</td>
-              <td><p className={myQuizzesStyles.ac}>{createdQuizzesRow.access_code}</p></td>
-              <td>{createdQuizzesRow.no_of_questions}</td>
-              <td>{createdQuizzesRow.duration}</td>
-              <td>{createdQuizzesRow.created_on}</td>
-            </tr>
-          )
-        });
-      else if(this.state.onTakenQuizzes)
-        takenQuizzesRows = this.props.listQuizzes.quizzes.map((takenQuizzesRow) => {
-          counter++;
-          return (
-            <tr
-              key={counter}
-              position={counter}
-            >
-              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/taken/${takenQuizzesRow.id}`} onClick={(e) => {this.getTakenQuiz(takenQuizzesRow.id)}}>{takenQuizzesRow.id}</Link></td>
-              <td>{takenQuizzesRow.name}</td>
-              <td>{takenQuizzesRow.score}</td>
-              <td>{takenQuizzesRow.no_of_questions}</td>
-              <td>{takenQuizzesRow.duration}</td>
-              <td>{takenQuizzesRow.taken_on}</td>
-            </tr>
-          )
-        });
-      else if(this.state.onPracticeQuizzes)
-        practiceQuizzesRows = this.props.listQuizzes.quizzes.map((practiceQuizzesRow) => {
-          counter++;
-          return (
-            <tr
-              key={counter}
-              position={counter}
-            >
-              <td><Link className={myQuizzesStyles.link} to={`/my_quizzes/practice/${practiceQuizzesRow.id}`} onClick={(e) => {this.getPracticeQuiz(practiceQuizzesRow.id)}}>{practiceQuizzesRow.id}</Link></td>
-              <td>{practiceQuizzesRow.name}</td>
-              <td>{practiceQuizzesRow.score}</td>
-              <td>{practiceQuizzesRow.no_of_questions}</td>
-              <td>{practiceQuizzesRow.duration}</td>
-              <td>{practiceQuizzesRow.taken_on}</td>
-            </tr>
-          )
-        });
-    }
-    else if (this.props.listQuizzes.message){
+    if (this.props.listQuizzes.quizzes) {
+      if (this.state.onCreatedQuizzes)
+        createdQuizzesRows = this.props.listQuizzes.quizzes.map(
+          (createdQuizzesRow) => {
+            counter++;
+            return (
+              <tr key={counter} position={counter}>
+                <td>
+                  <Link
+                    className={myQuizzesStyles.link}
+                    to={`/my_quizzes/created/${createdQuizzesRow.id}`}
+                    onClick={(e) => {
+                      this.getCreatedQuiz(createdQuizzesRow.id);
+                    }}
+                  >
+                    {createdQuizzesRow.id}
+                  </Link>
+                </td>
+                <td>{createdQuizzesRow.name}</td>
+                <td>{createdQuizzesRow.quiz_type}</td>
+                <td>
+                  <p className={myQuizzesStyles.ac}>
+                    {createdQuizzesRow.access_code}
+                  </p>
+                </td>
+                <td>{createdQuizzesRow.no_of_questions}</td>
+                <td>{createdQuizzesRow.duration}</td>
+                <td>{createdQuizzesRow.created_on}</td>
+              </tr>
+            );
+          }
+        );
+      else if (this.state.onTakenQuizzes)
+        takenQuizzesRows = this.props.listQuizzes.quizzes.map(
+          (takenQuizzesRow) => {
+            counter++;
+            return (
+              <tr key={counter} position={counter}>
+                <td>
+                  <Link
+                    className={myQuizzesStyles.link}
+                    to={`/my_quizzes/taken/${takenQuizzesRow.id}`}
+                    onClick={(e) => {
+                      this.getTakenQuiz(takenQuizzesRow.id);
+                    }}
+                  >
+                    {takenQuizzesRow.id}
+                  </Link>
+                </td>
+                <td>{takenQuizzesRow.name}</td>
+                <td>{takenQuizzesRow.score}</td>
+                <td>{takenQuizzesRow.no_of_questions}</td>
+                <td>{takenQuizzesRow.duration}</td>
+                <td>{takenQuizzesRow.taken_on}</td>
+              </tr>
+            );
+          }
+        );
+      else if (this.state.onPracticeQuizzes)
+        practiceQuizzesRows = this.props.listQuizzes.quizzes.map(
+          (practiceQuizzesRow) => {
+            counter++;
+            return (
+              <tr key={counter} position={counter}>
+                <td>
+                  <Link
+                    className={myQuizzesStyles.link}
+                    to={`/my_quizzes/practice/${practiceQuizzesRow.id}`}
+                    onClick={(e) => {
+                      this.getPracticeQuiz(practiceQuizzesRow.id);
+                    }}
+                  >
+                    {practiceQuizzesRow.id}
+                  </Link>
+                </td>
+                <td>{practiceQuizzesRow.name}</td>
+                <td>{practiceQuizzesRow.score}</td>
+                <td>{practiceQuizzesRow.no_of_questions}</td>
+                <td>{practiceQuizzesRow.duration}</td>
+                <td>{practiceQuizzesRow.taken_on}</td>
+              </tr>
+            );
+          }
+        );
+    } else if (this.props.listQuizzes.message) {
       let type = "fail";
       let message = "Could not fetch quizzes.";
-      alert2 = (<Alert type={type} message={message} delete={this.clickDeleteQuizzesAlert}></Alert>);
+      alert2 = (
+        <Alert
+          type={type}
+          message={message}
+          delete={this.clickDeleteQuizzesAlert}
+        ></Alert>
+      );
     }
 
-    if(this.state.onCreatedQuizzes){
-      table = ( <Table className={myQuizzesStyles.table} striped bordered hover >
-        <thead>
-          <tr>
-            <th>Quiz ID</th>
-            <th>Quiz Name</th>
-            <th>Quiz Type</th>
-            <th style={{width: "200px"}}>Password</th>
-            <th>No. of Questions</th>
-            <th>Duration</th>
-            <th>Created On</th>
-          </tr>
-        </thead>
-        <tbody>
-          {createdQuizzesRows}
-        </tbody>
-      </Table>)
+    if (this.state.onCreatedQuizzes) {
+      table = (
+        <Table className={myQuizzesStyles.table} striped bordered hover>
+          <thead>
+            <tr>
+              <th>Quiz ID</th>
+              <th>Quiz Name</th>
+              <th>Quiz Type</th>
+              <th style={{ width: "200px" }}>Password</th>
+              <th>No. of Questions</th>
+              <th>Duration</th>
+              <th>Created On</th>
+            </tr>
+          </thead>
+          <tbody>{createdQuizzesRows}</tbody>
+        </Table>
+      );
+    } else if (this.state.onPracticeQuizzes) {
+      table = (
+        <Table className={myQuizzesStyles.table} striped bordered hover>
+          <thead>
+            <tr>
+              <th>Quiz ID</th>
+              <th>Quiz Name</th>
+              <th>Score</th>
+              <th>No. of Questions</th>
+              <th>Duration</th>
+              <th>Taken On</th>
+            </tr>
+          </thead>
+          <tbody>{practiceQuizzesRows}</tbody>
+        </Table>
+      );
+    } else if (this.state.onTakenQuizzes) {
+      table = (
+        <Table className={myQuizzesStyles.table} striped bordered hover>
+          <thead>
+            <tr>
+              <th>Quiz ID</th>
+              <th>Quiz Name</th>
+              <th>Score</th>
+              <th>No. of Questions</th>
+              <th>Duration</th>
+              <th>Taken On</th>
+            </tr>
+          </thead>
+          <tbody>{takenQuizzesRows}</tbody>
+        </Table>
+      );
     }
-    else if (this.state.onPracticeQuizzes){
-      table = (<Table className={myQuizzesStyles.table} striped bordered hover >
-        <thead>
-          <tr>
-            <th>Quiz ID</th>
-            <th>Quiz Name</th>
-            <th>Score</th>
-            <th>No. of Questions</th>
-            <th>Duration</th>
-            <th>Taken On</th> 
-          </tr>
-        </thead>
-        <tbody>
-          {practiceQuizzesRows}
-        </tbody>
-      </Table>)
-    }
-    else if ( this.state.onTakenQuizzes){
-      table = (<Table className={myQuizzesStyles.table} striped bordered hover >
-        <thead>
-          <tr>
-            <th>Quiz ID</th>
-            <th>Quiz Name</th>
-            <th>Score</th>
-            <th>No. of Questions</th>
-            <th>Duration</th>
-            <th>Taken On</th> 
-          </tr>
-        </thead>
-        <tbody>
-          {takenQuizzesRows}
-        </tbody>
-      </Table>)
-    }
-    
+
     return (
       <>
-      {redirectVar}
-      <NavigationBar></NavigationBar> 
-      {alert}
-      {alert2}
-      <Container fluid>
-        <div className={this.state.onCreatedQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected} onClick= {this.onClickCreatedQuizzes} >Created Quizzes</div>
-        <div className={this.state.onPracticeQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickPracticeQuizzes} >Practice Quizzes</div>
-        <div className={this.state.onTakenQuizzes ? myQuizzesStyles.buttonSelected : myQuizzesStyles.buttonUnselected}  onClick= {this.onClickTakenQuizzes} >Taken Quizzes</div>
-        {/* {title} */}
-        <div className={myQuizzesStyles.tableContainer}>
-          {table}
-        </div>
-      </Container>
-      <Footer></Footer>
+        {redirectVar}
+        <NavigationBar></NavigationBar>
+        {alert}
+        {alert2}
+        <Container fluid>
+          <div
+            className={
+              this.state.onCreatedQuizzes
+                ? myQuizzesStyles.buttonSelected
+                : myQuizzesStyles.buttonUnselected
+            }
+            onClick={this.onClickCreatedQuizzes}
+          >
+            Created Quizzes
+          </div>
+          <div
+            className={
+              this.state.onPracticeQuizzes
+                ? myQuizzesStyles.buttonSelected
+                : myQuizzesStyles.buttonUnselected
+            }
+            onClick={this.onClickPracticeQuizzes}
+          >
+            Practice Quizzes
+          </div>
+          <div
+            className={
+              this.state.onTakenQuizzes
+                ? myQuizzesStyles.buttonSelected
+                : myQuizzesStyles.buttonUnselected
+            }
+            onClick={this.onClickTakenQuizzes}
+          >
+            Taken Quizzes
+          </div>
+          {/* {title} */}
+          <div className={myQuizzesStyles.tableContainer}>{table}</div>
+        </Container>
+        <Footer></Footer>
       </>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {  auth: state.auth,
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
     reviewQuestions: state.reviewQuestions,
-    listQuizzes: state.listQuizzes };
+    listQuizzes: state.listQuizzes,
+  };
 };
 
 const MyQuizzes = connect(mapStateToProps)(ConnectedMyQuizzes);
