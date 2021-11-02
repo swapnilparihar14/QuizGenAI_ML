@@ -155,6 +155,15 @@ def get_quiz_score():
         return json_message, code
 
 
+@app.route("/delete_quiz", methods=["POST"])
+def delete_quiz():
+    if request.method == "POST":
+        quiz_id = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.delete_quiz(db, quiz_id)
+        return json_message, code
+
+
 @app.route("/take_practice_quiz", methods=["POST"])
 def take_practice_quiz():
     if request.method == "POST":

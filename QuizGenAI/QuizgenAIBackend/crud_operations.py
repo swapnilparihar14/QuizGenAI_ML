@@ -350,3 +350,21 @@ class CrudOperations:
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
+
+    def delete_quiz(self, db, quiz_id):
+        """
+        Deleting a quiz by a provided quiz_id
+        :params quiz_id: quiz details from API
+        :params db: database object
+        """
+        try:
+            print(quiz_id['quiz_id'])
+            db.quiz.remove({'_id': ObjectId(quiz_id.get('quiz_id'))})
+
+            return 200, jsonify(
+                message="Success"
+            )
+
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
