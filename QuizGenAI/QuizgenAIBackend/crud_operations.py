@@ -346,11 +346,17 @@ class CrudOperations:
             return 200, jsonify(
                 quizzes=quizzes
             )
+
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
 
     def delete_created_quiz(self, quiz_details, db):
+        """
+        Deleting a quiz by a provided quiz_id
+        :params quiz_id: quiz details from API
+        :params db: database object
+        """
         try:
             db.quiz.remove({
                 "_id": ObjectId(quiz_details["quiz_id"])
