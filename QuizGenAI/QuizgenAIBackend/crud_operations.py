@@ -346,7 +346,19 @@ class CrudOperations:
             return 200, jsonify(
                 quizzes=quizzes
             )
-
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error")
+
+    def delete_created_quiz(self, quiz_details, db):
+        try:
+            db.quiz.remove({
+                "_id": ObjectId(quiz_details["quiz_id"])
+            })
+            return 200, jsonify(
+                message="Success"
+            )
+        except Exception as e:
+            self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
+            return 400, jsonify(message="Error")
+

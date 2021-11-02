@@ -172,5 +172,13 @@ def take_practice_quiz():
         return json_message, code
 
 
+@app.route("/cancel_created_quiz", methods=["POST"])
+def cancel_created_quiz():
+    if request.method == "POST":
+        quiz_details = request.get_json()
+        crud_operations = CrudOperations()
+        code, json_message = crud_operations.delete_created_quiz(quiz_details, db)
+        return json_message, code
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
