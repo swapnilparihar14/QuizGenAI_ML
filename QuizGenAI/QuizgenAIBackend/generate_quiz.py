@@ -112,7 +112,7 @@ class GenerateQuiz:
 
         # Add Below code once co-reference resolution is implemented or Web scrapping is enabled
         # random.shuffle(sentences_list)
-        keyword_list = [KeywordAndPOS(sentence).get_keywords_key_bert() for sentence in sentences_list]
+        keyword_list = [KeywordAndPOS(sentence).get_keywords_yake() for sentence in sentences_list]
         return sentences_list, keyword_list
 
     def get_fb_question(self, context, options, correct_ans):
@@ -139,10 +139,11 @@ class GenerateQuiz:
         keyword = next(iter(temp))
         distractor = list(temp[keyword].keys())
         distractor.append(keyword)
+        distractor = [key.title() for key in distractor]
         if not distractor:
             return -1, []
         random.shuffle(distractor)
-        return distractor.index(keyword), distractor
+        return distractor.index(keyword.title()), distractor
 
     def get_mcq_question(self, context, options, correct_ans):
         """
