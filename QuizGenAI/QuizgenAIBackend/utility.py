@@ -7,7 +7,8 @@ from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
-
+import spacy
+nlp = spacy.load('en_core_web_sm')
 # nltk.download('stopwords')
 
 from nltk.translate.bleu_score import sentence_bleu
@@ -89,7 +90,8 @@ def tokenize_sentences(text, pruning=True):
     :param pruning: Remove smaller sentences
     :return: Sentence Array
     """
-    sentences = re.split("(?<!etc)\.", text)
+    tokens = nlp(text)
+    sentences = [sent.string.strip() for sent in tokens.sents]
     if pruning:
         return [sentence.strip() for sentence in sentences if len(sentence) > SENTENCE_CHAR_LIMIT]
     return sentences
