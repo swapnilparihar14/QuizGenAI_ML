@@ -4,8 +4,11 @@ import {
   SELECT_QUESTION,
   CREATE_QUIZ_SUCCESS,
   CREATE_QUIZ_FAIL,
+  CANCEL_CREATE_QUIZ,
+  CANCEL_CREATE_QUIZ_FAIL,
   RESET_REVIEW_QUESTIONS,
   DELETE_ERROR_REVIEW_QUESTION_MESSAGE,
+  DELETE_CANCEL_MESSAGE,
   LOG_OUT,
 } from "../actions/types";
 
@@ -50,9 +53,26 @@ const review_questions = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    
+    case CANCEL_CREATE_QUIZ:
+      return {
+        cancel: "true"
+      };
+    
+    case CANCEL_CREATE_QUIZ_FAIL:
+      return {
+        ...state,
+        cancel: "false"
+      };
 
     case DELETE_ERROR_REVIEW_QUESTION_MESSAGE:
       if (state.message) delete state.message;
+      return {
+        ...state,
+      };
+
+    case DELETE_CANCEL_MESSAGE:
+      if (state.cancel) delete state.cancel;
       return {
         ...state,
       };

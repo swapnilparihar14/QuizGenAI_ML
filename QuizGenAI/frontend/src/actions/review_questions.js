@@ -7,6 +7,9 @@ import {
   CREATE_QUIZ_FAIL,
   RESET_REVIEW_QUESTIONS,
   DELETE_ERROR_REVIEW_QUESTION_MESSAGE,
+  CANCEL_CREATE_QUIZ,
+  CANCEL_CREATE_QUIZ_FAIL,
+  DELETE_CANCEL_MESSAGE
 } from "./types";
 import url from "../config/config";
 
@@ -96,6 +99,12 @@ export const deleteMessage = () => (dispatch) => {
   });
 };
 
+export const deleteCancelMessage = () => (dispatch) => {
+  dispatch({
+    type: DELETE_CANCEL_MESSAGE,
+  });
+};
+
 export const cancelReviewQuestions = (data) => async (dispatch) => {
   const config = {
     headers: {
@@ -106,10 +115,20 @@ export const cancelReviewQuestions = (data) => async (dispatch) => {
   try {
     // axios.defaults.withCredentials = true;
 
-    const res = await axios.post(url + "/cancel_created_quiz", data, config);
+    await axios.post(url + "/cancel_created_quiz", data, config);
+
+    dispatch({
+      type: CANCEL_CREATE_QUIZ,
+    });
+
   } catch (err) {
     console.log(err);
     const error = err.response.data.message;
+
+    dispatch({
+      type: CANCEL_CREATE_QUIZ_FAIL,
+      payload: error,
+    });
   }
 };
 

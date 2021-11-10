@@ -1,4 +1,4 @@
-import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT } from "../actions/types";
+import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR_DELETE, LOG_OUT } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
@@ -10,11 +10,11 @@ const auth = (state = initialState, action) => {
   switch (type) {
     case SIGNUP_SUCCESS:
     case LOGIN_SUCCESS:
-      if(state.signup_message)
-        delete state.signup_message;
+      if(state.signup_error)
+        delete state.signup_error;
 
-      if(state.login_message)
-      delete state.login_message;
+      if(state.login_error)
+      delete state.login_error;
 
       localStorage.setItem("id", payload._id);
       delete payload._id;
@@ -26,14 +26,25 @@ const auth = (state = initialState, action) => {
 
     case SIGNUP_FAIL:
       return {
-        signup_message: payload,
+        signup_error: payload,
         isAuthenticated: false
       };
 
     case LOGIN_FAIL:
       return {
-        login_message: payload,
+        login_error: payload,
         isAuthenticated: false
+      };
+
+    case AUTH_ERROR_DELETE:
+      if(state.signup_error)
+        delete state.signup_error;
+
+      if(state.login_error)
+        delete state.login_error;
+
+      return {
+        ...state,
       };
 
     case LOG_OUT:

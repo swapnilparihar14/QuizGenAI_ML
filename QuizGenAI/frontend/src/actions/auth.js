@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOG_OUT} from "./types";
+import { SIGNUP_SUCCESS, SIGNUP_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR_DELETE, LOG_OUT} from "./types";
 import url from "../config/config";
 
 
@@ -74,13 +74,25 @@ export const login = (data) => async dispatch => {
     });
   } catch (err) {
     console.log("err", err);
-    const error = err.response.data.message;
+
+    let error = null; 
+    
+    if(err.response) {
+      error= err.response;
+      console.log("error", error);
+    }
 
     dispatch({
       type: LOGIN_FAIL,
       payload: error
     });
   }
+};
+
+export const deleteErrorMessage = () => dispatch => {
+  dispatch({
+    type: AUTH_ERROR_DELETE,
+  });
 };
 
 //Log Out

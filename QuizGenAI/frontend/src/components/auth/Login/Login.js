@@ -8,7 +8,7 @@ import { Redirect } from "react-router";
 import { MdEmail, MdLock } from "react-icons/md";
 import logo from "../../../assets/logo.svg";
 
-import { login } from "../../../actions/auth";
+import { login, deleteErrorMessage } from "../../../actions/auth";
 
 class ConnectedLogin extends React.Component {
   constructor(){
@@ -16,25 +16,54 @@ class ConnectedLogin extends React.Component {
     this.state = {
       email: "",
       password: "",
+      error: ""
     }
+  }
+  
+  deleteError = e =>{
+    this.props.dispatch(deleteErrorMessage());
   }
 
   handleChange = e =>{
     this.setState({ [e.target.id]: e.target.value });
   }
 
+  handleValidation = () => {
+    let {email, password} = this.state;
+    let valid = true;
+
+    let reg = /^\S+@\S+\.\S+$/;
+
+    if (email === "" || password === "") {
+      valid = false;
+      this.setState({error: "Fields can't be empty"});
+    }
+    
+    if (email !== "" && !reg.test(email)){
+      valid= false;
+      this.setState({error: "Email is not valid"});  
+    }
+
+    return valid;
+  }
+
   clickLogIn = async e =>{
     e.preventDefault();
 
-    const {
-      email, password
-    } = this.state;
+    this.setState({error: ""});  
+    this.deleteError();
 
-    await this.props.dispatch(
-      login({
+    if(this.handleValidation()) {
+      const {
         email, password
-      })
-    );
+      } = this.state;
+
+      await this.props.dispatch(
+        login({
+          email, password
+        })
+      );
+    } 
   }
 
   render() {
@@ -50,9 +79,16 @@ class ConnectedLogin extends React.Component {
     }
 
     let errorMessage = (<p className={loginStyles.errormessage} style={{visibility: "hidden"}}>{"error message"}</p>);
-  
-    if(logIn.login_message)
-      errorMessage =  (<p className={loginStyles.errormessage} style={{visibility: "visible"}}>{logIn.login_message}</p>);
+
+    if(this.state.error !== "") {
+        errorMessage =  (<p className={loginStyles.errormessage} style={{visibility: "visible"}}>{this.state.error}</p>); 
+    }
+    else if(logIn.login_error) {
+      if (logIn.login_error.status < 500)
+        errorMessage =  (<p className={loginStyles.errormessage} style={{visibility: "visible"}}>{logIn.login_error.data.message}</p>);
+      else
+      errorMessage =  (<p className={loginStyles.errormessage} style={{visibility: "visible"}}>{"Server Error. Can't login."}</p>);
+    }
 
     let loginForm = (
     <Container className={loginStyles.container}> 
@@ -72,7 +108,7 @@ class ConnectedLogin extends React.Component {
                   <MdEmail />
                 </InputGroup.Text>
               </InputGroup.Prepend>
-              <Form.Control
+              <Form.Control 
                 onChange={this.handleChange}
                 type="email"
               />
@@ -100,7 +136,7 @@ class ConnectedLogin extends React.Component {
 
         {errorMessage}
         <Button className={loginStyles.authButton} onClick= {this.clickLogIn} >Log In</Button>
-        <Card.Text className={loginStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Don&apos;t have an account? <Link className={loginStyles.link} to="/signup">Sign up</Link></Card.Text>
+        <Card.Text className={loginStyles.labels} style={{textAlign: "center", fontSize: "0.8rem", marginTop: "1rem"}}>Don&apos;t have an account? <Link className={loginStyles.link} to="/signup" onClick={this.deleteError}>Sign up</Link></Card.Text>
       </Card>
       </Container>
     );

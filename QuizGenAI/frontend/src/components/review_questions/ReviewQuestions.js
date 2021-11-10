@@ -12,8 +12,8 @@ import Alert from "../alert/Alert";
 
 import {
   createQuiz,
-  resetReviewQuestions,
   deleteMessage,
+  deleteCancelMessage,
   cancelReviewQuestions,
 } from "../../actions/review_questions";
 
@@ -21,7 +21,6 @@ class ConnectedReviewQuestions extends React.Component {
   constructor() {
     super();
     this.state = {
-      cancel: false,
     };
   }
 
@@ -41,22 +40,25 @@ class ConnectedReviewQuestions extends React.Component {
       quiz_id: this.props.reviewQuestions.quiz_id,
     };
     await this.props.dispatch(cancelReviewQuestions(data));
-    await this.props.dispatch(resetReviewQuestions());
-
-    this.setState({ cancel: true });
   };
 
-  clickDeleteAlert = (e) => {
+  clickDeleteAlert = async (e) => {
     e.preventDefault();
-    this.props.dispatch(deleteMessage());
+    await this.props.dispatch(deleteMessage());
   };
+
+  clickDeleteCancelAlert = async (e) => {
+    e.preventDefault();
+    await this.props.dispatch(deleteCancelMessage());
+  }
 
   render() {
     let cancelRedirect = null;
-    if (this.state.cancel) cancelRedirect = <Redirect to="/my_quizzes" />;
-
     let redirectVar = null;
+
     const review_questions = this.props.reviewQuestions;
+
+    if (review_questions.cancel && review_questions.cancel === "true") cancelRedirect = <Redirect to="/my_quizzes" />;
 
     let multipleChoiceQuestions = null;
     let fillinTheBlankQuestions = null;
@@ -67,19 +69,29 @@ class ConnectedReviewQuestions extends React.Component {
     let trueOrFalseQuestionsHeader = null;
 
     let counter = 0;
-    let alert;
-    if (
-      this.props.reviewQuestions.message &&
-      this.props.reviewQuestions.message != "Success"
-    ) {
+    let alert = null;
+    let cancelAlert = null;
+
+    if (review_questions.message && review_questions.message !== "Success") {
       alert = (
         <Alert
           type="fail"
-          message={this.props.reviewQuestions.message}
+          message={review_questions.message}
           delete={this.clickDeleteAlert}
         />
       );
     }
+
+    if (review_questions.cancel && review_questions.cancel === "false") {
+      cancelAlert = (
+        <Alert
+          type="fail"
+          message={"Failed to cancel quiz."}
+          delete={this.clickDeleteCancelAlert}
+        />
+      );
+    }
+
     if (review_questions.createQuizStatus)
       redirectVar = <Redirect to="/my_quizzes" />;
     else if (review_questions.questions) {
@@ -168,6 +180,7 @@ class ConnectedReviewQuestions extends React.Component {
           REVIEW QUESTIONS
         </Container>
         {alert}
+        {cancelAlert}
         <Container className={reviewQuestionsStyles.container}>
           <h2 style={{ fontSize: "1rem", marginBottom: "10px" }}>
             Select the questions you would like to add to your quiz
