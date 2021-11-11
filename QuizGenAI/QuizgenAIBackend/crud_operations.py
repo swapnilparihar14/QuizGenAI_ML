@@ -116,6 +116,7 @@ class CrudOperations:
                 quiz = db.quiz.find_one({'quiz_name': quiz_details.get("quiz_name")})
                 if quiz_details.get('access_code') == quiz['access_code']:
                     quiz_dict = {
+                        'quiz_id': str(quiz["_id"]),
                         'quiz_name': quiz_details.get("quiz_name"),
                         'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
                         'questions': []
