@@ -113,7 +113,7 @@ class CrudOperations:
                 "quizzes_taken.id": quiz_details.get("quiz_id")
             })
             if found is None:
-                quiz = db.quiz.find_one({'_id': ObjectId(quiz_details.get("quiz_id"))})
+                quiz = db.quiz.find_one({'quiz_name': ObjectId(quiz_details.get("quiz_name"))})
 
                 if quiz_details.get('access_code') == quiz['access_code']:
                     quiz_dict = {
