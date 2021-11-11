@@ -143,7 +143,7 @@ class KeywordAndPOS:
             extractor = YAKE()
             extractor.load_document(input=self.text, language='en', normalization=None)
             stoplist = get_stopword_list()
-            extractor.candidate_selection(n=3, stoplist=stoplist)
+            extractor.candidate_selection(n=2, stoplist=stoplist)
             extractor.candidate_weighting(window=3, stoplist=stoplist, use_stems=False)
             keyphrases = extractor.get_n_best(n=self.keyword_limit, threshold=0.8)
             for val in keyphrases:
