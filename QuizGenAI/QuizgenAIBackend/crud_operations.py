@@ -114,7 +114,6 @@ class CrudOperations:
             })
             if found is None:
                 quiz = db.quiz.find_one({'quiz_name': quiz_details.get("quiz_name")})
-
                 if quiz_details.get('access_code') == quiz['access_code']:
                     quiz_dict = {
                         'quiz_name': quiz_details.get("quiz_name"),
@@ -124,7 +123,7 @@ class CrudOperations:
                     question_list = []
                     questions = db.questions.find(
                         {
-                            'quiz_name': quiz_details.get("quiz_name")
+                            'quiz_id': str(quiz["_id"])
                         }
                     )
 
