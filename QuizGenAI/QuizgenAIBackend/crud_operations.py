@@ -110,21 +110,21 @@ class CrudOperations:
         try:
             found = db.user_table.find_one({
                 '_id': ObjectId(quiz_details.get("user_id")),
-                "quizzes_taken.id": quiz_details.get("quiz_id")
+                "quizzes_taken.name": quiz_details.get("quiz_name")
             })
             if found is None:
                 quiz = db.quiz.find_one({'quiz_name': ObjectId(quiz_details.get("quiz_name"))})
 
                 if quiz_details.get('access_code') == quiz['access_code']:
                     quiz_dict = {
-                        'quiz_id': quiz_details.get("quiz_id"),
+                        'quiz_name': quiz_details.get("quiz_name"),
                         'duration': quiz['duration'] if 'duration' in quiz.keys() else "",
                         'questions': []
                     }
                     question_list = []
                     questions = db.questions.find(
                         {
-                            'quiz_id': quiz_details.get("quiz_id")
+                            'quiz_name': quiz_details.get("quiz_name")
                         }
                     )
 
