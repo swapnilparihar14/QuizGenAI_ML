@@ -22,7 +22,42 @@ class ConnectedNavBar extends React.Component {
 
   render() {
     let nav = null;
+    let navTabs = null;
+
     if (this.props.auth.isAuthenticated === true) {
+      if(this.props.auth.type === "instructor"){
+        navTabs = <> 
+          <Link
+          to={"/create_quiz"}
+          className={navbarStyles.links_dark}
+          style={{ display: "block", padding: "10px" }}
+          >
+          Create Quiz
+          </Link>
+          <span className={navbarStyles.separator}>|</span>
+        </>
+      }
+      else {
+        navTabs = <>
+          <Link
+          to={"/practice_quiz"}
+          className={navbarStyles.links_dark}
+          style={{ display: "block", padding: "10px" }}
+        >
+          Practice Quiz
+        </Link>
+        <span className={navbarStyles.separator}>|</span>
+        <Link
+          to={"/take_quiz"}
+          className={navbarStyles.links_dark}
+          style={{ display: "block", padding: "10px" }}
+        >
+          Take Quiz
+        </Link>
+        <span className={navbarStyles.separator}>|</span>
+        </>
+      }
+
       nav = (
         <Navbar collapseOnSelect id={navbarStyles.navbar_dark} expand="md">
           <Navbar.Brand>
@@ -44,34 +79,7 @@ class ConnectedNavBar extends React.Component {
                 Home
               </Link>
               <span className={navbarStyles.separator}>|</span>
-              <Link
-                to={"/create_quiz"}
-                className={navbarStyles.links_dark}
-                style={{ display: "block", padding: "10px" }}
-              >
-                Create Quiz
-              </Link>
-              <span className={navbarStyles.separator}>|</span>
-              <Link
-                to={"/practice_quiz"}
-                className={navbarStyles.links_dark}
-                style={{ display: "block", padding: "10px" }}
-              >
-                Practice Quiz
-              </Link>
-              <span className={navbarStyles.separator}>|</span>
-              <Link
-                to={"/take_quiz"}
-                className={navbarStyles.links_dark}
-                style={{ display: "block", padding: "10px" }}
-              >
-                Take Quiz
-              </Link>
-              {/* <span className={navbarStyles.separator}>|</span> */}
-              {/* <Link to={"/"}  className={navbarStyles.links_dark} style={{ display: "block", padding: "10px"}}>
-                   Public Quizzes
-                  </Link> */}
-              <span className={navbarStyles.separator}>|</span>
+              {navTabs}
               <NavDropdown
                 title={`Hi, ` + this.props.auth.first_name}
                 className={navbarStyles.links_dark}
