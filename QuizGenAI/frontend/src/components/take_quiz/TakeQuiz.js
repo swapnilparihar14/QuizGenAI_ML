@@ -13,7 +13,7 @@ class ConnectedTakeQuiz extends React.Component {
     super();
     this.state = {
       privacy: "",
-      quiz_id: "",
+      quiz_name: "",
       password: ""
     }
   }
@@ -29,7 +29,7 @@ class ConnectedTakeQuiz extends React.Component {
 
     let data = {
       user_id: id,
-      quiz_id: this.state.quiz_id,
+      quiz_name: this.state.quiz_name,
       access_code: this.state.password
     }
 
@@ -83,9 +83,9 @@ class ConnectedTakeQuiz extends React.Component {
     let infoFields = "";
     if (this.state.privacy === "private") {
       infoFields = (<>
-        {/* Enter Quiz ID */}
-        <Form.Group controlId="quiz_id">
-            <Form.Label className={takeQuizStyles.labels}>Quiz ID</Form.Label>
+        {/* Enter Quiz Name */}
+        <Form.Group controlId="quiz_name">
+            <Form.Label className={takeQuizStyles.labels}>Quiz Name</Form.Label>
               <Form.Control
                 onChange={this.handleChange}
               />
@@ -103,9 +103,9 @@ class ConnectedTakeQuiz extends React.Component {
     }
     else if (this.state.privacy === "public"){
       infoFields = (<>
-        {/* Enter Quiz ID */}
-        <Form.Group controlId="quiz_id">
-            <Form.Label className={takeQuizStyles.labels}>Quiz ID</Form.Label>
+        {/* Enter Quiz Name */}
+        <Form.Group controlId="quiz_name">
+            <Form.Label className={takeQuizStyles.labels}>Quiz Name</Form.Label>
               <Form.Control
                 onChange={this.handleChange}
               />

@@ -179,10 +179,9 @@ class ConnectedMyQuizzes extends React.Component {
                       this.getCreatedQuiz(createdQuizzesRow.id);
                     }}
                   >
-                    {createdQuizzesRow.id}
+                    {createdQuizzesRow.name}
                   </Link>
                 </td>
-                <td>{createdQuizzesRow.name}</td>
                 <td>{createdQuizzesRow.quiz_type}</td>
                 <td>
                   <p className={myQuizzesStyles.ac}>
@@ -210,10 +209,9 @@ class ConnectedMyQuizzes extends React.Component {
                       this.getTakenQuiz(takenQuizzesRow.id);
                     }}
                   >
-                    {takenQuizzesRow.id}
+                    {takenQuizzesRow.name}
                   </Link>
                 </td>
-                <td>{takenQuizzesRow.name}</td>
                 <td>{takenQuizzesRow.score}</td>
                 <td>{takenQuizzesRow.no_of_questions}</td>
                 <td>{takenQuizzesRow.duration}</td>
@@ -236,10 +234,9 @@ class ConnectedMyQuizzes extends React.Component {
                       this.getPracticeQuiz(practiceQuizzesRow.id);
                     }}
                   >
-                    {practiceQuizzesRow.id}
+                    {practiceQuizzesRow.name}
                   </Link>
                 </td>
-                <td>{practiceQuizzesRow.name}</td>
                 <td>{practiceQuizzesRow.score}</td>
                 <td>{practiceQuizzesRow.no_of_questions}</td>
                 <td>{practiceQuizzesRow.duration}</td>
@@ -265,13 +262,12 @@ class ConnectedMyQuizzes extends React.Component {
         <Table className={myQuizzesStyles.table} striped bordered hover>
           <thead>
             <tr>
-              <th>Quiz ID</th>
-              <th>Quiz Name</th>
-              <th>Quiz Type</th>
-              <th style={{ width: "200px" }}>Password</th>
-              <th>No. of Questions</th>
-              <th>Duration</th>
-              <th>Created On</th>
+              <th style={{ width: "25%" }}>Quiz Name</th>
+              <th style={{ width: "10%" }}>Quiz Type</th>
+              <th style={{ width: "15%" }}>Password</th>
+              <th style={{ width: "15%" }}>No. of Questions</th>
+              <th style={{ width: "15%" }}>Duration</th>
+              <th style={{ width: "20%" }}>Created On</th>
             </tr>
           </thead>
           <tbody>{createdQuizzesRows}</tbody>
@@ -282,12 +278,11 @@ class ConnectedMyQuizzes extends React.Component {
         <Table className={myQuizzesStyles.table} striped bordered hover>
           <thead>
             <tr>
-              <th>Quiz ID</th>
-              <th>Quiz Name</th>
-              <th>Score</th>
-              <th>No. of Questions</th>
-              <th>Duration</th>
-              <th>Taken On</th>
+              <th style={{ width: "25%" }}>Quiz Name</th>
+              <th style={{ width: "15%" }}>Score</th>
+              <th style={{ width: "20%" }}>No. of Questions</th>
+              <th style={{ width: "20%" }}>Duration</th>
+              <th style={{ width: "20%" }}>Taken On</th>
             </tr>
           </thead>
           <tbody>{practiceQuizzesRows}</tbody>
@@ -298,12 +293,11 @@ class ConnectedMyQuizzes extends React.Component {
         <Table className={myQuizzesStyles.table} striped bordered hover>
           <thead>
             <tr>
-              <th>Quiz ID</th>
-              <th>Quiz Name</th>
-              <th>Score</th>
-              <th>No. of Questions</th>
-              <th>Duration</th>
-              <th>Taken On</th>
+              <th style={{ width: "25%" }}>Quiz Name</th>
+              <th style={{ width: "15%" }}>Score</th>
+              <th style={{ width: "20%" }}>No. of Questions</th>
+              <th style={{ width: "20%" }}>Duration</th>
+              <th style={{ width: "20%" }}>Taken On</th>
             </tr>
           </thead>
           <tbody>{takenQuizzesRows}</tbody>
@@ -317,7 +311,7 @@ class ConnectedMyQuizzes extends React.Component {
         <NavigationBar></NavigationBar>
         {alert}
         {alert2}
-        <Container fluid>
+        <Container fluid style={{paddingLeft: "40px", paddingRight: "40px"}}>
           <div
             className={
               this.state.onCreatedQuizzes
@@ -326,7 +320,7 @@ class ConnectedMyQuizzes extends React.Component {
             }
             onClick={this.onClickCreatedQuizzes}
           >
-            Created Quizzes
+            List of your created quizzes
           </div>
           <div
             className={
@@ -336,7 +330,7 @@ class ConnectedMyQuizzes extends React.Component {
             }
             onClick={this.onClickPracticeQuizzes}
           >
-            Practice Quizzes
+            List of your practice quizzes
           </div>
           <div
             className={
@@ -346,7 +340,7 @@ class ConnectedMyQuizzes extends React.Component {
             }
             onClick={this.onClickTakenQuizzes}
           >
-            Taken Quizzes
+            List of your taken quizzes
           </div>
           {/* {title} */}
           <div className={myQuizzesStyles.tableContainer}>{table}</div>
