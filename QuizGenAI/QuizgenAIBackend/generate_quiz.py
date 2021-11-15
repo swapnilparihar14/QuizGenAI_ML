@@ -64,6 +64,7 @@ class GenerateQuiz:
                 message=message,
                 questions=questions,
                 quiz_id=str(quiz_id),
+                quiz_name=quiz_details['quiz_name'],
                 access_code=quiz_details['access_code']
             )
         except Exception as e:
@@ -245,7 +246,7 @@ class GenerateQuiz:
                         'type': 'fbq',
                         'quiz_id': quiz_id
                     })
-            return 200, jsonify(message="Successfully created quiz")
+            return 200, jsonify(quiz_id= quiz_id, message="Successfully created quiz")
         except Exception as e:
             self.log.error(f"{inspect.currentframe().f_code.co_name} . Error: {e}")
             return 400, jsonify(message="Error in creating quiz")
