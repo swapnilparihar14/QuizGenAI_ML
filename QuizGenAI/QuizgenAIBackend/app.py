@@ -169,7 +169,7 @@ def take_practice_quiz():
             if code == 200:
                 crud_operations = CrudOperations()
                 code, json_message = crud_operations.take_created_quiz(json.loads(questions_data.data), True, db)
-        questions_data['json_message'] = json_message
+        # questions_data['json_message'] = json_message
         return questions_data, code
 
 
